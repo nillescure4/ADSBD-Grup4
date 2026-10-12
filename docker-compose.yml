@@ -11,5 +11,26 @@ services:
       - .env
     command: server /data --console-address ":9001"
 
+  minio-init:
+    image: cgr.dev/chainguard/minio:latest
+    container_name: minio-init
+    depends_on:
+      - minio
+    env_file:
+      - .env
+    entrypoint: >
+      /bin/sh -c "
+      until /usr/bin/mc alias set local http://minio:9000
+      \"$$MINIO_ROOT_USER\" \"$$MINIO_ROOT_PASSWORD\"; do
+        sleep 2;
+      done;
+      /usr/bin/mc mb --ignore-existing local/1.landing-zone;
+      /usr/bin/mc mb --ignore-existing local/2.formatted-zone;
+      /usr/bin/mc mb --ignore-existing local/3.trusted-zone;
+      /usr/bin/mc mb --ignore-existing local/4.exploitation-zone;
+      printf '' | /usr/bin/mc pipe local/1.landing-zone/temporal/.keep;
+      printf '' | /usr/bin/mc pipe local/1.landing-zone/persistent/.keep;
+      "
+
 volumes:
   minio_data:

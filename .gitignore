@@ -1,0 +1,17 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+.idea/
+.vscode/
+dist/
+build/
+*.egg-info/
+
+# Les dades reals viuen a MinIO, no al repositori.
+data/
+

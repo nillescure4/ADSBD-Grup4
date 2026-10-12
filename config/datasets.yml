@@ -1,0 +1,17 @@
+# Substituiu aquests exemples pels tres datasets reals del projecte.
+datasets:
+  dataset_a:
+    source: source_a
+    modality: unknown
+    raw_format: unknown
+
+  dataset_b:
+    source: source_b
+    modality: unknown
+    raw_format: unknown
+
+  dataset_c:
+    source: source_c
+    modality: unknown
+    raw_format: unknown
+
