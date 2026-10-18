@@ -1,0 +1,38 @@
+[
+  {
+    "name": "1980_1999",
+    "target_games": 150,
+    "screenshots_per_game": 4,
+    "filters": {
+      "dates": "1980-01-01,1999-12-31",
+      "ordering": "-added"
+    }
+  },
+  {
+    "name": "2000_2009",
+    "target_games": 200,
+    "screenshots_per_game": 4,
+    "filters": {
+      "dates": "2000-01-01,2009-12-31",
+      "ordering": "-added"
+    }
+  },
+  {
+    "name": "2010_2019",
+    "target_games": 350,
+    "screenshots_per_game": 4,
+    "filters": {
+      "dates": "2010-01-01,2019-12-31",
+      "ordering": "-added"
+    }
+  },
+  {
+    "name": "2020_2026",
+    "target_games": 300,
+    "screenshots_per_game": 4,
+    "filters": {
+      "dates": "2020-01-01,2026-12-31",
+      "ordering": "-added"
+    }
+  }
+]
