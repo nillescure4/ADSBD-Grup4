@@ -12,6 +12,7 @@ dist/
 build/
 *.egg-info/
 
+reports/
 # Les dades reals viuen a MinIO, no al repositori.
 data/
 
