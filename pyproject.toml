@@ -12,6 +12,8 @@ dependencies = [
   "boto3>=1.35,<2",
   "python-dotenv>=1.0,<2",
   "PyYAML>=6.0,<7",
+  "requests>=2.31,<3",
+  "pyarrow>=18,<24",
 ]
 
 [project.optional-dependencies]

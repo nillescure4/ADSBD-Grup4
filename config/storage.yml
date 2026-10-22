@@ -6,5 +6,12 @@ buckets:
 
 landing:
   temporal_prefix: temporal
+  texts_prefix: texts
   persistent_prefix: persistent
+
+formatted:
+  texts_prefix: texts
+
+trusted:
+  texts_prefix: texts
 
