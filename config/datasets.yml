@@ -2,16 +2,17 @@
 datasets:
   dataset_a:
     source: source_a
-    modality: unknown
-    raw_format: unknown
+    modality: text
+    raw_format: json
 
-  dataset_b:
-    source: source_b
-    modality: unknown
-    raw_format: unknown
+  rawg_images:
+    source: rawg
+    modality: image
+    directory: rawg_full
+    raw_format: png
 
   dataset_c:
     source: source_c
-    modality: unknown
-    raw_format: unknown
+    modality: audio
+    raw_format: wav
 

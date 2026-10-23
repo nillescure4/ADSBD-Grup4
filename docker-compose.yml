@@ -28,8 +28,6 @@ services:
       /usr/bin/mc mb --ignore-existing local/2.formatted-zone;
       /usr/bin/mc mb --ignore-existing local/3.trusted-zone;
       /usr/bin/mc mb --ignore-existing local/4.exploitation-zone;
-      printf '' | /usr/bin/mc pipe local/1.landing-zone/temporal/.keep;
-      printf '' | /usr/bin/mc pipe local/1.landing-zone/persistent/.keep;
       "
 
 volumes:
