@@ -1,13 +1,27 @@
+"""Quality rules for Trusted images: duplicate detection, soft flags and hard rejections."""
+from __future__ import annotations
+
 import numpy as np
 import pandas as pd
 
 MIN_SIDE = 480            # px
-MIN_CONTRAST = 5.0        # std de la lluminositat: sota això és gairebé uniforme
-BLUR_THRESHOLD = 50.0     # variància del Laplacià
+MIN_CONTRAST = 5.0        # luminance std; below this the image is almost uniform
+BLUR_THRESHOLD = 50.0     # Laplacian variance
 DARK_THRESHOLD = 30.0
 BRIGHT_THRESHOLD = 225.0
 LETTERBOX_THRESHOLD = 0.10
-NEAR_DUP_DISTANCE = 5     # distància de Hamming entre pHash de 64 bits
+NEAR_DUP_DISTANCE = 5     # Hamming distance between 64-bit pHashes
+
+RULES_VERSION = 1         # bump whenever a rule or threshold changes meaning
+THRESHOLDS = {
+    "min_side": MIN_SIDE,
+    "min_contrast": MIN_CONTRAST,
+    "blur": BLUR_THRESHOLD,
+    "dark": DARK_THRESHOLD,
+    "bright": BRIGHT_THRESHOLD,
+    "letterbox": LETTERBOX_THRESHOLD,
+    "near_dup_distance": NEAR_DUP_DISTANCE,
+}
 
 
 def _hamming(value: np.uint64, others: np.ndarray) -> np.ndarray:
@@ -16,13 +30,21 @@ def _hamming(value: np.uint64, others: np.ndarray) -> np.ndarray:
 
 
 def flag_duplicates(df: pd.DataFrame) -> pd.DataFrame:
+    """Flag exact and near duplicates among images that pass the hard rules.
+
+    Rejected images (corrupt, too small, blank) do not take part, so a valid image
+    is never discarded as a duplicate of an image that is rejected anyway.
+    The first appearance (in key order) is the one that is kept.
+    """
     df = df.copy()
-    valid = df["error"].isna()
+    valid = (df["error"].isna() & (df["width"] >= MIN_SIDE)
+             & (df["height"] >= MIN_SIDE) & (df["contrast"] >= MIN_CONTRAST))
 
-    # Duplicats exactes (mateix contingut)
-    df["dup_exact"] = valid & df.duplicated("sha256", keep="first")
+    # Exact duplicates (same content)
+    df["dup_exact"] = False
+    df.loc[valid, "dup_exact"] = df[valid].duplicated("sha256", keep="first")
 
-    # Gairebé duplicats (mateix pHash aprox.): es conserva la primera aparició
+    # Near duplicates (similar pHash)
     df["dup_near"] = False
     candidates = df[valid & ~df["dup_exact"]]
     index = candidates.index.to_numpy()
@@ -42,13 +64,13 @@ def flag_duplicates(df: pd.DataFrame) -> pd.DataFrame:
 def apply_rules(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
-    # Flags suaus (només es registren)
+    # Soft flags (recorded only)
     df["flag_blurry"] = df["sharpness"] < BLUR_THRESHOLD
     df["flag_dark"] = df["brightness"] < DARK_THRESHOLD
     df["flag_bright"] = df["brightness"] > BRIGHT_THRESHOLD
     df["flag_letterbox"] = df["letterbox_ratio"] > LETTERBOX_THRESHOLD
 
-    # Regles dures (eliminen); la darrera assignació té prioritat
+    # Hard rules (reject); the last assignment wins
     df["reject_reason"] = None
     df.loc[df["dup_near"] | df["dup_exact"], "reject_reason"] = "duplicate"
     df.loc[df["contrast"] < MIN_CONTRAST, "reject_reason"] = "blank"

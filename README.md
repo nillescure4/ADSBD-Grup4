@@ -286,3 +286,10 @@ si es vol conservar el contingut de MinIO.
 6. Crear els productes finals de l'Exploitation Zone.
 7. Afegir proves unitàries i d'integració a cada etapa.
 
+## Pipelines desenvolupats
+
+Per executar la pipeline d'imatges en Windows:
+
+```bash
+.\run_image_pipeline.ps1
+```
