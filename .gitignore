@@ -11,7 +11,11 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+reports/
+Scripts/
+Lib/
 
+reports/
 # Les dades reals viuen a MinIO, no al repositori.
 data/
 
