@@ -139,12 +139,8 @@ El servei `minio-init` crea idempotentment aquests buckets:
 4.exploitation-zone
 ```
 
-També crea els prefixos inicials següents mitjançant objectes `.keep` buits:
-
-```text
-1.landing-zone/temporal/
-1.landing-zone/persistent/
-```
+Els prefixos `temporal/` i `persistent/` apareixen quan s'hi desen objectes;
+no es creen fitxers buits per representar carpetes.
 
 Podeu consultar l'estat dels contenidors amb:
 
