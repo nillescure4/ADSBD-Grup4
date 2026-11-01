@@ -21,6 +21,7 @@ if __package__ in (None, ""):
 from src.common.config import load_storage_config
 from src.common.minio_client import create_minio_client, list_object_keys
 from src.ingestion.text_temporal_to_persistent import read_bytes, read_optional
+from src.formatting.text_input_formats import SUPPORTED_EXTENSIONS, decode_capture
 
 
 # Fixed types prevent all-null columns from changing type between daily batches.
@@ -94,7 +95,8 @@ def format_texts(*, dry_run: bool = False) -> int:
     target_prefix = f"{storage['formatted']['texts_prefix'].strip('/')}/rawg/"
     client = create_minio_client()
     client.head_bucket(Bucket=target_bucket)
-    pattern = re.compile(r"rawg\$game_details_(\d+)\$(\d{2}-\d{2}-\d{4})\.json")
+    extensions = "|".join(SUPPORTED_EXTENSIONS)
+    pattern = re.compile(r"rawg\$game_details_(\d+)\$(\d{2}-\d{2}-\d{4})\.(?:" + extensions + r")", re.IGNORECASE)
     batches: dict[str, list[tuple[str, int, str]]] = defaultdict(list)
     for key in list_object_keys(client, source_bucket, source_prefix):
         match = pattern.fullmatch(key[len(source_prefix):])
@@ -110,12 +112,15 @@ def format_texts(*, dry_run: bool = False) -> int:
         try:
             captures = []
             inputs = []
+            seen_ids = set()
             for key, game_id, date in sorted(sources):
+                if game_id in seen_ids:
+                    raise ValueError(f"Mes d'un fitxer per joc i dia: {game_id}, {day}")
+                seen_ids.add(game_id)
                 raw = read_bytes(client, source_bucket, key)
                 digest = sha256(raw)
-                payload = json.loads(raw)
-                if not isinstance(payload, dict) or type(payload.get("id")) is not int or payload["id"] != game_id:
-                    raise ValueError(f"ID del JSON inconsistent: {key}")
+                payload = decode_capture(raw, key.rsplit(".", 1)[1], game_id,
+                                         integer_fields=INTEGER_FIELDS, text_fields=TEXT_FIELDS)
                 record_key = f"{source_prefix}manifests/rawg$text_sources_{game_id}${date}.jsonl"
                 record = json.loads(read_bytes(client, source_bucket, record_key))
                 collected = datetime.fromisoformat(record["ingested_at_utc"])
