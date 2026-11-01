@@ -50,25 +50,36 @@ def input_signature(formatted: dict[str, str]) -> dict:
     listing = json.dumps(sorted(formatted.items())).encode("utf-8")
     return {
         "rules_version": rules.RULES_VERSION,
-        "thresholds": rules.THRESHOLDS,
+        "thresholds": dict(rules.THRESHOLDS),
         "images": len(formatted),
         "listing_sha256": hashlib.sha256(listing).hexdigest(),
     }
 
 
-def collect_metrics(client, bucket: str, keys: list[str]) -> pd.DataFrame:
-    rows = []
+def collect_metrics(client, bucket: str, keys: list[str]) -> tuple[pd.DataFrame, list[str]]:
+    """Measure every image. Returns the metrics table and the keys that could not be read.
+
+    An image that cannot be decoded is a quality problem and ends up as 'corrupt'. An image that
+    cannot be read from MinIO is an infrastructure problem: it must never be recorded as corrupt,
+    because the decision would be checkpointed and the image would stay out of Trusted.
+    """
+    rows, unreadable = [], []
     for i, key in enumerate(keys, start=1):
-        row = {"key": key, "error": None}
         try:
             raw = client.get_object(Bucket=bucket, Key=key)["Body"].read()
+        except Exception as exc:
+            unreadable.append(key)
+            print(f"[ERROR] {key}: could not be read ({type(exc).__name__})", file=sys.stderr)
+            continue
+        row = {"key": key, "error": None}
+        try:
             row.update(compute_metrics(raw))
         except Exception as exc:
             row["error"] = f"{type(exc).__name__}: {exc}"
         rows.append(row)
         if i % 500 == 0:
             print(f"  {i}/{len(keys)}")
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows), unreadable
 
 
 def sync_trusted(client, src_bucket: str, dst_bucket: str, formatted: dict[str, str],
@@ -82,8 +93,8 @@ def sync_trusted(client, src_bucket: str, dst_bucket: str, formatted: dict[str, 
         if existing.get(dest) == formatted[key]:
             skipped += 1
             continue
-        print(f"{key} -> {dest}")
         if dry_run:
+            print(f"{key} -> {dest}")
             continue
         try:
             client.copy_object(Bucket=dst_bucket, Key=dest,
@@ -135,7 +146,11 @@ def build_trusted_images(*, dry_run: bool, prune: bool, csv_output: Path) -> int
         return 1 if errors else 0
 
     print(f"Measuring {len(formatted)} images...")
-    metrics = collect_metrics(client, src_bucket, sorted(formatted))
+    metrics, unreadable = collect_metrics(client, src_bucket, sorted(formatted))
+    if unreadable:
+        print(f"[ERROR] {len(unreadable)} images could not be read from MinIO; nothing was written. "
+              f"Fix the connection and run again.", file=sys.stderr)
+        return 1
     df = rules.apply_rules(rules.flag_duplicates(metrics))
     accepted = df.loc[df["reject_reason"].isna(), "key"].tolist()
     outcomes = df["reject_reason"].fillna("accepted").value_counts()
@@ -155,11 +170,11 @@ def build_trusted_images(*, dry_run: bool, prune: bool, csv_output: Path) -> int
         sync_trusted(client, src_bucket, dst_bucket, formatted, accepted, dry_run=True, prune=prune)
         return 0
 
-    csv_text = df.to_csv(index=False)
+    # Bytes with "\n" endings on every platform: write_text() on Windows would turn "\r\n" into "\r\r\n"
+    csv_bytes = df.to_csv(index=False).replace("\r\n", "\n").encode("utf-8")
     csv_output.parent.mkdir(parents=True, exist_ok=True)
-    csv_output.write_text(csv_text, encoding="utf-8")
-    put_verified(client, dst_bucket, f"{QUALITY_PREFIX}images_quality.csv",
-                 csv_text.encode("utf-8"), "text/csv")
+    csv_output.write_bytes(csv_bytes)
+    put_verified(client, dst_bucket, f"{QUALITY_PREFIX}images_quality.csv", csv_bytes, "text/csv")
     put_verified(client, dst_bucket, f"{QUALITY_PREFIX}summary.json",
                  json.dumps(summary, ensure_ascii=False, indent=2).encode("utf-8"),
                  "application/json")
