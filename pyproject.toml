@@ -22,6 +22,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+embeddings = [
+  "chromadb>=1.0,<2",
+  "open-clip-torch>=2.30,<4",
+  "torch>=2.2,<3",
+  "torchvision>=0.17,<1",
+]
 dev = [
   "pytest>=8,<9",
 ]
