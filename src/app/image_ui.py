@@ -4,7 +4,7 @@ import streamlit as st
 
 from src.app.visual_search import connect_images, decode_upload, load_image
 from src.app.ui import collection, game_details
-from src.app.trusted_details import names
+from src.app.game_fields import render_game_fields
 
 
 @st.cache_resource
@@ -77,7 +77,9 @@ def render_image(rank, result, *, compact=False):
                 records = collection().get(where={"game_id": metadata["game_id"]}, include=["documents", "metadatas"])
                 index = max(range(len(records["ids"])), key=lambda n: records["metadatas"][n]["collection_date"])
                 details = game_details({"game_id": metadata["game_id"], "text": records["documents"][index], "metadata": records["metadatas"][index]})
-                st.write(f"**RAWG rating:** {details.get('rating', 'Not available')} · **Genres:** {names(details.get('genres'))}")
-                st.caption(f"Game details · Text snapshot {records['metadatas'][index]['collection_date']}")
+                st.caption(f"RAWG ID {metadata['game_id']} · Game details · Text snapshot {records['metadatas'][index]['collection_date']}")
+                render_game_fields(details, compact=compact)
             except Exception:
                 st.caption("Related game details are unavailable.")
+        else:
+            st.caption("Related game details are unavailable: no verified game ID is recorded for this image.")

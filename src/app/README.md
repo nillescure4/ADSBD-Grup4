@@ -60,8 +60,11 @@ Results reference Trusted object keys and SHA-256 hashes. Source images are
 verified before display; changed or inaccessible sources are reported. Optional
 `provenance/images.jsonl` in Trusted associates exact image object keys and ETags
 with game IDs and names. These IDs are never inferred from arbitrary filenames.
-When this provenance exists, image cards can join the game's latest verified
-Trusted text record to show ratings and genres. Missing provenance remains
+When this provenance exists, image cards join the game's latest verified
+Trusted text record to show the same fields as description cards: RAWG rating,
+Metacritic, playtime, release date, genres, platforms, developers and publishers.
+TASK 1 uses metric tiles; TASK 2 uses a compact layout. The RAWG ID and text
+snapshot date identify the record used. Missing provenance remains
 explicitly unavailable. Keep this manifest outside the `images/` prefix so it
 is not treated as image input by the image quality pipeline.
 

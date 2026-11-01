@@ -1,7 +1,8 @@
 import streamlit as st
 
 from src.app.text_search import search
-from src.app.trusted_details import highlight_description, names
+from src.app.trusted_details import highlight_description
+from src.app.game_fields import render_game_fields
 from src.app.ui import collection, dataset_status, game_details, heading, model, pending_card
 from src.app.image_ui import image_collection, image_status, query_image, render_image
 from src.app.visual_search import search_images
@@ -32,24 +33,9 @@ def render_result(rank, result, *, details=_UNSET, compact=False):
                 st.markdown(highlight_description(details["description_clean"], metadata["char_start"],
                                                   metadata["char_end"]), unsafe_allow_html=True)
             st.caption(f"RAWG ID {result['game_id']} · Snapshot {result['date']}")
-            rating = details.get("rating")
-            metacritic = details.get("metacritic")
-            playtime = details.get("playtime")
-            values = [("RAWG rating", f"{rating:g} / 5" if rating is not None else "Not available"),
-                      ("Metacritic", f"{metacritic} / 100" if metacritic is not None else "Not available"),
-                      ("Playtime", f"{playtime} h" if playtime is not None else "Not available")]
             if compact:
                 st.caption(f"Cosine similarity · {result['score']:.3f}")
-                for label, value in values:
-                    st.write(f"**{label}:** {value}")
-            else:
-                for column, (label, value) in zip(st.columns(3), values):
-                    column.metric(label, value)
-            st.write(f"**Release date:** {details.get('released') or 'Not available'}")
-            st.write(f"**Genres:** {names(details.get('genres'))}")
-            st.write(f"**Platforms:** {names(details.get('platforms'), nested='platform')}")
-            st.write(f"**Developers:** {names(details.get('developers'))}")
-            st.write(f"**Publishers:** {names(details.get('publishers'))}")
+            render_game_fields(details, compact=compact)
         else:
             st.warning("Full description and game details are unavailable: the Trusted snapshot could not be loaded or verified. Only the indexed description is shown below.")
             st.subheader("Indexed description")
