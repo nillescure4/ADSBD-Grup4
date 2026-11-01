@@ -1,8 +1,9 @@
-# Substituiu aquests exemples pels tres datasets reals del projecte.
+# Source collections used by the multimodal pipeline.
 datasets:
-  dataset_a:
-    source: source_a
+  rawg_texts:
+    source: rawg
     modality: text
+    directory: text_descriptions
     raw_format: json
 
   rawg_images:
@@ -11,8 +12,9 @@ datasets:
     directory: rawg_full
     raw_format: png
 
-  dataset_c:
-    source: source_c
+  opengameart_audio:
+    source: opengameart
     modality: audio
-    raw_format: wav
+    directory: opengameart_audio/raw/files
+    raw_format: mixed_audio
 

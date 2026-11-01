@@ -307,7 +307,7 @@ def parse_args() -> argparse.Namespace:
         description="Collect raw gameplay screenshots from RAWG with provenance manifests."
     )
     p.add_argument("--api-key", default=os.getenv("RAWG_API_KEY"))
-    p.add_argument("--output", default="data/landing/rawg")
+    p.add_argument("--output", default="data/landing/rawg_full")
     p.add_argument("--plan", help="JSON collection plan. Overrides single-query selection.")
     p.add_argument("--max-games", type=int, default=100)
     p.add_argument("--screenshots-per-game", type=int, default=4)
