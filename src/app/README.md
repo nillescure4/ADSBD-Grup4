@@ -43,10 +43,28 @@ This implementation retrieves all chunks for correct grouping and filtering
 of the small local corpus. A scalable retrieval strategy will be needed if
 its size increases substantially.
 
-Search only requires the local database. MinIO is optional for game names from
-Trusted: if unavailable, RAWG IDs are displayed instead. Data does not need to
-be ingested again to use the interface. Update the catalogue using independent
-pipeline processes and reload the page. Game names are cached for two minutes.
+Search only requires the local database. Each result also loads its exact
+Trusted snapshot from MinIO, checking its SHA-256, row, game ID, full text hash
+and matching passage. It displays the complete `description_clean`, RAWG rating,
+Metacritic score, release date, playtime, genres, platforms, developers and
+publishers. The complete description appears immediately after the result title,
+with its best-matching passage in bold. A note in Text mode explains why long
+descriptions are split into passages and how the highlighted passage determines
+the ranking. Source text is HTML-escaped, preserving paragraphs and punctuation.
+Technical fields and provenance are not exposed as result expanders; provenance
+remains available internally for verification. Structured JSON columns are decoded for presentation.
+Missing values are labelled explicitly; zero values are preserved.
+
+The similarity score still comes from the best-matching chunk, rather than an
+embedding of the complete description. Details always belong to the matching
+snapshot, including when historical search is enabled; they are never replaced
+with values from a newer snapshot. Verified snapshots are cached by bucket,
+object key and hash for two minutes.
+
+If Trusted is unavailable or fails verification, search results remain visible
+with an explicit warning and only the indexed passage. A partial passage is
+never labelled as a complete description. Data does not need to be ingested
+again. Update the catalogue using independent pipelines and reload the page.
 
 TASK 2 images and audio will need to be resolved from their original assets and
 provenance. OpenGameArt audio consists of independent CC0 music tracks, not
@@ -56,7 +74,7 @@ rankings: their scores cannot be compared directly.
 ## Verification
 
 ```powershell
-python -m pytest tests/unit/test_app_text_search.py tests/unit/test_streamlit_app.py -q
+python -m pytest tests/unit/test_app_text_search.py tests/unit/test_app_trusted_details.py tests/unit/test_streamlit_app.py -q
 ```
 
 Interface tests use Streamlit AppTest without downloading weights or modifying

@@ -39,28 +39,20 @@ def pending_card(title: str, description: str) -> None:
 
 
 @st.cache_data(ttl=120, show_spinner=False)
-def game_names():
-    """Optional labels from Trusted. Local vector search works without MinIO."""
-    import pyarrow as pa
-    import pyarrow.parquet as pq
+def trusted_snapshot(bucket: str, key: str, digest: str):
+    """Cache by snapshot identity, never just by game ID."""
     import boto3
     from botocore.config import Config
-    from src.common.config import load_minio_settings, load_storage_config
-    from src.ingestion.text_temporal_to_persistent import read_bytes
+    from src.common.config import load_minio_settings
+    from src.app.trusted_details import load_snapshot
 
-    names = {}
-    try:
-        client = boto3.client("s3", **load_minio_settings(),
-                              config=Config(connect_timeout=1, read_timeout=2, retries={"max_attempts": 0}))
-        records = collection().get(include=["metadatas"])["metadatas"] or []
-        keys = sorted({(row["collection_date"], row["trusted_object_key"]) for row in records})
-        bucket = load_storage_config()["buckets"]["trusted"]
-        for _, key in keys:
-            data = read_bytes(client, bucket, key)
-            table = pq.ParquetFile(pa.BufferReader(data)).read(columns=["id", "name"])
-            for row in table.to_pylist():
-                if row["name"]:
-                    names[row["id"]] = row["name"]
-    except Exception:
-        pass
-    return names
+    client = boto3.client("s3", **load_minio_settings(),
+                          config=Config(connect_timeout=1, read_timeout=3, retries={"max_attempts": 0}))
+    return load_snapshot(client, bucket, key, digest)
+
+
+def game_details(result):
+    from src.app.trusted_details import select_game
+    metadata = result["metadata"]
+    return select_game(trusted_snapshot(metadata["trusted_bucket"], metadata["trusted_object_key"],
+                                       metadata["trusted_object_sha256"]), result)
