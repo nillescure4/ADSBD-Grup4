@@ -14,9 +14,11 @@ in English. Source descriptions retain their original language.
 
 - **Home:** project context, architecture and real catalogue counts.
 - **TASK 1 · Similarity** (`/similarity`): text-to-text search with complete
-  descriptions and verified game details from Trusted. Image and audio inputs
-  remain disabled.
-- **TASK 2 · Multimodal** (`/multimodal`): preview; retrieval is not connected.
+  descriptions and verified game details, plus image-to-image screenshot search.
+  Images can be uploaded or selected from the catalogue. A selected catalogue
+  reference is excluded from its image results. Audio remains disabled.
+- **TASK 2 · Multimodal** (`/multimodal`): text-to-image and image-to-text search,
+  optionally returning both descriptions and screenshots in separate rankings.
 - **TASK 3 · Game finder** (`/generation`): text search followed by an
   AI-generated preference tree: eight games, three answers, one recommendation.
 
@@ -40,6 +42,47 @@ substitute invented metadata or duplicate historical captures.
 
 The app reads sources and embeddings without changing them. Models load on
 demand and share a lock across sessions. No search history is written to disk.
+
+## Image and cross-modal search
+
+Prepare `images_jina_clip_v2` in the same database with
+`python -m src.exploitation.images.build_embeddings`. Both collections must use
+the shared checkpoint, code revisions, 1024 dimensions, L2 normalization and
+cosine distance. Separate modality fingerprints are checked before retrieval;
+older CLIP collections cannot be mixed into these searches.
+
+The [Jina reference implementation](https://huggingface.co/jinaai/jina-clip-v2)
+uses `retrieval.query` for text queries to images and descriptions. Image queries
+use the same model's RGB image tower and pinned preprocessing. Uploaded files
+are decoded locally, limited to 20 MB and 40 million pixels, and never ingested.
+
+Results reference Trusted object keys and SHA-256 hashes. Source images are
+verified before display; changed or inaccessible sources are reported. Optional
+`provenance/images.jsonl` in Trusted associates exact image object keys and ETags
+with game IDs and names. These IDs are never inferred from arbitrary filenames.
+When this provenance exists, image cards can join the game's latest verified
+Trusted text record to show ratings and genres. Missing provenance remains
+explicitly unavailable. Keep this manifest outside the `images/` prefix so it
+is not treated as image input by the image quality pipeline.
+
+The current validation corpus contains **50 real RAWG screenshots and 100
+different game descriptions**. Historical text captures are preserved; the
+cross-modal validation selects exactly the latest 100 descriptions through a
+read-only Chroma filter.
+
+Run the real corpus check after preparing both collections:
+
+```powershell
+$env:ADSBD_RUN_VISUAL_SEARCH_TESTS = "1"
+python -m pytest tests/integration/test_visual_search_50_100.py -v -s
+```
+
+This verifies every source, all 50 image and 100 description self-queries,
+cross-modal cosine rankings against direct vector products, real text and image
+encoding, and an incremental image rerun with zero changed vectors. The report
+is written to `data/exploitation/text_image_validation_50_100.json`. Source-game
+recall is a diagnostic of the screenshot/description pairing, not a guarantee
+of semantic relevance. Audio still requires the separate CLAP implementation.
 
 Restart Streamlit after another process updates the local ChromaDB database.
 The in-process vector index may otherwise retain an older snapshot. Retrieval

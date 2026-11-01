@@ -30,15 +30,15 @@ def test_home_and_navigation(status):
     assert app.metric[0].label == "Games with indexed text"
 
 
-@pytest.mark.parametrize("module,title", [
-    ("multimodal", "One idea, different perspectives"),
-])
-def test_pending_tasks_cannot_execute(module, title):
-    app = page(module).run()
+def test_audio_connections_are_still_pending(monkeypatch):
+    from src.app.views import multimodal
+    monkeypatch.setattr(multimodal, "dataset_status", lambda: ({"games": 100}, None))
+    monkeypatch.setattr(multimodal, "image_status", lambda: (50, None))
+    app = page("multimodal").run()
+    app.radio[0].set_value("Audio").run()
     assert not app.exception
-    assert app.info and all(button.disabled for button in app.button)
-    assert app.title[0].value == title
-    assert "Coming soon" in app.info[0].value
+    assert all(button.disabled for button in app.button)
+    assert app.title[0].value == "One idea, different perspectives"
 
 
 def test_text_search_form_and_rendering(status, monkeypatch):
@@ -75,7 +75,7 @@ def test_text_search_form_and_rendering(status, monkeypatch):
     assert any(item.label == "RAWG rating" and item.value == "0 / 5" for item in app.metric)
     assert any(item.label == "Metacritic" and item.value == "Not available" for item in app.metric)
     assert any("Puzzle" in item.value for item in app.markdown)
-    app.radio[0].set_value("Image").run()
+    app.radio[0].set_value("Audio").run()
     assert not app.exception and all(button.disabled for button in app.button)
 
 

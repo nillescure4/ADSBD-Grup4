@@ -20,6 +20,9 @@ def collection():
 
 @st.cache_resource
 def model():
+    import torch
+    # CPU inference is serialized; avoid oversubscribing the local machine.
+    torch.set_num_threads(min(torch.get_num_threads(), 4))
     from src.exploitation.jina_clip import JinaEncoder
     return JinaEncoder("cpu"), threading.Lock()
 

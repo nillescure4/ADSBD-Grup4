@@ -3,22 +3,27 @@ import streamlit as st
 from src.app.text_search import search
 from src.app.trusted_details import highlight_description, names
 from src.app.ui import collection, dataset_status, game_details, heading, model, pending_card
+from src.app.image_ui import image_collection, image_status, query_image, render_image
+from src.app.visual_search import search_images
 
 
 _UNSET = object()
 
 
-def render_result(rank, result, *, details=_UNSET):
+def render_result(rank, result, *, details=_UNSET, compact=False):
     if details is _UNSET:
         try:
             details = game_details(result)
         except Exception:
             details = None
     with st.container(border=True):
-        left, right = st.columns([4,1])
         title = (details or {}).get("name") or f"Game #{result['game_id']}"
-        left.subheader(f"{rank:02d} · {title}")
-        right.metric("Cosine similarity", f"{result['score']:.3f}")
+        if compact:
+            st.subheader(f"{rank:02d} · {title}")
+        else:
+            left, right = st.columns([4,1])
+            left.subheader(f"{rank:02d} · {title}")
+            right.metric("Cosine similarity", f"{result['score']:.3f}")
         if details is not None:
             metadata = result["metadata"]
             if metadata.get("representation") == "full_description":
@@ -27,13 +32,19 @@ def render_result(rank, result, *, details=_UNSET):
                 st.markdown(highlight_description(details["description_clean"], metadata["char_start"],
                                                   metadata["char_end"]), unsafe_allow_html=True)
             st.caption(f"RAWG ID {result['game_id']} · Snapshot {result['date']}")
-            a,b,c = st.columns(3)
             rating = details.get("rating")
             metacritic = details.get("metacritic")
             playtime = details.get("playtime")
-            a.metric("RAWG rating", f"{rating:g} / 5" if rating is not None else "Not available")
-            b.metric("Metacritic", f"{metacritic} / 100" if metacritic is not None else "Not available")
-            c.metric("Playtime", f"{playtime} h" if playtime is not None else "Not available")
+            values = [("RAWG rating", f"{rating:g} / 5" if rating is not None else "Not available"),
+                      ("Metacritic", f"{metacritic} / 100" if metacritic is not None else "Not available"),
+                      ("Playtime", f"{playtime} h" if playtime is not None else "Not available")]
+            if compact:
+                st.caption(f"Cosine similarity · {result['score']:.3f}")
+                for label, value in values:
+                    st.write(f"**{label}:** {value}")
+            else:
+                for column, (label, value) in zip(st.columns(3), values):
+                    column.metric(label, value)
             st.write(f"**Release date:** {details.get('released') or 'Not available'}")
             st.write(f"**Genres:** {names(details.get('genres'))}")
             st.write(f"**Platforms:** {names(details.get('platforms'), nested='platform')}")
@@ -43,13 +54,18 @@ def render_result(rank, result, *, details=_UNSET):
             st.warning("Full description and game details are unavailable: the Trusted snapshot could not be loaded or verified. Only the indexed description is shown below.")
             st.subheader("Indexed description")
             st.text(result["text"])
+            if compact:
+                st.caption(f"Cosine similarity · {result['score']:.3f}")
 
 
 def render():
     heading("TASK 01 / SAME-MODALITY SIMILARITY SEARCH", "Find games with similar ideas",
             "Start with a text and discover descriptions related by meaning.")
     modality = st.radio("Modality", ["Text", "Image", "Audio"], horizontal=True)
-    if modality != "Text":
+    if modality == "Image":
+        render_image_search()
+        return
+    if modality == "Audio":
         pending_card(f"Search by {modality.lower()}",
                      "You will be able to provide an item and retrieve similar items of the same modality.")
         st.file_uploader("Reference item", type=["png", "jpg", "jpeg"] if modality == "Image" else ["wav", "mp3", "flac"], disabled=True)
@@ -99,3 +115,35 @@ def render():
     with st.expander("How are results ranked?"):
         st.write("Queries and complete descriptions use the same pinned Jina CLIP v2 model. The full description and game details belong to the matching Trusted snapshot. When history is included, the best match across all snapshots is used.")
         st.caption("Similarity is a relative score, not a probability or a guarantee of relevance. The current catalogue is small, and CLIP may have limitations with some languages and long descriptions.")
+
+
+def render_image_search():
+    st.info("Find screenshots with similar visual content using Jina CLIP v2. Upload an image or choose a catalogue screenshot.")
+    count, error = image_status()
+    if error:
+        st.info(error)
+        return
+    st.caption(f"{count} indexed images available")
+    try:
+        image, excluded = query_image("similarity")
+    except Exception:
+        st.error("The reference image could not be decoded or verified.")
+        return
+    top_k = st.slider("Maximum number of images", 1, min(20, max(1, count)), min(5, count), key="similarity_image_limit")
+    if st.button("Find similar images", type="primary"):
+        st.session_state.pop("image_results", None)
+        if image is None:
+            st.warning("Choose a reference image before searching.")
+        else:
+            try:
+                with st.spinner("Comparing images…"):
+                    encoder, lock = model()
+                    with lock:
+                        results = search_images(image_collection(), encoder, image=image, top_k=top_k, exclude_ids=excluded)
+                st.session_state["image_results"] = results
+            except Exception:
+                st.error("Image search could not be completed. Check the model, image index and Trusted storage.")
+    if "image_results" in st.session_state:
+        st.subheader("Similar screenshots")
+        for rank, result in enumerate(st.session_state["image_results"], 1):
+            render_image(rank, result)

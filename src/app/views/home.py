@@ -22,8 +22,8 @@ def render():
     st.header("Three ways to explore")
     columns = st.columns(3)
     cards = [
-        ("01 / SIMILARITY", "Find similar experiences", "Compare items within the same modality. Description search is available now.", "🟢 Text available"),
-        ("02 / MULTIMODAL", "Connect the modalities", "Describe an idea and explore text, images and audio related to the same concept.", "🟠 Coming soon"),
+        ("01 / SIMILARITY", "Find similar experiences", "Compare descriptions with descriptions, or screenshots with screenshots.", "🟢 Text and images available"),
+        ("02 / MULTIMODAL", "Connect the modalities", "Find screenshots from a text query and descriptions from a reference image.", "🟢 Text ↔ image available"),
         ("03 / AI GAME FINDER", "Find your next game", "Start with 8 retrieved games. Answer 3 AI-generated questions to get one recommendation.", "✨ Requires 8 games and an AI connection"),
     ]
     for column, (label, title, text, status) in zip(columns, cards):
@@ -49,5 +49,5 @@ def render():
         st.caption("Audio tracks are independent; they are not soundtracks attributed to the RAWG games.")
     with right, st.container(border=True):
         st.subheader("What can you try today?")
-        st.write("Open **TASK 1 · Similarity**, enter a description and explore the closest games.")
-        st.caption("TASK 2 is a preview. TASK 3 needs an AI connection and at least eight different indexed games.")
+        st.write("Use **TASK 1** for text or image similarity, **TASK 2** to search across text and images, and **TASK 3** for a guided game recommendation.")
+        st.caption("Audio search is pending. TASK 3 needs an AI connection and at least eight different indexed games.")
