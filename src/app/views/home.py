@@ -14,7 +14,7 @@ def render():
     a,b,c = st.columns(3)
     a.metric("Games with indexed text", info["games"] if info else "—")
     b.metric("Data snapshots", info["captures"] if info else "—")
-    c.metric("Indexed text chunks", info["vectors"] if info else "—")
+    c.metric("Indexed descriptions", info["vectors"] if info else "—")
     if error:
         st.info(error)
     elif info["dates"]:
@@ -24,7 +24,7 @@ def render():
     cards = [
         ("01 / SIMILARITY", "Find similar experiences", "Compare items within the same modality. Description search is available now.", "🟢 Text available"),
         ("02 / MULTIMODAL", "Connect the modalities", "Describe an idea and explore text, images and audio related to the same concept.", "🟠 Coming soon"),
-        ("03 / GENERATION", "Ask and create with context", "Use retrieved content to generate explanations and ideas with traceable sources.", "🟠 Coming soon"),
+        ("03 / AI GAME FINDER", "Find your next game", "Start with 8 retrieved games. Answer 3 AI-generated questions to get one recommendation.", "✨ Requires 8 games and an AI connection"),
     ]
     for column, (label, title, text, status) in zip(columns, cards):
         with column, st.container(border=True):
@@ -50,4 +50,4 @@ def render():
     with right, st.container(border=True):
         st.subheader("What can you try today?")
         st.write("Open **TASK 1 · Similarity**, enter a description and explore the closest games.")
-        st.caption("TASK 2 and TASK 3 preview the planned experience. They do not run searches or generative models yet.")
+        st.caption("TASK 2 is a preview. TASK 3 needs an AI connection and at least eight different indexed games.")

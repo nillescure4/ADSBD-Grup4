@@ -20,8 +20,8 @@ def collection():
 
 @st.cache_resource
 def model():
-    from src.exploitation.text.build_embeddings import OpenClipEncoder
-    return OpenClipEncoder("cpu"), threading.Lock()
+    from src.exploitation.jina_clip import JinaEncoder
+    return JinaEncoder("cpu"), threading.Lock()
 
 
 def dataset_status():

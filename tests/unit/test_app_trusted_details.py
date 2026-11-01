@@ -67,6 +67,19 @@ def test_modified_snapshot_is_rejected():
         load_snapshot(client, "trusted", "historical.parquet", "wrong hash")
 
 
+def test_full_description_jina_hit_needs_no_chunk_offsets():
+    client, digest = snapshot()
+    rows = load_snapshot(client, "trusted", "historical.parquet", digest)
+    hit = result()
+    hit["text"] = rows[0]["description_clean"]
+    hit["metadata"]["representation"] = "full_description"
+    del hit["metadata"]["char_start"], hit["metadata"]["char_end"]
+    assert select_game(rows, hit)["name"] == "Original name"
+    hit["text"] = "Original description."
+    with pytest.raises(ValueError, match="complete"):
+        select_game(rows, hit)
+
+
 @pytest.mark.parametrize("problem", ["wrong_row", "missing_row", "negative_row", "changed_text", "changed_chunk"])
 def test_stale_provenance_cannot_show_another_game_or_description(problem):
     client, digest = snapshot()

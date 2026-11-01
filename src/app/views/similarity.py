@@ -5,11 +5,15 @@ from src.app.trusted_details import highlight_description, names
 from src.app.ui import collection, dataset_status, game_details, heading, model, pending_card
 
 
-def render_result(rank, result):
-    try:
-        details = game_details(result)
-    except Exception:
-        details = None
+_UNSET = object()
+
+
+def render_result(rank, result, *, details=_UNSET):
+    if details is _UNSET:
+        try:
+            details = game_details(result)
+        except Exception:
+            details = None
     with st.container(border=True):
         left, right = st.columns([4,1])
         title = (details or {}).get("name") or f"Game #{result['game_id']}"
@@ -17,8 +21,11 @@ def render_result(rank, result):
         right.metric("Cosine similarity", f"{result['score']:.3f}")
         if details is not None:
             metadata = result["metadata"]
-            st.markdown(highlight_description(details["description_clean"], metadata["char_start"],
-                                              metadata["char_end"]), unsafe_allow_html=True)
+            if metadata.get("representation") == "full_description":
+                st.text(details["description_clean"])
+            else:
+                st.markdown(highlight_description(details["description_clean"], metadata["char_start"],
+                                                  metadata["char_end"]), unsafe_allow_html=True)
             st.caption(f"RAWG ID {result['game_id']} · Snapshot {result['date']}")
             a,b,c = st.columns(3)
             rating = details.get("rating")
@@ -33,8 +40,8 @@ def render_result(rank, result):
             st.write(f"**Developers:** {names(details.get('developers'))}")
             st.write(f"**Publishers:** {names(details.get('publishers'))}")
         else:
-            st.warning("Full description and game details are unavailable: the Trusted snapshot could not be loaded or verified. Only the indexed matching passage is shown below.")
-            st.subheader("Best-matching passage")
+            st.warning("Full description and game details are unavailable: the Trusted snapshot could not be loaded or verified. Only the indexed description is shown below.")
+            st.subheader("Indexed description")
             st.text(result["text"])
 
 
@@ -48,9 +55,8 @@ def render():
         st.file_uploader("Reference item", type=["png", "jpg", "jpeg"] if modality == "Image" else ["wav", "mp3", "flac"], disabled=True)
         st.button("Find similar items", disabled=True)
         return
-    st.info("Descriptions can be too long for the model, so we split them into shorter passages. "
-            "Each game is ranked by its best-matching passage. The full description is shown in the results, "
-            "with that passage in bold: it is the part that produced the similarity score, rather than a keyword highlight.")
+    st.info("Jina CLIP v2 compares your query with complete game descriptions. "
+            "Each game appears once, ranked by semantic similarity to what you are looking for.")
     info, error = dataset_status()
     if error or not info or not info["games"]:
         st.info(error or "The text catalogue is empty.")
@@ -91,5 +97,5 @@ def render():
         st.subheader("Start with an idea")
         st.write("Try concepts such as **medieval adventure**, **cooperative puzzles** or **competitive team shooter**.")
     with st.expander("How are results ranked?"):
-        st.write("The query and descriptions are compared using the same CLIP model. Long queries are also split into chunks. Each game appears once, ranked by its highest-scoring chunk. The full description and game details are read from the same Trusted snapshot as that chunk. When history is included, the best match across all snapshots is used.")
+        st.write("Queries and complete descriptions use the same pinned Jina CLIP v2 model. The full description and game details belong to the matching Trusted snapshot. When history is included, the best match across all snapshots is used.")
         st.caption("Similarity is a relative score, not a probability or a guarantee of relevance. The current catalogue is small, and CLIP may have limitations with some languages and long descriptions.")

@@ -28,7 +28,7 @@ pages = {
     "The three tasks": [
         st.Page(similarity.render, title="TASK 1 · Similarity", icon="🔎", url_path="similarity"),
         st.Page(multimodal.render, title="TASK 2 · Multimodal", icon="🧩", url_path="multimodal"),
-        st.Page(generation.render, title="TASK 3 · Generation", icon="✨", url_path="generation"),
+        st.Page(generation.render, title="TASK 3 · Game finder", icon="✨", url_path="generation"),
     ],
 }
 page = st.navigation(pages)
@@ -36,6 +36,7 @@ with st.sidebar:
     st.divider()
     st.caption("AVAILABLE NOW")
     st.markdown("🟢 Search game descriptions")
-    st.caption("Image and audio search and generation are coming soon.")
+    st.markdown("✨ Guided game finder · Requires 8 games and an AI connection")
+    st.caption("Image and audio search are coming soon.")
     st.caption("ADSBD · Group 4")
 page.run()

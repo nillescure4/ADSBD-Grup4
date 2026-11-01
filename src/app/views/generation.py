@@ -1,32 +1,109 @@
+"""Text retrieval followed by an AI-generated binary preference tree."""
+
+from functools import partial
+
 import streamlit as st
 
-from src.app.ui import heading, pending_card
+from src.app.game_finder import current_options, final_recommendation, generate_tree, plain_label, require_candidates, tree_dot
+from src.app.generative_model import configuration, generate
+from src.app.text_search import search
+from src.app.trusted_details import names
+from src.app.ui import collection, dataset_status, game_details, heading, model
+from src.app.views.similarity import render_result
+
+
+STATE_KEY = "game_finder"
+
+
+def retrieve_candidates(query):
+    encoder, lock = model()
+    with lock:
+        results = search(collection(), encoder, query, top_k=8, latest_only=True)
+    require_candidates(results)
+    candidates = []
+    for result in results:
+        details = game_details(result)
+        candidates.append({"game_id": result["game_id"], "name": details.get("name") or f"Game #{result['game_id']}",
+                           "description": details["description_clean"], "genres": names(details.get("genres")),
+                           "rating": details.get("rating"), "result": result, "details": details})
+    return candidates
 
 
 def render():
-    heading("TASK 03 / GENERATIVE TASKS", "From discovery to answers",
-            "An assistant combining data retrieval with a generative model.")
-    st.info("Coming soon · The generative model is not connected yet. No queries are sent to external services.")
-    main, context = st.columns([3,2])
-    with main, st.container(border=True):
-        st.subheader("What would you like to explore?")
-        st.selectbox("Request type", ["Recommend and explain", "Compare experiences", "Suggest an atmosphere"], disabled=True)
-        st.text_area("Your request", placeholder="I am looking for a medieval adventure. Explain which options in the catalogue fit and suggest a musical atmosphere.", height=150, disabled=True)
-        st.multiselect("Context to retrieve", ["Descriptions", "Images", "Audio"], default=["Descriptions"], disabled=True)
-        st.button("Generate an answer with context", disabled=True, type="primary")
-    with context:
-        pending_card("Retrieved sources", "Review the chunks and assets used as context, together with their provenance.")
-    st.subheader("Your answer will appear here")
-    with st.container(border=True):
-        st.write("The generated answer will distinguish catalogue content from creative suggestions and provide access to the retrieved sources.")
-        st.caption("No answer or conversation history has been generated yet.")
-    st.header("The planned workflow")
-    st.markdown("**Request → Context retrieval → Generative model → Answer with sources**")
-    with st.expander("What is needed to enable this task?", expanded=True):
-        st.markdown("""
-- Define the final use case and select a suitable generative model.
-- Connect context retrieval to searches from the previous tasks.
-- Prepare the prompt, model invocation and source presentation.
-- Verify handling of missing context and model errors.
-""")
-        st.caption("A text-only model will receive textual context. Direct image or audio processing will require a compatible model or an explicit transformation.")
+    heading("TASK 03 / AI GAME FINDER", "Find your next game",
+            "Describe an experience. Answer three questions. Discover one recommendation.")
+    st.info("Text only for now. We retrieve the top 8 different games using their complete descriptions. "
+            "The AI uses your request and this shortlist to build a decision tree. "
+            "Each answer halves the options: 8 → 4 → 2 → 1.")
+    config, setup_error = configuration()
+    info, catalogue_error = dataset_status()
+    if setup_error:
+        st.info(setup_error)
+    if catalogue_error:
+        st.info(catalogue_error)
+    enough = bool(info and info["games"] >= 8)
+    if info and not enough:
+        st.info(f"The catalogue currently contains {info['games']} different games. At least 8 are needed. Historical snapshots of the same game do not count as extra options.")
+    with st.form("game_finder_search"):
+        query = st.text_area("What kind of game are you looking for?", max_chars=4000, height=120,
+                             placeholder="I want an immersive adventure with a strong story and interesting choices.")
+        submitted = st.form_submit_button("Find my game", type="primary", disabled=bool(setup_error or not enough or catalogue_error))
+        st.caption("Starting a search sends your request and the eight retrieved games to the configured AI model. Your answers then follow the generated tree without further AI calls.")
+    if submitted and config and enough and not catalogue_error:
+        st.session_state.pop(STATE_KEY, None)
+        if not query.strip():
+            st.warning("Describe what you are looking for before starting.")
+        else:
+            try:
+                with st.spinner("Finding eight games and preparing your questions…"):
+                    candidates = retrieve_candidates(query)
+                    tree = generate_tree(query, candidates, partial(generate, config))
+                st.session_state[STATE_KEY] = {"query": query, "candidates": candidates, "tree": tree, "path": "",
+                                             "provider": config.provider, "model": config.model}
+            except Exception as exc:
+                st.error("The game finder could not prepare a valid decision tree. Check that MinIO, the embeddings and the AI model are available, then try again.")
+                if isinstance(exc, ValueError):
+                    st.text(str(exc))
+    saved = st.session_state.get(STATE_KEY)
+    if not saved:
+        return
+    candidates, tree, path = saved["candidates"], saved["tree"], saved["path"]
+    st.divider()
+    st.caption("YOUR SEARCH")
+    st.text(saved["query"])
+    st.caption(f"Questions generated by {saved['provider']} · {saved['model']}")
+    st.progress(len(path) / 3, text=f"{len(path)} of 3 questions answered · {len(current_options(tree, candidates, path))} games remaining")
+    if len(path) < 3:
+        node = next(node for node in tree["nodes"] if node["path"] == path)
+        st.subheader(f"Question {len(path) + 1} of 3")
+        st.text(node["question"])
+        left, right = st.columns(2)
+        for column, branch, label in ((left, "L", "left_label"), (right, "R", "right_label")):
+            if column.button(plain_label(node[label]), key=f"answer_{path}_{branch}", use_container_width=True):
+                saved["path"] += branch
+                st.rerun()
+    else:
+        game, reason = final_recommendation(tree, candidates, path)
+        st.success("Your recommendation")
+        render_result(1, game["result"], details=game["details"])
+        st.subheader("Why this game?")
+        st.text(reason)
+        st.caption("AI-generated explanation based on the retrieved catalogue and your selected preferences. Similarity measures the initial retrieval, not a probability of enjoying the game.")
+    if path:
+        st.caption("YOUR CHOICES")
+        for depth, branch in enumerate(path):
+            node = next(node for node in tree["nodes"] if node["path"] == path[:depth])
+            st.text(f"{depth + 1}. {node['question']} → {node['left_label' if branch == 'L' else 'right_label']}")
+    back, reset = st.columns(2)
+    if back.button("Previous question", disabled=not path):
+        saved["path"] = path[:-1]
+        st.rerun()
+    if reset.button("Start a new search"):
+        st.session_state.pop(STATE_KEY, None)
+        st.rerun()
+    with st.expander("View the decision tree"):
+        st.graphviz_chart(tree_dot(tree, candidates, path))
+    with st.expander("The eight retrieved games"):
+        remaining = set(current_options(tree, candidates, path))
+        for rank, game in enumerate(candidates, 1):
+            st.text(f"{rank:02d} · {game['name']} · Similarity {game['result']['score']:.3f} · {'Still in consideration' if game['game_id'] in remaining else 'Ruled out'}")

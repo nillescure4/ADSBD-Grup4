@@ -14,6 +14,9 @@ class Encoder:
     def encode(self, texts):
         return [[1.0, 0.0] for _ in texts]
 
+    def encode_query(self, text):
+        return [1.0, 0.0]
+
 
 class Collection:
     metadata = {"config_sha256": configuration(Encoder(), False)[1]}

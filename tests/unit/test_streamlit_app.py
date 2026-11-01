@@ -32,7 +32,6 @@ def test_home_and_navigation(status):
 
 @pytest.mark.parametrize("module,title", [
     ("multimodal", "One idea, different perspectives"),
-    ("generation", "From discovery to answers"),
 ])
 def test_pending_tasks_cannot_execute(module, title):
     app = page(module).run()
@@ -59,7 +58,7 @@ def test_text_search_form_and_rendering(status, monkeypatch):
     ])
     app = page("similarity").run()
     assert app.button[0].label == "Find games"
-    assert "split them into shorter passages" in app.info[0].value
+    assert "complete game descriptions" in app.info[0].value
     app.button[0].click().run()
     assert app.warning
     app.text_area[0].input("puzzle game")
@@ -99,6 +98,6 @@ render_result(1, {'game_id': 1, 'score': 0.5, 'date': '2026-10-22', 'text': 'Ind
                               'char_start': 0, 'char_end': 15}})
 """).run()
     assert not app.exception
-    assert "Only the indexed matching passage" in app.warning[0].value
+    assert "Only the indexed description" in app.warning[0].value
     assert not any(item.value == "Full description" for item in app.subheader)
     assert any(item.value == "Indexed passage" for item in app.text)

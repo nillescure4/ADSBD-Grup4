@@ -50,7 +50,10 @@ def select_game(rows: list[dict[str, Any]], result: dict[str, Any]) -> dict[str,
     text = row.get("description_clean")
     if not isinstance(text, str) or hashlib.sha256(text.encode()).hexdigest() != metadata["text_sha256"]:
         raise ValueError("The Trusted description does not match the indexed text.")
-    if text[metadata["char_start"]:metadata["char_end"]] != result["text"]:
+    if metadata.get("representation") == "full_description":
+        if text != result["text"]:
+            raise ValueError("The retrieved document does not match the complete Trusted description.")
+    elif text[metadata["char_start"]:metadata["char_end"]] != result["text"]:
         raise ValueError("The retrieved chunk does not match the Trusted description.")
     return row
 
