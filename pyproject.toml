@@ -19,11 +19,20 @@ dependencies = [
   "opencv-python>=4.8,<5",
   "imagehash>=4.3,<5",
   "matplotlib>=3.8,<4",
-  "chromadb>=0.4,<1",
-  "open-clip-torch>=2.0,<3",
 ]
 
 [project.optional-dependencies]
+embeddings = [
+  "chromadb>=1.0,<2",
+  "transformers==4.48.3",
+  "huggingface-hub>=0.26,<1",
+  "einops>=0.8,<0.9",
+  "sentencepiece>=0.2,<0.3",
+  "timm>=1.0,<2",
+  "accelerate>=1,<2",
+  "torch>=2.2,<3",
+  "torchvision>=0.17,<1",
+]
 dev = [
   "pytest>=8,<9",
 ]
@@ -33,4 +42,3 @@ include = ["src*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-
