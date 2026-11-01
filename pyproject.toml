@@ -19,6 +19,8 @@ dependencies = [
   "opencv-python>=4.8,<5",
   "imagehash>=4.3,<5",
   "matplotlib>=3.8,<4",
+  "chromadb>=0.4,<1",
+  "open-clip-torch>=2.0,<3",
 ]
 
 [project.optional-dependencies]
