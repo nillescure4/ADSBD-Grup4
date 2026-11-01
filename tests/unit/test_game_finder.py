@@ -5,7 +5,7 @@ import json
 import pytest
 
 from src.app.game_finder import (PATHS, current_options, final_recommendation, generate_tree,
-                                 plain_label, tree_dot, validate_tree)
+                                 materialize_tree, plain_label, tree_dot, validate_tree)
 
 
 def candidates():
@@ -24,6 +24,19 @@ def tree():
                       "left_ids": left, "right_ids": right})
         groups[path + "L"], groups[path + "R"] = left, right
     return {"nodes": nodes, "recommendations": [{"game_id": value, "reason": f"Evidence for {value}"} for value in range(1, 9)]}
+
+
+def model_tree():
+    payload = tree()
+    nodes = {node["path"]: node for node in payload["nodes"]}
+    def level(path):
+        if len(path) == 3:
+            game_id = nodes[path[:-1]]["left_ids" if path[-1] == "L" else "right_ids"][0]
+            return {"game_id": game_id, "reason": f"Evidence for {game_id}"}
+        node = nodes[path]
+        return {**{key: node[key] for key in ("question", "left_label", "right_label")},
+                "left": level(path + "L"), "right": level(path + "R")}
+    return {"tree": level("")}
 
 
 def test_all_eight_paths_take_exactly_three_questions_to_unique_games():
@@ -86,9 +99,9 @@ def test_generation_receives_request_and_exactly_eight_full_descriptions_once():
     def generator(system, prompt, schema):
         calls.append(json.loads(prompt))
         assert "untrusted data" in system
-        assert schema["properties"]["nodes"]["minItems"] == 7
+        assert "left" in schema["properties"]["tree"]["properties"]
         assert "private" not in prompt
-        return tree()
+        return model_tree()
     payload = generate_tree("A story adventure", candidates(), generator)
     assert calls[0]["user_request"] == "A story adventure"
     assert [row["description"] for row in calls[0]["retrieved_games"]] == [f"Description {n}" for n in range(1, 9)]
@@ -128,3 +141,19 @@ def test_duplicate_question_on_same_route_and_markdown_labels():
     with pytest.raises(ValueError, match="same question"):
         validate_tree(payload, candidates())
     assert plain_label("![image](https://example.com)").startswith(r"\!\[image\]\(")
+
+
+def test_model_tree_derives_balanced_partitions_and_rejects_wrong_depth():
+    result = validate_tree(materialize_tree(model_tree()), candidates())
+    assert final_recommendation(result, candidates(), "RRR")[0]["game_id"] == 8
+    malformed = model_tree()
+    malformed["tree"]["left"] = {"game_id": 1, "reason": "Premature leaf"}
+    with pytest.raises(ValueError, match="exactly three"):
+        materialize_tree(malformed)
+
+
+def test_duplicate_ai_leaf_is_rejected_after_materialization():
+    response = model_tree()
+    response["tree"]["left"]["left"]["right"]["game_id"] = 1
+    with pytest.raises(ValueError):
+        validate_tree(materialize_tree(response), candidates())

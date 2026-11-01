@@ -16,28 +16,56 @@ Describe what the player would prefer; do not reveal a final recommendation in a
 question. Branch labels must be clear, distinct choices, not arbitrary Yes/No.
 Do not invent features or games. If the catalogue offers weak matches, describe
 the available differences honestly. Recommend only within this shortlist.
-Return JSON with nodes and recommendations. Nodes have path, question,
-left_label, right_label, left_ids and right_ids. Paths are '', L, R, LL, LR,
-RL, RR. L/R append to the current path. Child lists must partition the parent
-list equally, without duplicates or omissions. Recommendations have game_id
-and reason; provide one for each game. Explain its fit to the user request and
-the three preferences on its path, using the supplied evidence only."""
+Return JSON with a tree containing exactly three levels of binary questions.
+Each internal node has question, left_label, right_label, left and right.
+Each leaf has game_id and reason. Use every supplied game exactly once among
+the eight leaves. Decide the game groupings and write questions that distinguish
+their actual characteristics. Avoid repeating a question along a route.
+Each answer label must accurately describe ALL games below its branch. Use
+broad shared preferences for mixed groups, rather than falsely calling every
+game competitive, multiplayer, or open-world. Plan compatible pairs first,
+then groups of four. Prefer relative trade-offs over unsupported feature claims.
+Each leaf reason explains the game's fit to the user request and the three
+preferences on its path, using the supplied evidence only."""
 
 
 def tree_schema(game_ids: list[int]) -> dict[str, Any]:
-    ids = {"type": "array", "items": {"type": "integer", "enum": game_ids}, "minItems": 1, "maxItems": 4}
-    node = {"type": "object", "properties": {
-        "path": {"type": "string", "enum": list(PATHS)},
-        **{key: {"type": "string"} for key in ("question", "left_label", "right_label")},
-        "left_ids": ids, "right_ids": ids,
-    }, "required": ["path", "question", "left_label", "right_label", "left_ids", "right_ids"], "additionalProperties": False}
-    recommendation = {"type": "object", "properties": {
+    leaf = {"type": "object", "properties": {
         "game_id": {"type": "integer", "enum": game_ids}, "reason": {"type": "string"},
     }, "required": ["game_id", "reason"], "additionalProperties": False}
-    return {"type": "object", "properties": {
-        "nodes": {"type": "array", "items": node, "minItems": 7, "maxItems": 7},
-        "recommendations": {"type": "array", "items": recommendation, "minItems": 8, "maxItems": 8},
-    }, "required": ["nodes", "recommendations"], "additionalProperties": False}
+    def level(depth):
+        if depth == 0:
+            return leaf
+        properties = {key: {"type": "string"} for key in ("question", "left_label", "right_label")}
+        properties.update(left=level(depth - 1), right=level(depth - 1))
+        return {"type": "object", "properties": properties,
+                "required": list(properties), "additionalProperties": False}
+    return {"type": "object", "properties": {"tree": level(3)},
+            "required": ["tree"], "additionalProperties": False}
+
+
+def materialize_tree(response: Any) -> dict:
+    """Derive partitions from a fixed-depth tree instead of trusting ID lists."""
+    if not isinstance(response, dict) or set(response) != {"tree"}:
+        raise ValueError("The AI must return a binary decision tree.")
+    nodes, recommendations = [], []
+    def walk(node, path, depth):
+        if not isinstance(node, dict):
+            raise ValueError("An AI tree node must be an object.")
+        if depth == 0:
+            if set(node) != {"game_id", "reason"} or type(node["game_id"]) is not int:
+                raise ValueError("Each leaf must contain one game ID and an explanation.")
+            recommendations.append(node)
+            return [node["game_id"]]
+        if set(node) != {"question", "left_label", "right_label", "left", "right"}:
+            raise ValueError("Every route must contain exactly three binary questions.")
+        left = walk(node["left"], path + "L", depth - 1)
+        right = walk(node["right"], path + "R", depth - 1)
+        nodes.append({"path": path, **{key: node[key] for key in ("question", "left_label", "right_label")},
+                      "left_ids": left, "right_ids": right})
+        return left + right
+    walk(response["tree"], "", 3)
+    return {"nodes": nodes, "recommendations": recommendations}
 
 
 def require_candidates(candidates: list[dict]) -> list[int]:
@@ -102,7 +130,7 @@ def generate_tree(query: str, candidates: list[dict], generator: Callable) -> di
     # The model gets public catalogue data, not credentials or internal storage paths.
     catalogue = [{key: game[key] for key in ("game_id", "name", "description", "genres", "rating")} for game in candidates]
     prompt = json.dumps({"user_request": query, "retrieved_games": catalogue}, ensure_ascii=False)
-    return validate_tree(generator(SYSTEM_PROMPT, prompt, tree_schema(ids)), candidates)
+    return validate_tree(materialize_tree(generator(SYSTEM_PROMPT, prompt, tree_schema(ids))), candidates)
 
 
 def current_options(tree: dict, candidates: list[dict], path: str) -> list[int]:

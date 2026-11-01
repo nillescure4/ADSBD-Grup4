@@ -89,3 +89,33 @@ def test_failed_model_responses_are_safe_and_never_fabricated(monkeypatch, failu
     with pytest.raises(ValueError) as exc:
         service.generate(service.ModelConfig("openai", "test", "secret"), "system", "request", {})
     assert "secret" not in str(exc.value)
+
+
+def test_transient_server_failure_is_retried_once(monkeypatch):
+    calls = []
+    class Response:
+        def __init__(self, status):
+            self.status_code = status
+        def json(self):
+            return {"done": True, "message": {"content": '{"ok": true}'}}
+    def post(*args, **kwargs):
+        calls.append(True)
+        return Response(503 if len(calls) == 1 else 200)
+    monkeypatch.setattr(service.requests, "post", post)
+    monkeypatch.setattr(service.time, "sleep", lambda _: None)
+    assert service.generate(service.ModelConfig("ollama", "test"), "system", "request", {}) == {"ok": True}
+    assert len(calls) == 2
+
+
+def test_retries_are_bounded_for_persistent_outages(monkeypatch):
+    calls = []
+    class Response:
+        status_code = 503
+    def post(*args, **kwargs):
+        calls.append(True)
+        return Response()
+    monkeypatch.setattr(service.requests, "post", post)
+    monkeypatch.setattr(service.time, "sleep", lambda _: None)
+    with pytest.raises(ValueError, match="temporarily unavailable"):
+        service.generate(service.ModelConfig("ollama", "test"), "system", "request", {})
+    assert len(calls) == 2

@@ -63,6 +63,8 @@ def search(collection: Any, encoder: Any, query: str, *, top_k: int = 5,
     # This exhaustive reranking suits the current small local corpus.
     result = collection.query(query_embeddings=embeddings, n_results=len(metadata),
                               include=["documents", "metadatas", "distances"])
+    if len(result["metadatas"][0]) != len(metadata):
+        raise ValueError("The search index is out of date. Restart Streamlit after updating embeddings.")
     games = {}
     for documents, records, distances in zip(result["documents"], result["metadatas"], result["distances"]):
         for document, row, distance in zip(documents, records, distances):

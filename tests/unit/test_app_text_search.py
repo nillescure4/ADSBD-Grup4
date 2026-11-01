@@ -83,3 +83,15 @@ def test_missing_database_is_not_created(tmp_path):
     with pytest.raises(ValueError):
         service.connect(target)
     assert not target.exists()
+
+
+def test_stale_search_index_is_reported_before_incomplete_results_are_used():
+    collection = Collection()
+    original_query = collection.query
+    def stale_query(**kwargs):
+        response = original_query(**kwargs)
+        response["metadatas"][0] = response["metadatas"][0][:-1]
+        return response
+    collection.query = stale_query
+    with pytest.raises(ValueError, match="Restart Streamlit"):
+        service.search(collection, Encoder(), "adventure")

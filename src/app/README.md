@@ -41,7 +41,15 @@ substitute invented metadata or duplicate historical captures.
 The app reads sources and embeddings without changing them. Models load on
 demand and share a lock across sessions. No search history is written to disk.
 
+Restart Streamlit after another process updates the local ChromaDB database.
+The in-process vector index may otherwise retain an older snapshot. Retrieval
+detects an incomplete index and reports the required restart before using it.
+
 ## TASK 3 · AI configuration
+
+The selected project setup uses Gemini with `gemini-3.5-flash-lite`. The example
+environment file contains these settings; add your own `GEMINI_API_KEY` to the
+untracked `.env` before using TASK 3. Never commit the key.
 
 Set these values in the repository's untracked `.env`, or in the server
 environment. Configuration is re-read on page reruns. Entries in the local
@@ -71,15 +79,19 @@ Model names, availability and access depend on the configured provider.
 2. Load and verify their corresponding Trusted records.
 3. Make one AI request containing the demand, the eight complete descriptions,
    names, genres and ratings. Credentials and internal storage paths are excluded.
-4. The AI returns seven binary question nodes and eight leaf explanations.
-   Local validation checks exact IDs, unique nodes, balanced partitions and full
+4. The response schema fixes a binary tree with three question levels and eight
+   game leaves. The AI selects the groupings, questions and leaf explanations.
+   Candidate partitions are derived from the leaves. Local validation checks
+   exact IDs, unique nodes, balanced partitions and full
    coverage. Every path must reduce candidates **8 → 4 → 2 → 1**.
 5. Answer three questions. Traversal, backtracking and viewing the tree make
    **no additional AI calls**.
 6. Show the one remaining game, its complete description, Trusted metadata,
    retrieval similarity, generated explanation and selected preferences.
 
-A new submitted search replaces the previous run. Invalid, refused, incomplete
+A new submitted search replaces the previous run. A temporary HTTP 5xx service
+failure is retried once; answering questions never calls the model again.
+Invalid, refused, incomplete
 or unavailable AI responses show an error and produce no fabricated tree.
 The app also checks that the catalogue contains eight distinct games before
 enabling generation. Five games with ten snapshots are still only five options.

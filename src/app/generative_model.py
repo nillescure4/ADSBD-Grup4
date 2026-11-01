@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import re
+import time
 from urllib.parse import quote, urlsplit
 
 from dotenv import dotenv_values
@@ -65,8 +66,15 @@ def generate(config: ModelConfig, system: str, prompt: str, schema: dict) -> dic
     else:
         raise ValueError("Unsupported AI provider.")
     try:
-        response = requests.post(url, json=body, headers=headers, timeout=(5, 60))
+        for attempt in range(2):
+            response = requests.post(url, json=body, headers=headers, timeout=(5, 60))
+            if attempt == 0 and response.status_code in {500, 502, 503, 504}:
+                time.sleep(1)
+                continue
+            break
         if response.status_code != 200:
+            if response.status_code in {500, 502, 503, 504}:
+                raise ValueError("The AI service is temporarily unavailable after a retry. Please try again later.")
             raise ValueError(f"The AI service rejected the request (HTTP {response.status_code}). Check the model, credentials and quota.")
         data = response.json()
         if config.provider == "gemini":

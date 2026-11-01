@@ -7,7 +7,7 @@ from streamlit.testing.v1 import AppTest
 
 from src.app.views import generation
 from src.app.generative_model import ModelConfig
-from tests.unit.test_game_finder import candidates, tree
+from tests.unit.test_game_finder import candidates, model_tree
 
 
 def page():
@@ -31,7 +31,7 @@ def enabled(monkeypatch):
     monkeypatch.setattr(generation, "retrieve_candidates", lambda query: games)
     def generate(*args):
         calls.append(args)
-        return tree()
+        return model_tree()
     monkeypatch.setattr(generation, "generate", generate)
     return calls
 
