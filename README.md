@@ -4,6 +4,19 @@ Pipeline local de gestió de dades basat en una arquitectura per zones. MinIO
 actua com a emmagatzematge d'objectes compatible amb S3 i el codi Python del
 repositori s'encarrega d'ingerir, transformar, netejar i preparar les dades.
 
+## Interactive application · Game Atlas
+
+```powershell
+python -m pip install -e ".[app]"
+python -m streamlit run streamlit_app.py
+```
+
+Open http://localhost:8501. The application includes a project overview and a
+page for each TASK: similarity search, multimodal search and generation.
+Text search uses local embeddings in `texts_clip`; TASK 2 and TASK 3 preview
+planned features with pending actions disabled. The interface is in English.
+See the [application instructions](src/app/README.md).
+
 ## Arquitectura de dades
 
 El flux general del projecte és:
