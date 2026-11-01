@@ -138,10 +138,10 @@ def test_main_exits_1_when_a_dataset_fails_but_still_processes_the_others(projec
     assert raised.value.code == 1
     assert s3.keys("landing") == ["temporal/images/rawg/a.jpg"]
 
-def test_explicit_collection_directory_does_not_change_shared_configuration(tmp_path, monkeypatch, s3):
-    write_image(tmp_path, "shot.jpg")
+def test_explicit_collection_directory_does_not_change_shared_configuration(project, monkeypatch, s3):
+    write_image(project, "shot.jpg")
     configure_main(monkeypatch, s3, {"rawg": DATASET})
-    landing.main(["--dataset", "rawg", "--input-dir", str(tmp_path / "data/landing/rawg_images")])
+    landing.main(["--dataset", "rawg", "--input-dir", str(project / "data/landing/rawg_images")])
     assert s3.keys("landing") == ["temporal/images/rawg/shot.jpg"]
 
 
