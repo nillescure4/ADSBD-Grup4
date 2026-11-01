@@ -2,6 +2,7 @@
 """Upload local image datasets (a directory of subdirectories of images) to Landing temporal."""
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 
@@ -20,7 +21,7 @@ def iter_image_files(root: Path):
             yield path
 
 
-def load_images_to_landing(name: str, dataset: dict, client, storage: dict) -> int:
+def load_images_to_landing(name: str, dataset: dict, client, storage: dict, *, input_dir: Path | None = None) -> int:
     """Upload a dataset's images to landing/<temporal>/<images>/<dataset>/. Returns the error count."""
     missing = [k for k in REQUIRED_KEYS if k not in dataset]
     if missing:
@@ -28,7 +29,7 @@ def load_images_to_landing(name: str, dataset: dict, client, storage: dict) -> i
     if dataset["modality"] != "image":
         raise ValueError(f"Dataset '{name}' is not an image dataset.")
 
-    images_path = PROJECT_ROOT / "data" / "landing" / dataset["directory"]
+    images_path = input_dir or PROJECT_ROOT / "data" / "landing" / dataset["directory"]
     if not images_path.is_dir():
         raise FileNotFoundError(f"Directory not found: {images_path}")
 
@@ -58,9 +59,19 @@ def load_images_to_landing(name: str, dataset: dict, client, storage: dict) -> i
     return errors
 
 
-def main() -> None:
+def main(argv=None) -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--dataset", help="Select one configured image dataset")
+    parser.add_argument("--input-dir", type=Path, help="Override the selected dataset input directory")
+    args = parser.parse_args(argv)
+    if args.input_dir is not None and not args.dataset:
+        parser.error("--input-dir requires --dataset")
     datasets = load_yaml("datasets.yml")["datasets"]
     image_datasets = {n: d for n, d in datasets.items() if d.get("modality") == "image"}
+    if args.dataset:
+        if args.dataset not in image_datasets:
+            parser.error("The selected image dataset is not configured")
+        image_datasets = {args.dataset: image_datasets[args.dataset]}
     if not image_datasets:
         raise SystemExit("No image dataset found in datasets.yml")
 
@@ -72,7 +83,7 @@ def main() -> None:
     for name, dataset in image_datasets.items():
         print(f"Processing dataset '{name}'...")
         try:
-            total_errors += load_images_to_landing(name, dataset, client, storage)
+            total_errors += load_images_to_landing(name, dataset, client, storage, input_dir=args.input_dir)
         except Exception as exc:
             total_errors += 1
             print(f"[ERROR] {name}: {exc}", file=sys.stderr)
