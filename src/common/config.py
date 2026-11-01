@@ -22,7 +22,11 @@ def load_yaml(filename: str) -> dict[str, Any]:
 
 
 def load_storage_config() -> dict[str, Any]:
-    """Retorna la configuracio dels buckets i prefixos."""
+    """Load storage settings, optionally overridden for an isolated pipeline run."""
+    override = os.getenv("ADSBD_STORAGE_CONFIG")
+    if override:
+        with Path(override).open(encoding="utf-8") as stream:
+            return yaml.safe_load(stream) or {}
     return load_yaml("storage.yml")
 
 
