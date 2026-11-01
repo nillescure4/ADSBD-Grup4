@@ -24,6 +24,19 @@ THRESHOLDS = {
 }
 
 
+METRIC_COLUMNS = ("width", "height", "contrast", "sharpness", "brightness",
+                  "letterbox_ratio", "sha256", "phash")
+
+
+def _with_metric_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """Copy of df with every metric column present (all-NaN if no image could be decoded)."""
+    df = df.copy()
+    for column in METRIC_COLUMNS:
+        if column not in df.columns:
+            df[column] = np.nan
+    return df
+
+
 def _hamming(value: np.uint64, others: np.ndarray) -> np.ndarray:
     xor = np.bitwise_xor(others, value)
     return np.unpackbits(xor.view(np.uint8).reshape(-1, 8), axis=1).sum(axis=1)
@@ -36,7 +49,7 @@ def flag_duplicates(df: pd.DataFrame) -> pd.DataFrame:
     is never discarded as a duplicate of an image that is rejected anyway.
     The first appearance (in key order) is the one that is kept.
     """
-    df = df.copy()
+    df = _with_metric_columns(df)
     valid = (df["error"].isna() & (df["width"] >= MIN_SIDE)
              & (df["height"] >= MIN_SIDE) & (df["contrast"] >= MIN_CONTRAST))
 
@@ -62,7 +75,7 @@ def flag_duplicates(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def apply_rules(df: pd.DataFrame) -> pd.DataFrame:
-    df = df.copy()
+    df = _with_metric_columns(df)
 
     # Soft flags (recorded only)
     df["flag_blurry"] = df["sharpness"] < BLUR_THRESHOLD
