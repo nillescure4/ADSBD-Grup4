@@ -29,6 +29,7 @@ def available(monkeypatch):
         monkeypatch.setattr(module, "query_image", lambda key: (image, ("reference",)))
         monkeypatch.setattr(module, "collection", lambda: "text collection")
         monkeypatch.setattr(module, "image_collection", lambda: "image collection")
+    monkeypatch.setattr(multimodal, "audio_status", lambda: (0, "Audio not prepared"))
     return image
 
 

@@ -6,6 +6,7 @@ from src.app.game_fields import render_game_fields
 from src.app.ui import collection, dataset_status, game_details, heading, model, pending_card
 from src.app.image_ui import image_collection, image_status, query_image, render_image
 from src.app.visual_search import search_images
+from src.app.audio_ui import render_audio_search
 
 
 _UNSET = object()
@@ -46,16 +47,13 @@ def render_result(rank, result, *, details=_UNSET, compact=False):
 
 def render():
     heading("TASK 01 / SAME-MODALITY SIMILARITY SEARCH", "Find games with similar ideas",
-            "Start with a text and discover descriptions related by meaning.")
+            "Compare descriptions, screenshots or audio tracks within the same modality.")
     modality = st.radio("Modality", ["Text", "Image", "Audio"], horizontal=True)
     if modality == "Image":
         render_image_search()
         return
     if modality == "Audio":
-        pending_card(f"Search by {modality.lower()}",
-                     "You will be able to provide an item and retrieve similar items of the same modality.")
-        st.file_uploader("Reference item", type=["png", "jpg", "jpeg"] if modality == "Image" else ["wav", "mp3", "flac"], disabled=True)
-        st.button("Find similar items", disabled=True)
+        render_audio_search()
         return
     st.info("Jina CLIP v2 compares your query with complete game descriptions. "
             "Each game appears once, ranked by semantic similarity to what you are looking for.")

@@ -15,6 +15,8 @@ def status(monkeypatch):
     info = {"games": 5, "captures": 10, "vectors": 46, "dates": ["2026-10-20", "2026-10-22"]}
     monkeypatch.setattr(ui, "dataset_status", lambda: (info, None))
     monkeypatch.setattr(similarity, "dataset_status", lambda: (info, None))
+    from src.app import audio_ui
+    monkeypatch.setattr(audio_ui, "audio_status", lambda: (0, "Audio catalogue unavailable"))
 
 
 def page(module):
@@ -34,6 +36,7 @@ def test_audio_connections_are_still_pending(monkeypatch):
     from src.app.views import multimodal
     monkeypatch.setattr(multimodal, "dataset_status", lambda: ({"games": 100}, None))
     monkeypatch.setattr(multimodal, "image_status", lambda: (50, None))
+    monkeypatch.setattr(multimodal, "audio_status", lambda: (0, "Audio catalogue unavailable"))
     app = page("multimodal").run()
     app.radio[0].set_value("Audio").run()
     assert not app.exception

@@ -16,9 +16,11 @@ in English. Source descriptions retain their original language.
 - **TASK 1 · Similarity** (`/similarity`): text-to-text search with complete
   descriptions and verified game details, plus image-to-image screenshot search.
   Images can be uploaded or selected from the catalogue. A selected catalogue
-  reference is excluded from its image results. Audio remains disabled.
+  reference is excluded from its image results. Audio-to-audio search supports
+  catalogue references and local uploads, with playable compared excerpts.
 - **TASK 2 · Multimodal** (`/multimodal`): text-to-image and image-to-text search,
-  optionally returning both descriptions and screenshots in separate rankings.
+  optionally returning descriptions, screenshots and audio in separate rankings
+  for a text query. Image queries retrieve descriptions and screenshots.
 - **TASK 3 · Game finder** (`/generation`): text search followed by an
   AI-generated preference tree: eight games, three answers, one recommendation.
 
@@ -29,7 +31,7 @@ Prepare `texts_jina_clip_v2` in `data/exploitation/chroma` using the pipeline in
 encoder, configuration fingerprint, 1024 dimensions, L2 normalization and cosine
 metric. The old `texts_clip` collection is preserved and never mixed with Jina.
 
-Queries contain up to 4,000 characters and are encoded in full. Descriptions
+Jina queries contain up to 4,000 characters and are encoded in full. Descriptions
 are indexed in full, without chunking. Consequently, results no longer claim
 that a particular passage produced the score. Each game appears once. Latest
 snapshots are used by default; TASK 1 can also search historical snapshots.
@@ -85,7 +87,58 @@ cross-modal cosine rankings against direct vector products, real text and image
 encoding, and an incremental image rerun with zero changed vectors. The report
 is written to `data/exploitation/text_image_validation_50_100.json`. Source-game
 recall is a diagnostic of the screenshot/description pairing, not a guarantee
-of semantic relevance. Audio still requires the separate CLAP implementation.
+of semantic relevance.
+
+## Audio retrieval
+
+CLAP uses `laion/clap-htsat-unfused`, pinned to revision
+`8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a` for both processor and model.
+Its separate `audio_clap_center10_v1` collection lives in
+`data/exploitation/chroma`, with 512-dimensional L2-normalized vectors and
+cosine distance. Transformers 4.48.3 is verified with both Jina and CLAP.
+FFmpeg and FFprobe must be on PATH; the app also recognizes the optional
+project-local `data/tools/ffmpeg/bin` directory on Windows.
+
+Index Trusted FLACs with:
+
+```powershell
+python -m src.exploitation.audio.embedding_audio --all
+```
+
+Each track has one vector from its centered excerpt of up to ten seconds.
+Shorter tracks use their full duration. Result players play that excerpt,
+verified against the indexed Trusted source signature and available content
+hash. Cards show the full track duration, compared interval and similarity.
+OpenGameArt music is independent of RAWG games; no soundtrack attribution or
+game metadata is inferred for music assets.
+
+TASK 1 can reuse a catalogue vector, excluding the reference track, or encode
+the centered excerpt of an uploaded WAV/MP3/OGG/FLAC (maximum 50 MB). Uploads
+use disposable local files and are never ingested. TASK 2 encodes a text query
+with CLAP on demand; that temporary text vector is not stored. CLAP currently
+uses the first 77 tokens. Brief English descriptions of mood or sound are
+recommended. Audio-only queries do not load Jina.
+
+Jina and CLAP scores are ranked separately and must not be interpreted as a
+single shared scale. Audio-to-description retrieval needs a separate CLAP
+description collection and remains unavailable; image-to-audio retrieval is
+also unavailable with these two independently aligned models.
+
+The real validation corpus includes 16 CC0 tracks downloaded through the
+existing OpenGameArt web collector (this source is not a RAWG-style API).
+The complete source → Landing → Formatted → quality → Trusted → CLAP route
+was exercised. Re-run the opt-in validation after preparing the corpus:
+
+```powershell
+$env:ADSBD_RUN_AUDIO_SEARCH_TESTS = "1"
+python -m pytest tests/integration/test_audio_search_16.py -v -s
+```
+
+The test uses `data/audio/search_16` and `reports/audio_16_quality.csv`.
+It verifies every source and preview, all 16 self-queries against direct
+cosine products, real uploaded and text queries, and incremental reruns of
+all processing stages. Its summary is saved to
+`data/exploitation/audio_validation_16.json`.
 
 Restart Streamlit after another process updates the local ChromaDB database.
 The in-process vector index may otherwise retain an older snapshot. Retrieval

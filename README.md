@@ -13,8 +13,10 @@ python -m streamlit run streamlit_app.py
 
 Open http://localhost:8501. The application includes a project overview and a
 page for each TASK: similarity search, multimodal search and generation.
-Text search uses local embeddings in `texts_clip`; TASK 2 and TASK 3 preview
-planned features with pending actions disabled. The interface is in English.
+TASK 1 supports text, image and audio similarity. TASK 2 supports text/image
+retrieval and text-to-audio search. TASK 3 provides an AI-guided game finder.
+Jina and CLAP collections are separate in `data/exploitation/chroma`.
+The interface is in English.
 See the [application instructions](src/app/README.md).
 
 ## Arquitectura de dades
