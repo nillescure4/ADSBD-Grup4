@@ -23,7 +23,7 @@ def render():
     columns = st.columns(3)
     cards = [
         ("01 / SIMILARITY", "Find similar experiences", "Compare descriptions, screenshots or audio tracks within the same modality.", "🟢 Text, images and audio available"),
-        ("02 / MULTIMODAL", "Connect the modalities", "Find descriptions, screenshots and music from text, or descriptions from an image.", "🟢 Text ↔ image and text → audio available"),
+        ("02 / MULTIMODAL", "Connect the modalities", "Explore mixed results from text, screenshots or audio, and use category tabs to focus your search.", "🟢 Text ↔ image and text ↔ audio available"),
         ("03 / AI GAME FINDER", "Find your next game", "Start with text and/or images. Prioritize content, visuals or both, then choose between content, screenshots and music to reach one game.", "✨ Requires a vision AI connection and prepared catalogues"),
     ]
     for column, (label, title, text, status) in zip(columns, cards):
@@ -49,5 +49,5 @@ def render():
         st.caption("Audio tracks are independent; they are not soundtracks attributed to the RAWG games.")
     with right, st.container(border=True):
         st.subheader("What can you try today?")
-        st.write("Use **TASK 1** for text, image or audio similarity, **TASK 2** for text/image searches and text-to-audio retrieval, and **TASK 3** for a guided game recommendation.")
-        st.caption("TASK 3 needs a vision-capable AI connection, eight games with associated screenshots and at least two music assets. Direct audio-to-description retrieval remains pending.")
+        st.write("Use **TASK 1** for text, image or audio similarity, **TASK 2** for text/image and text/audio discovery with mixed results, and **TASK 3** for a guided game recommendation.")
+        st.caption("TASK 3 needs a vision-capable AI connection, eight games with associated screenshots and at least two music assets.")

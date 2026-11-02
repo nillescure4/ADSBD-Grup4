@@ -18,9 +18,12 @@ in English. Source descriptions retain their original language.
   Images can be uploaded or selected from the catalogue. A selected catalogue
   reference is excluded from its image results. Audio-to-audio search supports
   catalogue references and local uploads, with playable compared excerpts.
-- **TASK 2 · Multimodal** (`/multimodal`): text-to-image and image-to-text search,
-  optionally returning descriptions, screenshots and audio in separate rankings
-  for a text query. Image queries retrieve descriptions and screenshots.
+- **TASK 2 · Multimodal** (`/multimodal`): text/image and text/audio search in
+  both directions. Text queries can return descriptions, screenshots and audio;
+  image queries return descriptions and screenshots; audio queries return
+  descriptions and audio. Results open in **All modalities**, interleaved by
+  rank within each category. **Descriptions**, **Images** and **Audio** tabs
+  show only that category without rerunning the models.
 - **TASK 3 · Game finder** (`/generation`): text and/or image search with content,
   visual or balanced priority, followed by content/visual preferences and a
   final real-audio choice: eight games, three answers, one recommendation.
@@ -33,7 +36,7 @@ encoder, configuration fingerprint, 1024 dimensions, L2 normalization and cosine
 metric. The old `texts_clip` collection is preserved and never mixed with Jina.
 
 Jina queries contain up to 4,000 characters and are encoded in full. Descriptions
-are indexed in full, without chunking. Consequently, results no longer claim
+are indexed in full with Jina, without chunking. Consequently, results no longer claim
 that a particular passage produced the score. Each game appears once. Latest
 snapshots are used by default; TASK 1 can also search historical snapshots.
 Exhaustive grouping currently suits the small local corpus.
@@ -116,14 +119,56 @@ game metadata is inferred for music assets.
 TASK 1 can reuse a catalogue vector, excluding the reference track, or encode
 the centered excerpt of an uploaded WAV/MP3/OGG/FLAC (maximum 50 MB). Uploads
 use disposable local files and are never ingested. TASK 2 encodes a text query
-with CLAP on demand; that temporary text vector is not stored. CLAP currently
-uses the first 77 tokens. Brief English descriptions of mood or sound are
+with CLAP on demand; that temporary query vector is not stored. CLAP uses
+up to 512 tokens. English descriptions of mood or sound are
 recommended. Audio-only queries do not load Jina.
 
 Jina and CLAP scores are ranked separately and must not be interpreted as a
-single shared scale. Audio-to-description retrieval needs a separate CLAP
-description collection and remains unavailable; image-to-audio retrieval is
-also unavailable with these two independently aligned models.
+single shared scale. Audio-to-description retrieval uses the separate CLAP
+description collection below. Direct image/audio retrieval remains unavailable
+with these two independently aligned models.
+
+### CLAP description embeddings
+
+```powershell
+python -m src.exploitation.text.build_clap_embeddings
+```
+
+The `texts_clap` collection uses the same pinned checkpoint and revision as
+audio, 512-dimensional L2-normalized vectors and cosine distance. It contains
+one vector per game's latest Trusted description, selected across all capture
+partitions and verified against their manifests. Jina collections and existing
+audio vectors are preserved.
+
+The pinned RoBERTa text configuration and tokenizer support 512 tokens. The
+previous audio-query script imposed 77 tokens; this was a preprocessing choice,
+not the model's architectural context limit. Text queries now use 512 tokens.
+Stored descriptions exceeding the limit are truncated to an exact source
+prefix fitting 512 tokens including special tokens, as requested. Shorter
+descriptions are encoded in full. Trusted data remains unchanged.
+
+The current corpus has **100 descriptions: 99 fit in full and one is truncated**.
+Each record includes game ID, date, full-source and encoded-prefix hashes,
+Trusted object hash/row, offsets, token count, truncation flag and configuration
+fingerprint. Unchanged records skip inference; changed captures reuse identical
+text vectors while updating provenance. Replaced records are removed only after
+their new vectors have been verified. Incompatible configurations require a
+separate collection instead of mixing vectors.
+
+Audio queries use catalogue vectors or a freshly encoded upload. Description
+results resolve to verified Trusted records and show full game metadata. When
+truncation was needed, the encoded prefix is highlighted within the complete
+original description. Each game is returned once.
+
+```powershell
+$env:ADSBD_RUN_CLAP_TEXT_TESTS = "1"
+python -m pytest tests/integration/test_clap_text_search.py -v -s
+```
+
+The real validation checks all 100 source records and 16 audio queries, compares
+retrieval with direct vector products, verifies model dimensions and unit norms,
+and repeats indexing with zero recomputed vectors. Its report is saved to
+`data/exploitation/clap_text_validation.json`.
 
 The real validation corpus includes 16 CC0 tracks downloaded through the
 existing OpenGameArt web collector (this source is not a RAWG-style API).
@@ -217,7 +262,7 @@ Model names, availability and access depend on the configured provider.
    source description excerpts; visual choices show the actual screenshots.
    The standalone generation service can still request one wording correction.
 6. For each remaining pair, temporarily encode its descriptions with pinned
-   CLAP, currently using the first 77 tokens. Retrieve the best two tracks per
+   CLAP, using at most 512 tokens. Retrieve the best two tracks per
    description and select the different-source pair maximizing their combined
    cosine similarity. This resolves collisions by considering alternatives for
    either game. Prepare verified playable excerpts before showing the tree.

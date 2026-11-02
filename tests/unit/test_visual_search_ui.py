@@ -69,6 +69,10 @@ def test_task_two_routes_both_query_types_and_renders_both_modalities(available,
     assert not app.exception and len(calls) == 1
     assert calls[0][1]["targets"] == ["text", "image"]
     assert {item.value for item in app.text} >= {"Verified description result", "Verified image result"}
+    assert [tab.label for tab in app.tabs] == ["All modalities", "Descriptions", "Images"]
+    assert {item.value for item in app.tabs[0].text} >= {"Verified description result", "Verified image result"}
+    assert {item.value for item in app.tabs[1].text} == {"Verified description result"}
+    assert {item.value for item in app.tabs[2].text} == {"Verified image result"}
     if source == "Image":
         assert calls[0][1]["exclude_ids"] == ("reference",)
 
@@ -89,3 +93,36 @@ def test_empty_reference_does_not_run_the_model(available, monkeypatch):
     app.radio[0].set_value("Image").run()
     click(app, "Find similar images")
     assert not app.exception and app.warning
+
+
+def test_audio_source_searches_clap_descriptions_and_audio_without_loading_jina(monkeypatch):
+    monkeypatch.setattr(multimodal, "dataset_status", lambda: ({"games": 100}, None))
+    monkeypatch.setattr(multimodal, "image_status", lambda: (50, None))
+    monkeypatch.setattr(multimodal, "audio_status", lambda: (16, None))
+    monkeypatch.setattr(multimodal, "clap_text_status", lambda: (347, None))
+    monkeypatch.setattr(multimodal, "query_audio", lambda key: {"vector": [1.] + [0.] * 511, "source_key": "audio/reference.flac"})
+    monkeypatch.setattr(multimodal, "clap_collection", lambda: "CLAP descriptions")
+    monkeypatch.setattr(multimodal, "audio_collection", lambda: "CLAP audio")
+    monkeypatch.setattr(multimodal, "model", lambda: pytest.fail("Audio queries must not load Jina"))
+    monkeypatch.setattr(multimodal, "audio_model", lambda: pytest.fail("Indexed audio reuses its vector"))
+    calls = []
+    def audio_search(*args, **kwargs):
+        calls.append(kwargs)
+        return [{}]
+    monkeypatch.setattr(multimodal, "search_audio", audio_search)
+    monkeypatch.setattr(multimodal, "search_clap_descriptions", lambda *args, **kwargs: [{}])
+    monkeypatch.setattr(multimodal, "render_result", lambda *args, **kwargs: st.text("CLAP description result"))
+    monkeypatch.setattr(multimodal, "render_audio", lambda *args, **kwargs: st.text("Audio result"))
+    app = page("multimodal").run()
+    app.radio[0].set_value("Audio").run()
+    click(app, "Explore connections")
+    assert not app.exception and not app.error
+    assert calls[0]["source_key"] == "audio/reference.flac"
+    assert [tab.label for tab in app.tabs] == ["All modalities", "Descriptions", "Audio"]
+    assert {item.value for item in app.tabs[0].text} >= {"CLAP description result", "Audio result"}
+
+
+def test_mixed_results_interleave_category_ranks_instead_of_comparing_scores():
+    results = {"text": [{"score": .1}, {"score": .05}], "image": [{"score": .9}], "audio": [{"score": .5}, {"score": .4}]}
+    assert [(kind, rank) for kind, rank, hit in multimodal.interleave_results(results)] == [
+        ("text", 1), ("image", 1), ("audio", 1), ("text", 2), ("audio", 2)]

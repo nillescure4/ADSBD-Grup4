@@ -32,11 +32,12 @@ def test_home_and_navigation(status):
     assert app.metric[0].label == "Games with indexed text"
 
 
-def test_audio_connections_are_still_pending(monkeypatch):
+def test_missing_audio_catalogue_displays_setup_information(monkeypatch):
     from src.app.views import multimodal
     monkeypatch.setattr(multimodal, "dataset_status", lambda: ({"games": 100}, None))
     monkeypatch.setattr(multimodal, "image_status", lambda: (50, None))
     monkeypatch.setattr(multimodal, "audio_status", lambda: (0, "Audio catalogue unavailable"))
+    monkeypatch.setattr(multimodal, "clap_text_status", lambda: (0, "CLAP descriptions unavailable"))
     app = page("multimodal").run()
     app.radio[0].set_value("Audio").run()
     assert not app.exception
