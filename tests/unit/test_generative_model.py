@@ -119,3 +119,47 @@ def test_retries_are_bounded_for_persistent_outages(monkeypatch):
     with pytest.raises(ValueError, match="temporarily unavailable"):
         service.generate(service.ModelConfig("ollama", "test"), "system", "request", {})
     assert len(calls) == 2
+
+
+@pytest.mark.parametrize("provider", ["gemini", "openai", "ollama"])
+def test_labelled_images_are_attached_to_multimodal_requests(monkeypatch, provider):
+    bodies = []
+    def post(url, **kwargs):
+        bodies.append(kwargs["json"])
+        return type("Response", (), {"status_code": 400})()
+    monkeypatch.setattr(service.requests, "post", post)
+    image = {"label": "Candidate game ID 28", "mime_type": "image/jpeg", "data": "anBlZw=="}
+    with pytest.raises(ValueError, match="HTTP 400"):
+        service.generate(service.ModelConfig(provider, "vision", "secret"), "system", "prompt", {}, images=[image])
+    body = json.dumps(bodies[0])
+    assert "Candidate game ID 28" in body and "anBlZw==" in body and "secret" not in body
+
+
+def test_configured_gemini_vision_model_uses_deliberate_reasoning(monkeypatch):
+    calls = []
+    def post(url, **kwargs):
+        calls.append(kwargs)
+        return type("Response", (), {"status_code": 400})()
+    monkeypatch.setattr(service.requests, "post", post)
+    with pytest.raises(ValueError):
+        service.generate(service.ModelConfig("gemini", "gemini-3.5-flash-lite", "secret"), "system", "prompt", {},
+                         images=[{"label": "Candidate game ID 28", "mime_type": "image/jpeg", "data": "anBlZw=="}])
+    assert calls[0]["json"]["generationConfig"]["thinkingConfig"] == {"thinkingLevel": "MEDIUM"}
+    assert calls[0]["timeout"] == (5, 120)
+
+
+def test_connection_failure_before_a_response_is_retried_once(monkeypatch):
+    calls = []
+    class Response:
+        status_code = 200
+        def json(self):
+            return {"done": True, "message": {"content": '{"ok": true}'}}
+    def post(*args, **kwargs):
+        calls.append(True)
+        if len(calls) == 1:
+            raise requests.ConnectionError("Connection interrupted")
+        return Response()
+    monkeypatch.setattr(service.requests, "post", post)
+    monkeypatch.setattr(service.time, "sleep", lambda _: None)
+    assert service.generate(service.ModelConfig("ollama", "test"), "system", "request", {}) == {"ok": True}
+    assert len(calls) == 2

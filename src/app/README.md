@@ -21,8 +21,9 @@ in English. Source descriptions retain their original language.
 - **TASK 2 · Multimodal** (`/multimodal`): text-to-image and image-to-text search,
   optionally returning descriptions, screenshots and audio in separate rankings
   for a text query. Image queries retrieve descriptions and screenshots.
-- **TASK 3 · Game finder** (`/generation`): text search followed by an
-  AI-generated preference tree: eight games, three answers, one recommendation.
+- **TASK 3 · Game finder** (`/generation`): text and/or image search with content,
+  visual or balanced priority, followed by content/visual preferences and a
+  final real-audio choice: eight games, three answers, one recommendation.
 
 ## Retrieval prerequisites
 
@@ -149,6 +150,11 @@ detects an incomplete index and reports the required restart before using it.
 The selected project setup uses Gemini with `gemini-3.5-flash-lite`. The example
 environment file contains these settings; add your own `GEMINI_API_KEY` to the
 untracked `.env` before using TASK 3. Never commit the key.
+For this model, image-bearing generation, audits and wording corrections use
+medium thinking with a 20,000-token output budget, balancing grouping quality
+and preparation time. The model
+name stays explicitly configured; other models retain their default reasoning
+settings. Multimodal HTTP requests have a 120-second read timeout.
 
 Set these values in the repository's untracked `.env`, or in the server
 environment. Configuration is re-read on page reruns. Entries in the local
@@ -156,9 +162,9 @@ file take precedence over environment variables, including empty values.
 
 | Provider | LLM_PROVIDER | LLM_MODEL | Other settings |
 | --- | --- | --- | --- |
-| Gemini | `gemini` | An available model supporting JSON Schema | `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) |
-| OpenAI | `openai` | A Responses API model supporting Structured Outputs | `OPENAI_API_KEY` |
-| Ollama | `ollama` | The installed local model name | Optional `OLLAMA_HOST`; default `http://127.0.0.1:11434` |
+| Gemini | `gemini` | A vision model supporting JSON Schema | `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) |
+| OpenAI | `openai` | A vision Responses API model supporting Structured Outputs | `OPENAI_API_KEY` |
+| Ollama | `ollama` | An installed vision model supporting structured output | Optional `OLLAMA_HOST`; default `http://127.0.0.1:11434` |
 
 No provider or model is silently selected. Keep credentials server-side; never
 put them in a request, commit or screenshot. Ollama must already be running
@@ -173,27 +179,60 @@ Model names, availability and access depend on the configured provider.
 
 ## TASK 3 · Workflow
 
-1. Enter a text request. Retrieve the **eight highest-ranked different games**,
-   using each game's latest indexed description.
-2. Load and verify their corresponding Trusted records.
-3. Make one AI request containing the demand, the eight complete descriptions,
-   names, genres and ratings. Credentials and internal storage paths are excluded.
-4. The response schema fixes a binary tree with three question levels and eight
-   game leaves. The AI selects the groupings, questions and leaf explanations.
-   Candidate partitions are derived from the leaves. Local validation checks
-   exact IDs, unique nodes, balanced partitions and full
-   coverage. Every path must reduce candidates **8 → 4 → 2 → 1**.
-5. Answer three questions. Traversal, backtracking and viewing the tree make
-   **no additional AI calls**.
-6. Show the one remaining game, its complete description, Trusted metadata,
-   retrieval similarity, generated explanation and selected preferences.
+1. Provide text, up to three reference images, or both. Choose **Content**,
+   **Visual**, or **Balanced · no priority**. Reference images use the same
+   20 MB/40-million-pixel limits as image search and are never ingested.
+2. Encode each input with pinned Jina. Search complete descriptions and
+   screenshots. Within each modality, combine the input rankings with equal
+   weights using reciprocal rank fusion, `sum(1 / (60 + rank))`.
+   A game's multiple screenshots count once per image ranking. Only games with
+   a latest indexed description and an explicit image/game association are eligible.
+3. Content priority selects the first eight games from the content ranking;
+   Visual selects the first eight from the visual ranking. Balanced applies
+   equal-weight reciprocal rank fusion to the two game-level rankings. Cosine
+   values from descriptions and images are never directly sorted together.
+   Each selected game keeps its own description and most relevant screenshot.
+   Trusted text rows and image bytes are verified before proceeding.
+4. Send the request, reference images, eight complete descriptions, names,
+   genres, ratings and eight labelled actual screenshots to the configured
+   vision-capable AI. Images are JPEG-encoded with a maximum edge of 768 pixels.
+   Credentials and internal storage paths are excluded.
+5. Generate two balanced question levels, **8 → 4 → 2**, with fixed modality
+   order. Content and Balanced ask content first, then visual. Visual priority
+   reverses them. The schema and local validation enforce that order, eight
+   unique IDs and all partitions. Visual questions display every real screenshot
+   in both groups: four per group when first, two per group when second.
+   No synthetic images are generated. Every branch must include per-game
+   evidence: content evidence IDs resolve to actual sentences in the matching
+   description (an exact matching source quote is also accepted); visual
+   evidence describes the corresponding actual screenshot.
+   A second vision request audits every question and branch against all its
+   members. A locally invalid or rejected tree receives at most one correction
+   and a new audit before the search fails. Semantic corrections use a small
+   wording-only schema; they cannot reassign games or modify source evidence.
+   The audit reduces unsupported claims;
+   semantic quality remains dependent on the vision model.
+6. For each remaining pair, temporarily encode its descriptions with pinned
+   CLAP, currently using the first 77 tokens. Retrieve the best two tracks per
+   description and select the different-source pair maximizing their combined
+   cosine similarity. This resolves collisions by considering alternatives for
+   either game. Prepare verified playable excerpts before showing the tree.
+7. The final question compares those two audio excerpts, **2 → 1**. Tracks are
+   independent music assets, not claimed soundtracks. The final recommendation
+   includes the game, complete description, Trusted details, its screenshot,
+   selected music, AI explanation and an audit of the answers. The AI explains
+   the first two choices; the application explains the final music choice.
+8. Answering, backtracking and viewing the tree make **no additional AI calls**
+   or audio-ranking requests. All branches and audio choices are prepared once.
 
 A new submitted search replaces the previous run. A temporary HTTP 5xx service
-failure is retried once; answering questions never calls the model again.
+failure or connection interruption is retried once; read timeouts are not
+automatically retried. Answering questions never calls the model again.
 Invalid, refused, incomplete
 or unavailable AI responses show an error and produce no fabricated tree.
-The app also checks that the catalogue contains eight distinct games before
-enabling generation. Five games with ten snapshots are still only five options.
+The app checks basic catalogue counts before enabling generation and verifies
+at retrieval time that eight different games actually have associated images.
+Five games with ten snapshots are still only five options.
 The AI explanation is generated content; the description and game details are
 the verified catalogue data. Scores express retrieval similarity, not a
 probability of satisfaction.
@@ -201,11 +240,25 @@ probability of satisfaction.
 ## Verification
 
 ```powershell
-python -m pytest tests/unit/test_app_text_search.py tests/unit/test_app_trusted_details.py tests/unit/test_streamlit_app.py tests/unit/test_game_finder.py tests/unit/test_generative_model.py tests/unit/test_game_finder_ui.py -q
+python -m pytest tests/unit/test_app_text_search.py tests/unit/test_app_trusted_details.py tests/unit/test_streamlit_app.py tests/unit/test_game_finder.py tests/unit/test_multimodal_finder.py tests/unit/test_generative_model.py tests/unit/test_game_finder_ui.py -q
 ```
 
 Tests exercise all eight paths, three-question completion, backtracking, restart,
 model failures, malformed trees and provider request/response formats. UI and
 provider tests use explicit fixtures; they never send paid API requests or write
 test games into the production catalogue. A live provider run additionally
-requires a configured model and at least eight actual indexed games.
+requires a configured vision model, MinIO, eight games with associated images
+and at least two indexed audio tracks. The real validation exercises Content
+with text, Visual with an image, and Balanced with text plus an image; each
+tree is traversed through all eight routes and all audio pairs are verified:
+
+```powershell
+$env:ADSBD_RUN_MULTIMODAL_FINDER_TESTS = "1"
+python -m pytest tests/integration/test_multimodal_game_finder.py -v -s
+```
+
+This opt-in test starts three real searches with the configured AI provider.
+Each normally needs generation plus an audit; correction can add another pair
+of requests. Answering questions never sends additional requests.
+The public-catalogue validation summary is written to
+`data/exploitation/multimodal_game_finder_validation.json`.

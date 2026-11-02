@@ -24,7 +24,7 @@ def render():
     cards = [
         ("01 / SIMILARITY", "Find similar experiences", "Compare descriptions, screenshots or audio tracks within the same modality.", "🟢 Text, images and audio available"),
         ("02 / MULTIMODAL", "Connect the modalities", "Find descriptions, screenshots and music from text, or descriptions from an image.", "🟢 Text ↔ image and text → audio available"),
-        ("03 / AI GAME FINDER", "Find your next game", "Start with 8 retrieved games. Answer 3 AI-generated questions to get one recommendation.", "✨ Requires 8 games and an AI connection"),
+        ("03 / AI GAME FINDER", "Find your next game", "Start with text and/or images. Prioritize content, visuals or both, then choose between content, screenshots and music to reach one game.", "✨ Requires a vision AI connection and prepared catalogues"),
     ]
     for column, (label, title, text, status) in zip(columns, cards):
         with column, st.container(border=True):
@@ -50,4 +50,4 @@ def render():
     with right, st.container(border=True):
         st.subheader("What can you try today?")
         st.write("Use **TASK 1** for text, image or audio similarity, **TASK 2** for text/image searches and text-to-audio retrieval, and **TASK 3** for a guided game recommendation.")
-        st.caption("Audio-to-description retrieval is pending a CLAP text index. TASK 3 needs an AI connection and at least eight different indexed games.")
+        st.caption("TASK 3 needs a vision-capable AI connection, eight games with associated screenshots and at least two music assets. Direct audio-to-description retrieval remains pending.")

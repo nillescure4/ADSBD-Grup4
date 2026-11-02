@@ -36,7 +36,7 @@ with st.sidebar:
     st.divider()
     st.caption("AVAILABLE NOW")
     st.markdown("🟢 Search descriptions, screenshots and audio")
-    st.markdown("✨ Guided game finder · Requires 8 games and an AI connection")
+    st.markdown("✨ Multimodal game finder · Content, visuals and music")
     st.caption("TASK 2 connects text ↔ images and text → audio. Music assets are independent of the games.")
     st.caption("ADSBD · Group 4")
 page.run()
