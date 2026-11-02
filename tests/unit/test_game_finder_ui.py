@@ -11,7 +11,7 @@ from streamlit.testing.v1 import AppTest
 from src.app.views import generation
 from src.app.generative_model import ModelConfig
 from tests.unit.test_game_finder import candidates
-from tests.unit.test_multimodal_finder import multimodal_model_tree
+from tests.unit.test_multimodal_finder import multimodal_model_tree, wording_response
 
 
 def page():
@@ -110,7 +110,7 @@ def test_model_failure_continues_to_real_catalogue_questions_without_another_cli
     click(app, "Choose group A")
     click(app, "Choose audio A")
     assert app.success and not app.error and not app.exception
-    assert len(failed_calls) == 1
+    assert len(failed_calls) == 2
     assert any(item.value == "01 · Game 1" for item in app.subheader)
 
 
@@ -120,3 +120,36 @@ def test_default_request_is_prefilled_and_can_be_cleared(enabled):
     app.text_area[0].set_value("")
     click(app, "Find my game")
     assert app.warning and not enabled
+
+
+@pytest.mark.parametrize("repair_failure", ["rejected", "unavailable", "malformed"])
+def test_rejected_questions_are_corrected_automatically_then_retained_before_catalogue_fallback(enabled, monkeypatch, repair_failure):
+    calls = []
+    def generate(*args, **kwargs):
+        schema = args[3]
+        calls.append(schema)
+        if "approved" in schema["properties"]:
+            return {"approved": False, "issues": ["A branch label needs broader wording"]}
+        if "questions" in schema["properties"]:
+            if repair_failure == "unavailable":
+                raise ValueError("AI unavailable during correction")
+            if repair_failure == "malformed":
+                return {"questions": []}
+            repaired = wording_response()
+            repaired["questions"][0]["question"] = "Which corrected preference appeals to you?"
+            return repaired
+        return multimodal_model_tree()
+    monkeypatch.setattr(generation, "generate", generate)
+    app = page().run()
+    click(app, "Find my game")
+    assert not app.exception and not app.error
+    assert app.session_state[generation.STATE_KEY]["question_source"] == "ai_unreviewed"
+    assert any("questions" in schema["properties"] for schema in calls)
+    assert not any(item.value == "Description 1" for item in app.text)
+    if repair_failure == "rejected":
+        assert any(item.value == "Which corrected preference appeals to you?" for item in app.text)
+    before = len(calls)
+    click(app, "Explore alone")
+    click(app, "Explore alone")
+    click(app, "Choose audio A")
+    assert app.success and len(calls) == before

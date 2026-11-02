@@ -253,14 +253,14 @@ Model names, availability and access depend on the configured provider.
    description (an exact matching source quote is also accepted); visual
    evidence describes the corresponding actual screenshot.
    A second vision request audits every question and branch against all its
-   members. The interface makes one generation attempt with this audit. If
-   generation, validation or auditing fails, the same submission immediately
-   builds balanced catalogue questions without asking the user to click again.
-   These compare groups of actual descriptions and screenshots in retrieval
-   order, preserving eight different games and the selected modality order.
-   Generic group labels avoid inventing shared traits. Content choices show
-   source description excerpts; visual choices show the actual screenshots.
-   The standalone generation service can still request one wording correction.
+   members. If generation, validation or auditing fails, the interface tries
+   one automatic correction or regeneration without another user click.
+   If the review still fails, it keeps the latest structurally usable AI tree
+   and labels its content review as unconfirmed. Structural checks still enforce
+   eight actual games, balanced partitions and the selected question order.
+   Only when no usable AI tree exists does it build balanced catalogue questions.
+   These compare actual descriptions and screenshots in retrieval order;
+   content choices show source excerpts and visual choices show the real images.
 6. For each remaining pair, temporarily encode its descriptions with pinned
    CLAP, using at most 512 tokens. Retrieve the best two tracks per
    description and select the different-source pair maximizing their combined
@@ -277,9 +277,11 @@ Model names, availability and access depend on the configured provider.
 A new submitted search replaces the previous run. A temporary HTTP 5xx service
 failure or connection interruption is retried once; read timeouts are not
 automatically retried. Answering questions never calls the model again.
-Invalid, refused, incomplete or unavailable AI responses automatically use
-the catalogue-based questions. The interface identifies their actual source
-and does not claim they were AI-generated. The final two distinct audio choices
+Invalid, refused, incomplete or unavailable AI responses receive one automatic
+preparation retry. A usable AI question is retained even when its content audit
+remains unconfirmed; the interface identifies that status. Catalogue questions
+are the last resort when neither attempt produced a usable structure, and are
+not presented as AI-generated. The final two distinct audio choices
 are still retrieved with CLAP. Missing or changed source data can still stop a
 search: the application does not substitute invented games, images or audio.
 The app checks basic catalogue counts before enabling generation and verifies

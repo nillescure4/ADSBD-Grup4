@@ -239,3 +239,26 @@ def test_catalogue_questions_cover_all_eight_games_without_inventing_preferences
     reached = [final_recommendation(tree, games, "".join(path))[0]["game_id"] for path in product("LR", repeat=3)]
     assert sorted(reached) == list(range(1, 9))
     assert ("screenshots" if priority == "visual" else "descriptions") in next(node for node in tree["nodes"] if not node["path"])["question"]
+
+
+def test_initial_service_failure_is_retried_automatically():
+    images = [model_image(Image.new("RGB", (10, 10)), f"Candidate game ID {index}") for index in range(1, 9)]
+    calls = []
+    def generator(system, prompt, schema, **kwargs):
+        calls.append(schema)
+        if len(calls) == 1:
+            raise ValueError("Temporary service outage")
+        return {"approved": True, "issues": []} if "approved" in schema["properties"] else multimodal_model_tree()
+    tree = generate_multimodal_tree("Adventure", candidates(), "balanced", generator, images)
+    assert len(tree["nodes"]) == 7 and len(calls) == 3
+
+
+def test_content_evidence_rejection_retains_a_structurally_valid_question():
+    from src.app.game_finder import QuestionPreparationError
+    images = [model_image(Image.new("RGB", (10, 10)), f"Candidate game ID {index}") for index in range(1, 9)]
+    response = multimodal_model_tree()
+    response["tree"]["left_evidence"][0]["fact"] = "An unsupported content claim"
+    with pytest.raises(QuestionPreparationError) as failure:
+        generate_multimodal_tree("Adventure", candidates(), "balanced", lambda *args, **kwargs: response, images)
+    assert failure.value.tree is not None
+    assert len(failure.value.tree["nodes"]) == 7
