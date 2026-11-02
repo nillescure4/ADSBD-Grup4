@@ -91,13 +91,32 @@ def test_three_answers_reach_each_leaf_without_additional_ai_calls(enabled, path
     assert len(enabled) == 2 and not app.exception
 
 
-def test_model_failure_displays_error_and_clears_previous_run(enabled, monkeypatch):
+def test_model_failure_continues_to_real_catalogue_questions_without_another_click(enabled, monkeypatch):
     app = page().run()
     app.text_area[0].set_value("Story adventure")
     click(app, "Find my game")
     assert generation.STATE_KEY in app.session_state
-    monkeypatch.setattr(generation, "generate", lambda *args, **kwargs: {"nodes": []})
+    failed_calls = []
+    def invalid_response(*args, **kwargs):
+        failed_calls.append(True)
+        return {"nodes": []}
+    monkeypatch.setattr(generation, "generate", invalid_response)
     click(app, "Find my game")
-    assert not app.exception and app.error
-    assert generation.STATE_KEY not in app.session_state
-    assert not app.success
+    assert not app.exception and not app.error
+    assert app.session_state[generation.STATE_KEY]["question_source"] == "catalogue"
+    assert app.session_state[generation.STATE_KEY]["path"] == ""
+    assert any(item.value == "Description 1" for item in app.text)
+    click(app, "Choose group A")
+    click(app, "Choose group A")
+    click(app, "Choose audio A")
+    assert app.success and not app.error and not app.exception
+    assert len(failed_calls) == 1
+    assert any(item.value == "01 · Game 1" for item in app.subheader)
+
+
+def test_default_request_is_prefilled_and_can_be_cleared(enabled):
+    app = page().run()
+    assert app.text_area[0].value == "A chill game to play with my friends, not too difficult."
+    app.text_area[0].set_value("")
+    click(app, "Find my game")
+    assert app.warning and not enabled

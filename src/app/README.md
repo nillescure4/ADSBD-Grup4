@@ -182,6 +182,7 @@ Model names, availability and access depend on the configured provider.
 1. Provide text, up to three reference images, or both. Choose **Content**,
    **Visual**, or **Balanced · no priority**. Reference images use the same
    20 MB/40-million-pixel limits as image search and are never ingested.
+   The editable default request is "A chill game to play with my friends, not too difficult."
 2. Encode each input with pinned Jina. Search complete descriptions and
    screenshots. Within each modality, combine the input rankings with equal
    weights using reciprocal rank fusion, `sum(1 / (60 + rank))`.
@@ -207,11 +208,14 @@ Model names, availability and access depend on the configured provider.
    description (an exact matching source quote is also accepted); visual
    evidence describes the corresponding actual screenshot.
    A second vision request audits every question and branch against all its
-   members. A locally invalid or rejected tree receives at most one correction
-   and a new audit before the search fails. Semantic corrections use a small
-   wording-only schema; they cannot reassign games or modify source evidence.
-   The audit reduces unsupported claims;
-   semantic quality remains dependent on the vision model.
+   members. The interface makes one generation attempt with this audit. If
+   generation, validation or auditing fails, the same submission immediately
+   builds balanced catalogue questions without asking the user to click again.
+   These compare groups of actual descriptions and screenshots in retrieval
+   order, preserving eight different games and the selected modality order.
+   Generic group labels avoid inventing shared traits. Content choices show
+   source description excerpts; visual choices show the actual screenshots.
+   The standalone generation service can still request one wording correction.
 6. For each remaining pair, temporarily encode its descriptions with pinned
    CLAP, currently using the first 77 tokens. Retrieve the best two tracks per
    description and select the different-source pair maximizing their combined
@@ -228,8 +232,11 @@ Model names, availability and access depend on the configured provider.
 A new submitted search replaces the previous run. A temporary HTTP 5xx service
 failure or connection interruption is retried once; read timeouts are not
 automatically retried. Answering questions never calls the model again.
-Invalid, refused, incomplete
-or unavailable AI responses show an error and produce no fabricated tree.
+Invalid, refused, incomplete or unavailable AI responses automatically use
+the catalogue-based questions. The interface identifies their actual source
+and does not claim they were AI-generated. The final two distinct audio choices
+are still retrieved with CLAP. Missing or changed source data can still stop a
+search: the application does not substitute invented games, images or audio.
 The app checks basic catalogue counts before enabling generation and verifies
 at retrieval time that eight different games actually have associated images.
 Five games with ten snapshots are still only five options.

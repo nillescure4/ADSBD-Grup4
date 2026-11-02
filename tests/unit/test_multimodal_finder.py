@@ -229,3 +229,13 @@ def test_wording_repair_preserves_all_game_assignments_and_evidence():
     repair["questions"][0]["left_ids"] = [1]
     with pytest.raises(ValueError):
         apply_wording_repair(response, repair)
+
+
+@pytest.mark.parametrize("priority", ["content", "visual", "balanced"])
+def test_catalogue_questions_cover_all_eight_games_without_inventing_preferences(priority):
+    from src.app.game_finder import catalogue_tree
+    games = candidates()
+    tree = catalogue_tree(games, priority)
+    reached = [final_recommendation(tree, games, "".join(path))[0]["game_id"] for path in product("LR", repeat=3)]
+    assert sorted(reached) == list(range(1, 9))
+    assert ("screenshots" if priority == "visual" else "descriptions") in next(node for node in tree["nodes"] if not node["path"])["question"]
