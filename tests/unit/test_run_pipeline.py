@@ -8,13 +8,15 @@ import pytest
 from src.pipelines import run_pipeline as pipeline
 
 
-def test_plan_shares_rawg_manifest_and_stops_at_trusted(tmp_path):
+def test_plan_shares_rawg_manifest_and_indexes_all_modalities(tmp_path):
     args = pipeline.parse_args(["--rawg-output", str(tmp_path / "images"), "--audio-output", str(tmp_path / "music")])
     plan = pipeline.build_plan(args)
     modules = [step.module for step in plan]
-    assert len(plan) == 17
+    assert len(plan) == 23
     assert modules.index("src.trusted.audio.analyze_audio_quality") < modules.index("src.trusted.audio.trusted_audio")
-    assert not any("exploitation" in module for module in modules)
+    assert modules[-5:] == ["src.exploitation.text.build_embeddings", "src.exploitation.images.build_embeddings",
+                            "src.exploitation.audio.embedding_audio", "src.exploitation.text.build_clap_embeddings",
+                            "src.pipelines.verify_exploitation"]
     assert str(tmp_path / "images/manifests/games.jsonl") in plan[1].arguments
     assert str(tmp_path / "music/raw/files") in next(s.arguments for s in plan if s.module.endswith("audio_landing"))
     assert "--all" in next(s.arguments for s in plan if s.module.endswith("audio_persistent"))
@@ -22,8 +24,44 @@ def test_plan_shares_rawg_manifest_and_stops_at_trusted(tmp_path):
 
 def test_skip_collection_has_no_source_requests():
     plan = pipeline.build_plan(pipeline.parse_args(["--skip-collection"]))
-    assert len(plan) == 14
+    assert len(plan) == 20
     assert not any("collect_" in step.module or step.module.endswith("text_to_temporal_landing") for step in plan)
+
+
+def test_trusted_only_and_embeddings_only_have_independent_plans(tmp_path):
+    trusted = pipeline.build_plan(pipeline.parse_args(["--through", "trusted"]))
+    assert len(trusted) == 18 and not any("exploitation" in s.module for s in trusted)
+    plan = pipeline.build_plan(pipeline.parse_args(["--embeddings-only", "--db-path", str(tmp_path)]))
+    assert len(plan) == 5
+    assert all("exploitation" in s.module for s in plan)
+    assert all(str(tmp_path) in s.arguments for s in plan)
+
+
+@pytest.mark.parametrize("flag", ["--embeddings-only", "--serve"])
+def test_trusted_only_rejects_incompatible_options(flag):
+    with pytest.raises(SystemExit):
+        pipeline.parse_args(["--through", "trusted", flag])
+
+
+@pytest.mark.parametrize("outcome", [0, 1])
+def test_application_starts_only_after_success_and_uses_selected_database(tmp_path, monkeypatch, outcome):
+    monkeypatch.setattr(pipeline, "load_dotenv", lambda *args: None)
+    monkeypatch.setattr(pipeline, "preflight", lambda *args: None)
+    monkeypatch.setattr(pipeline, "prepare_storage", lambda **kwargs: None)
+    monkeypatch.setattr(pipeline, "verify_trusted", lambda: {"text_partitions": 1, "images": 8, "audio": 2})
+    monkeypatch.setattr(pipeline, "run_steps", lambda *args: (outcome, []))
+    calls = []
+    monkeypatch.setattr(pipeline, "execute", lambda command, env: calls.append((command, env)) or 0)
+    result = pipeline.main(["--embeddings-only", "--serve", "--db-path", str(tmp_path / "chroma"),
+                            "--report-dir", str(tmp_path / "reports")])
+    assert result == outcome
+    assert len(calls) == (0 if outcome else 1)
+    if calls:
+        command, env = calls[0]
+        assert command[:4] == [sys.executable, "-m", "streamlit", "run"]
+        assert env["ADSBD_CHROMA_PATH"] == str(tmp_path / "chroma")
+    report = json.loads(next((tmp_path / "reports").glob("run_*.json")).read_text())
+    assert report["exit_code"] == outcome
 
 
 def test_dry_run_never_connects_or_writes(tmp_path, monkeypatch, capsys):

@@ -24,7 +24,7 @@ dependencies = [
 
 [project.optional-dependencies]
 app = [
-  "streamlit>=1.42,<2",
+  "streamlit>=1.66,<2",
   "graphviz>=0.20,<1",
   "chromadb>=1.0,<2",
   "transformers==4.48.3",

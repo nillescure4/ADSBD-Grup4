@@ -6,6 +6,7 @@ each game is returned once, optionally considering only its latest capture.
 """
 
 from pathlib import Path
+import os
 from typing import Any
 
 from src.exploitation.text.build_embeddings import (
@@ -13,7 +14,7 @@ from src.exploitation.text.build_embeddings import (
 )
 
 
-DB_PATH = PROJECT_ROOT / "data/exploitation/chroma"
+DB_PATH = Path(os.getenv("ADSBD_CHROMA_PATH", str(PROJECT_ROOT / "data/exploitation/chroma"))).resolve()
 
 
 def connect(db_path: Path = DB_PATH) -> Any:
