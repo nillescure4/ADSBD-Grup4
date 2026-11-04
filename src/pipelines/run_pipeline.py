@@ -42,8 +42,8 @@ def positive(value: str) -> int:
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", nargs="?", choices=["run", "status"], default="run")
-    parser.add_argument("--max-games", type=positive, default=8, help="New RAWG games to select (default: 8)")
-    parser.add_argument("--screenshots-per-game", type=positive, default=2)
+    parser.add_argument("--max-games", type=positive, default=100, help="New RAWG games to select (default: 100)")
+    parser.add_argument("--screenshots-per-game", type=positive, default=1)
     parser.add_argument("--max-audio-files", type=positive, default=5, help="Total downloaded audio target (default: 5)")
     parser.add_argument("--audio-max-items", type=positive, default=30, help="Maximum CC0 submissions to inspect per run")
     parser.add_argument("--audio-query", default="")
@@ -264,6 +264,7 @@ def check_status() -> int:
 
 
 def main(argv=None) -> int:
+    started = time.monotonic()
     args = parse_args(argv)
     plan = build_plan(args)
     if args.dry_run:
@@ -310,6 +311,7 @@ def main(argv=None) -> int:
             report = args.report_dir / f"run_{timestamp}.json"
             report.write_text(json.dumps({"completed_at_utc": timestamp, "exit_code": code,
                                           "error": error, "steps": records, "trusted": counts,
+                                          "total_seconds": round(time.monotonic() - started, 3),
                                           "through": args.through, "database": str(args.db_path)}, indent=2), encoding="utf-8")
             print(f"Run report: {report}")
     if code == 0 and args.serve:

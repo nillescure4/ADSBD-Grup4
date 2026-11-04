@@ -42,7 +42,7 @@ orchestrator does not download executables. CPU workers default to four unless
 
 ## Selection and execution
 
-Defaults: **8 new RAWG games**, up to **2 screenshots per game**, and **5 total
+Defaults: **100 new RAWG games**, up to **1 screenshot per game**, and **5 total
 downloaded playable music files** in the audio collection directory. These are
 bounded sample targets, not a complete crawl or a guarantee that every asset
 passes Trusted quality checks. TASK 3 needs eight distinct games with verified
@@ -135,7 +135,8 @@ Chroma database and is also passed to Streamlit through `ADSBD_CHROMA_PATH`.
 Use both options together for complete isolation.
 
 Each run writes `reports/pipeline/run_<UTC>.json` with stage names, exit codes,
-durations, final zone and failure details. Detailed quality CSVs/plots are under
+per-stage durations, total preparation time (`total_seconds`), final zone and
+failure details. Detailed quality CSVs/plots are under
 that directory; `exploitation.json` contains the verified counts, retrieval probes
 and `task3_data_ready`. `--report-dir` overrides the location. Credentials are
 passed through the environment and configured secrets are redacted from child logs.
