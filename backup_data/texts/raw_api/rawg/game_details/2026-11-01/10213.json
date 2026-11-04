@@ -1,0 +1,406 @@
+{
+  "id": 10213,
+  "slug": "dota-2",
+  "name": "Dota 2",
+  "name_original": "Dota 2",
+  "description": "<p>What used to be an unofficial modded map for the Warcraft 3, ended up being the most budgeted cybersport discipline, gathering millions of people to watch annual international championships.<br />\nMOBA genre started with the DOTA, Defense of the Ancients, which can be efficiently described as 5 vs 5 top-down action strategy game, during which players are tasked to destroy the enemy core while protecting their own.<br />\nPlayers can pick out of the roster of 112 heroes and battle on the single map while taking advantage of field vision, resources and item build that can either make heroes stronger or disable the enemy. DOTA 2 is still active, and receives updates weekly, reshaping metas and refreshing game balance, if by any chance some heroes became unreasonably strong. Each hero has not only a unique set of abilities but is fully customizable, through getting items for heroes after matches of through the trade. Not only heroes but terrain, couriers, that deliver items for you and even match announcers, that can be voiced by heroes, professional casters of just memorable characters from other forms of media.</p>",
+  "metacritic": 90,
+  "metacritic_platforms": [],
+  "released": "2013-07-09",
+  "tba": false,
+  "updated": "2026-10-25T17:48:12",
+  "background_image": "https://media.rawg.io/media/games/6fc/6fcf4cd3b17c288821388e6085bb0fc9.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/7ef/7ef8db57f075fe2417f9a3c0fe9913f3.jpg",
+  "website": "http://www.dota2.com/",
+  "rating": 3.07,
+  "rating_top": 3,
+  "ratings": [
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 926,
+      "percent": 31.84
+    },
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 791,
+      "percent": 27.2
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 743,
+      "percent": 25.55
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 448,
+      "percent": 15.41
+    }
+  ],
+  "reactions": {
+    "1": 5,
+    "2": 7,
+    "3": 18,
+    "4": 12,
+    "5": 6,
+    "6": 6,
+    "7": 1,
+    "8": 14,
+    "9": 4,
+    "10": 2,
+    "11": 4,
+    "12": 3,
+    "13": 1,
+    "14": 1,
+    "15": 4,
+    "16": 2,
+    "17": 3
+  },
+  "added": 13213,
+  "added_by_status": {
+    "yet": 213,
+    "owned": 10133,
+    "beaten": 575,
+    "toplay": 31,
+    "dropped": 1784,
+    "playing": 477
+  },
+  "playtime": 14,
+  "screenshots_count": 8,
+  "movies_count": 2,
+  "creators_count": 7,
+  "achievements_count": 0,
+  "parent_achievements_count": 0,
+  "reddit_url": "https://www.reddit.com/r/DotA2/",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 12185,
+  "twitch_count": 100,
+  "youtube_count": 1000000,
+  "reviews_text_count": 39,
+  "ratings_count": 2869,
+  "suggestions_count": 426,
+  "alternative_names": [],
+  "metacritic_url": "",
+  "parents_count": 0,
+  "additions_count": 0,
+  "game_series_count": 1,
+  "user_game": null,
+  "reviews_count": 2908,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    },
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 80676,
+        "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+      },
+      "released_at": "2013-07-09",
+      "requirements": {
+        "minimum": "Minimum:\nOS: Ubuntu 12.04 or newer\nProcessor: Dual core from Intel or AMD at 2.8 GHz\nMemory: 4 GB RAM\nGraphics: nVidia Geforce 8600/9600GT (Driver v331), AMD HD 2xxx-4xxx (Driver mesa 10.5.9), AMD HD 5xxx+ (Driver mesa 10.5.9 or Catalyst 15.7), Intel HD 3000 (Driver mesa 10.6)\nNetwork: Broadband Internet connection\nStorage: 15 GB available space\nSound Card: OpenAL Compatible Sound Card"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2013-07-09",
+      "requirements": {
+        "minimum": "Minimum:\nOS: OS X Mavericks 10.9 or newer\nProcessor: Dual core from Intel\nMemory: 4 GB RAM\nGraphics: nVidia 320M or higher, or Radeon HD 2400 or higher, or Intel HD 3000 or higher\nNetwork: Broadband Internet connection\nStorage: 15 GB available space"
+      }
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2013-07-09",
+      "requirements": {
+        "minimum": "Minimum:\nOS: Windows 7 or newer\nProcessor: Dual core from Intel or AMD at 2.8 GHz\nMemory: 4 GB RAM\nGraphics: nVidia GeForce 8600/9600GT, ATI/AMD Radeon HD2600/3600\nDirectX: Version 9.0c\nNetwork: Broadband Internet connection\nStorage: 15 GB available space\nSound Card: DirectX Compatible"
+      }
+    }
+  ],
+  "stores": [
+    {
+      "id": 11168,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 1612,
+      "name": "Valve Software",
+      "slug": "valve-software",
+      "games_count": 44,
+      "image_background": "https://media.rawg.io/media/games/46d/46d98e6910fbc0706e2948a7cc9b10c5.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 59,
+      "name": "Massively Multiplayer",
+      "slug": "massively-multiplayer",
+      "games_count": 4287,
+      "image_background": "https://media.rawg.io/media/games/6fc/6fcf4cd3b17c288821388e6085bb0fc9.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 7,
+      "name": "Multiplayer",
+      "slug": "multiplayer",
+      "language": "eng",
+      "games_count": 42845,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 7808,
+      "name": "steam-trading-cards",
+      "slug": "steam-trading-cards",
+      "language": "eng",
+      "games_count": 7568,
+      "image_background": "https://media.rawg.io/media/games/8cc/8cce7c0e99dcc43d66c8efd42f9d03e3.jpg"
+    },
+    {
+      "id": 24,
+      "name": "RPG",
+      "slug": "rpg",
+      "language": "eng",
+      "games_count": 26941,
+      "image_background": "https://media.rawg.io/media/games/26d/26d4437715bee60138dab4a7c8c59c92.jpg"
+    },
+    {
+      "id": 18,
+      "name": "Co-op",
+      "slug": "co-op",
+      "language": "eng",
+      "games_count": 14562,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 411,
+      "name": "cooperative",
+      "slug": "cooperative",
+      "language": "eng",
+      "games_count": 6673,
+      "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Online Co-Op",
+      "slug": "online-co-op",
+      "language": "eng",
+      "games_count": 7825,
+      "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
+    },
+    {
+      "id": 64,
+      "name": "Fantasy",
+      "slug": "fantasy",
+      "language": "eng",
+      "games_count": 33212,
+      "image_background": "https://media.rawg.io/media/games/6fc/6fcf4cd3b17c288821388e6085bb0fc9.jpg"
+    },
+    {
+      "id": 49,
+      "name": "Difficult",
+      "slug": "difficult",
+      "language": "eng",
+      "games_count": 14367,
+      "image_background": "https://media.rawg.io/media/games/04a/04a7e7e185fb51493bdcbe1693a8b3dc.jpg"
+    },
+    {
+      "id": 79,
+      "name": "Free to Play",
+      "slug": "free-to-play",
+      "language": "eng",
+      "games_count": 10074,
+      "image_background": "https://media.rawg.io/media/games/dcb/dcbb67f371a9a28ea38ffd73ee0f53f3.jpg"
+    },
+    {
+      "id": 97,
+      "name": "Action RPG",
+      "slug": "action-rpg",
+      "language": "eng",
+      "games_count": 8770,
+      "image_background": "https://media.rawg.io/media/games/33d/33df5a032898b8ab7e3773c7a5f1d336.jpg"
+    },
+    {
+      "id": 40852,
+      "name": "Steam Workshop",
+      "slug": "steam-workshop",
+      "language": "eng",
+      "games_count": 1790,
+      "image_background": "https://media.rawg.io/media/games/46d/46d98e6910fbc0706e2948a7cc9b10c5.jpg"
+    },
+    {
+      "id": 157,
+      "name": "PvP",
+      "slug": "pvp",
+      "language": "eng",
+      "games_count": 12220,
+      "image_background": "https://media.rawg.io/media/games/ac7/ac7b8327343da12c971cfc418f390a11.jpg"
+    },
+    {
+      "id": 40837,
+      "name": "In-App Purchases",
+      "slug": "in-app-purchases",
+      "language": "eng",
+      "games_count": 3468,
+      "image_background": "https://media.rawg.io/media/screenshots/54f/54fcf1a626faa92afa3f5d2834dbc5ce.jpg"
+    },
+    {
+      "id": 121,
+      "name": "Character Customization",
+      "slug": "character-customization",
+      "language": "eng",
+      "games_count": 6744,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Replay Value",
+      "slug": "replay-value",
+      "language": "eng",
+      "games_count": 2304,
+      "image_background": "https://media.rawg.io/media/games/1f4/1f47a270b8f241e4676b14d39ec620f7.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Team-Based",
+      "slug": "team-based",
+      "language": "eng",
+      "games_count": 2099,
+      "image_background": "https://media.rawg.io/media/games/476/476178ef18ab0534771d099f51cdc694.jpg"
+    },
+    {
+      "id": 168,
+      "name": "RTS",
+      "slug": "rts",
+      "language": "eng",
+      "games_count": 3006,
+      "image_background": "https://media.rawg.io/media/screenshots/4d9/4d9afae02fdf2896569b1c7bfeabb8c1.jpg"
+    },
+    {
+      "id": 170,
+      "name": "Competitive",
+      "slug": "competitive",
+      "language": "eng",
+      "games_count": 1326,
+      "image_background": "https://media.rawg.io/media/games/7f0/7f021d4a3577ac9d591a628a431fc2e5.jpg"
+    },
+    {
+      "id": 40856,
+      "name": "Valve Anti-Cheat enabled",
+      "slug": "valve-anti-cheat-enabled",
+      "language": "eng",
+      "games_count": 105,
+      "image_background": "https://media.rawg.io/media/games/78d/78dfae12fb8c5b16cd78648553071e0a.jpg"
+    },
+    {
+      "id": 65,
+      "name": "Tower Defense",
+      "slug": "tower-defense",
+      "language": "eng",
+      "games_count": 8069,
+      "image_background": "https://media.rawg.io/media/screenshots/486/4867553de7f93ab572102c47570a9050.jpg"
+    },
+    {
+      "id": 169,
+      "name": "MOBA",
+      "slug": "moba",
+      "language": "eng",
+      "games_count": 715,
+      "image_background": "https://media.rawg.io/media/screenshots/bd0/bd0ae747540a2b38740eb5f59c284a81.jpg"
+    },
+    {
+      "id": 73,
+      "name": "e-sports",
+      "slug": "e-sports",
+      "language": "eng",
+      "games_count": 80,
+      "image_background": "https://media.rawg.io/media/games/cc7/cc77035eb972f179f5090ee2a0fabd99.jpg"
+    },
+    {
+      "id": 40909,
+      "name": "SteamVR Collectibles",
+      "slug": "steamvr-collectibles",
+      "language": "eng",
+      "games_count": 44,
+      "image_background": "https://media.rawg.io/media/screenshots/ccd/ccd34c9f511f91edaa03bea681d207ea.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 3399,
+      "name": "Valve",
+      "slug": "valve",
+      "games_count": 48,
+      "image_background": "https://media.rawg.io/media/games/66e/66e90c9d7b9a17335b310ceb294e9365.jpg"
+    }
+  ],
+  "esrb_rating": null,
+  "clip": null,
+  "description_raw": "What used to be an unofficial modded map for the Warcraft 3, ended up being the most budgeted cybersport discipline, gathering millions of people to watch annual international championships.\nMOBA genre started with the DOTA, Defense of the Ancients, which can be efficiently described as 5 vs 5 top-down action strategy game, during which players are tasked to destroy the enemy core while protecting their own.\nPlayers can pick out of the roster of 112 heroes and battle on the single map while taking advantage of field vision, resources and item build that can either make heroes stronger or disable the enemy. DOTA 2 is still active, and receives updates weekly, reshaping metas and refreshing game balance, if by any chance some heroes became unreasonably strong. Each hero has not only a unique set of abilities but is fully customizable, through getting items for heroes after matches of through the trade. Not only heroes but terrain, couriers, that deliver items for you and even match announcers, that can be voiced by heroes, professional casters of just memorable characters from other forms of media."
+}

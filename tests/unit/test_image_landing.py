@@ -118,13 +118,13 @@ def configure_main(monkeypatch, s3, datasets):
 def test_main_without_image_datasets_exits_with_a_message(monkeypatch, s3):
     configure_main(monkeypatch, s3, {"descriptions": {"modality": "text", "directory": "t", "source": "rawg"}})
     with pytest.raises(SystemExit, match="No image dataset"):
-        landing.main()
+        landing.main([])
 
 
 def test_main_uploads_every_image_dataset(project, monkeypatch, s3):
     write_image(project, "a.jpg")
     configure_main(monkeypatch, s3, {"rawg": DATASET})
-    landing.main()
+    landing.main([])
     assert s3.keys("landing") == ["temporal/images/rawg/a.jpg"]
     assert s3.calls["head_bucket"] == 1
 
@@ -134,6 +134,18 @@ def test_main_exits_1_when_a_dataset_fails_but_still_processes_the_others(projec
     broken = {"modality": "image", "directory": "does_not_exist", "source": "other"}
     configure_main(monkeypatch, s3, {"broken": broken, "rawg": DATASET})
     with pytest.raises(SystemExit) as raised:
-        landing.main()
+        landing.main([])
     assert raised.value.code == 1
     assert s3.keys("landing") == ["temporal/images/rawg/a.jpg"]
+
+def test_explicit_collection_directory_does_not_change_shared_configuration(project, monkeypatch, s3):
+    write_image(project, "shot.jpg")
+    configure_main(monkeypatch, s3, {"rawg": DATASET})
+    landing.main(["--dataset", "rawg", "--input-dir", str(project / "data/landing/rawg_images")])
+    assert s3.keys("landing") == ["temporal/images/rawg/shot.jpg"]
+
+
+def test_input_override_requires_an_explicit_dataset(monkeypatch):
+    with pytest.raises(SystemExit) as failure:
+        landing.main(["--input-dir", "."])
+    assert failure.value.code == 2

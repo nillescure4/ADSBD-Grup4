@@ -46,6 +46,14 @@ def test_discovery_preserves_submissions_and_ignores_non_audio(tmp_path):
     ]
 
 
+@pytest.mark.parametrize("extension", sorted(audio_landing.AUDIO_EXTENSIONS))
+def test_every_formatted_audio_format_can_enter_landing(tmp_path, extension):
+    from src.formatting.audio.formatting_audio import AUDIO_EXTENSIONS
+    assert set(audio_landing.AUDIO_EXTENSIONS) == AUDIO_EXTENSIONS
+    path = write_audio(tmp_path, "123", "music" + extension.upper())
+    assert audio_landing.discover_audio_files(tmp_path) == [path]
+
+
 def test_temporal_key_keeps_original_filename(tmp_path):
     path = write_audio(tmp_path, "100180", "Synth%20Wave_0.mp3")
     assert audio_landing.temporal_object_key(tmp_path, path, "temporal") == (

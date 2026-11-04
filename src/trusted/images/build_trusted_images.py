@@ -141,6 +141,15 @@ def build_trusted_images(*, dry_run: bool, prune: bool, csv_output: Path) -> int
 
     if checkpoint and checkpoint["input"] == signature:
         print("[SKIP] Inputs and rules unchanged; verifying Trusted outputs only")
+        if not dry_run:
+            # Restore the report for downstream analysis even in a new local directory.
+            response = client.get_object(Bucket=dst_bucket, Key=f"{QUALITY_PREFIX}images_quality.csv")
+            try:
+                report_bytes = response["Body"].read()
+            finally:
+                response["Body"].close()
+            csv_output.parent.mkdir(parents=True, exist_ok=True)
+            csv_output.write_bytes(report_bytes)
         errors = sync_trusted(client, src_bucket, dst_bucket, formatted,
                               checkpoint["accepted"], dry_run=dry_run, prune=prune)
         return 1 if errors else 0

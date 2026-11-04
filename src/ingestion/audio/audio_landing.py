@@ -19,8 +19,10 @@ from src.ingestion.audio.audio_persistent import audio_identity, persistent_inde
 
 LOGGER = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_AUDIO_DIR = PROJECT_ROOT / "data" / "audio" / "audio_files"
-AUDIO_EXTENSIONS = frozenset({".mp3", ".ogg", ".wav", ".flac"})
+DEFAULT_AUDIO_DIR = PROJECT_ROOT / "data" / "landing" / "opengameart_audio" / "raw" / "files"
+# Keep the collector, Landing and Formatted playable-audio contracts aligned.
+AUDIO_EXTENSIONS = frozenset({".aac", ".aif", ".aiff", ".au", ".flac", ".m4a",
+                              ".mp3", ".oga", ".ogg", ".opus", ".wav", ".wma"})
 AUDIO_PREFIX = "audio"
 
 
@@ -179,7 +181,7 @@ def main() -> int:
         "--input-dir",
         type=Path,
         default=DEFAULT_AUDIO_DIR,
-        help="Local audio_files folder (default: data/audio/audio_files)",
+        help="Collector audio folder (default: data/landing/opengameart_audio/raw/files)",
     )
     parser.add_argument("--dry-run", action="store_true", help="Show planned keys without using MinIO")
     selection = parser.add_mutually_exclusive_group()

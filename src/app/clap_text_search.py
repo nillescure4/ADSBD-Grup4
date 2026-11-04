@@ -1,6 +1,7 @@
 """Read-only audio-to-description retrieval in the pinned CLAP space."""
 
 import math
+from src.common.chroma_reads import ReliableReads
 
 from src.app.audio_search import validate_audio_vector
 from src.app.text_search import DB_PATH
@@ -15,7 +16,7 @@ def connect_clap_texts(path=DB_PATH):
     import chromadb
     collection = chromadb.PersistentClient(path=str(path)).get_collection(COLLECTION, embedding_function=None)
     validate_collection(collection)
-    return collection
+    return ReliableReads(collection)
 
 
 def search_clap_descriptions(collection, vector, *, top_k=5):

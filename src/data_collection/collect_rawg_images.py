@@ -307,7 +307,7 @@ def parse_args() -> argparse.Namespace:
         description="Collect raw gameplay screenshots from RAWG with provenance manifests."
     )
     p.add_argument("--api-key", default=os.getenv("RAWG_API_KEY"))
-    p.add_argument("--output", default="data/landing/rawg")
+    p.add_argument("--output", default="data/landing/rawg_full")
     p.add_argument("--plan", help="JSON collection plan. Overrides single-query selection.")
     p.add_argument("--max-games", type=int, default=100)
     p.add_argument("--screenshots-per-game", type=int, default=4)
@@ -320,7 +320,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--dry-run", action="store_true")
     return p.parse_args()
 
-def main() -> None:
+def main() -> int:
     args = parse_args()
     if not args.api_key:
         raise SystemExit(
@@ -411,6 +411,7 @@ def main() -> None:
 
     print("\n=== Summary ===")
     print(json.dumps(summary, indent=2))
+    return 1 if totals["errors"] else 0
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -178,7 +178,7 @@ def test_open_collection_checks_version_and_does_not_create(tmp_path):
         PersistentClient=lambda path: SimpleNamespace(get_collection=lambda **kwargs: db),
     )
     with patch.dict(sys.modules, {"chromadb": fake_chroma}):
-        assert mod.open_existing_collection(target) is db
+        assert mod.open_existing_collection(target).collection is db
         db.metadata["index_version"] = "old-version"
         with pytest.raises(RuntimeError, match="different model"):
             mod.open_existing_collection(target)

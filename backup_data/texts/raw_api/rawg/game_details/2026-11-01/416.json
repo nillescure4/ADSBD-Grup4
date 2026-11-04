@@ -1,0 +1,601 @@
+{
+  "id": 416,
+  "slug": "grand-theft-auto-san-andreas",
+  "name": "Grand Theft Auto: San Andreas",
+  "name_original": "Grand Theft Auto: San Andreas",
+  "description": "<p>Grand Theft Auto - San Andreas is the seventh entry in the series in the GTA franchise, but only second big title after GTA - Vice City. Setting up in fictional state San Andreas, you follow the story of CJ, a member of one of the multiple gangs in the city. CJ&#39;s family is being attacked in drive shooting which resulted in the death of CJ&#39;s mother, so he returns to home from Liberty City. Meeting the rest of the family at his mom&#39;s funeral, he decides to rebuild the gang and gain control of the state.</p>\n<p>The game makes a brilliant connection with missions and open world actions that you are able to do around the cities. You can steal cars, buy guns, hunt for collectables and do some side quests, while different characters give you specific missions in order to push the plot forward. Streets are filled with people as well as plenty of vehicles to steal. Fictional brands of cars, tanks, bikes are available to be stolen from any place around the city. Armoury contains pistols, rifles, hand-machine guns or a rocket launcher as well as melee weapons giving player freedom in anything he&#39;s doing in GTA.</p>",
+  "metacritic": 93,
+  "metacritic_platforms": [],
+  "released": "2004-10-26",
+  "tba": false,
+  "updated": "2026-11-01T19:54:32",
+  "background_image": "https://media.rawg.io/media/games/960/960b601d9541cec776c5fa42a00bf6c4.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/236/236efd76a15fca0ce4d9129a788e517e.jpg",
+  "website": "http://www.rockstargames.com/sanandreas/pc",
+  "rating": 4.5,
+  "rating_top": 5,
+  "ratings": [
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 2545,
+      "percent": 61.3
+    },
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 1313,
+      "percent": 31.62
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 202,
+      "percent": 4.87
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 92,
+      "percent": 2.22
+    }
+  ],
+  "reactions": {
+    "1": 6,
+    "2": 3,
+    "3": 11,
+    "4": 11,
+    "5": 2,
+    "7": 2,
+    "8": 1,
+    "10": 5,
+    "11": 8,
+    "12": 6,
+    "15": 1,
+    "18": 1
+  },
+  "added": 12257,
+  "added_by_status": {
+    "yet": 297,
+    "owned": 6489,
+    "beaten": 3935,
+    "toplay": 223,
+    "dropped": 1179,
+    "playing": 134
+  },
+  "playtime": 2,
+  "screenshots_count": 25,
+  "movies_count": 0,
+  "creators_count": 8,
+  "achievements_count": 121,
+  "parent_achievements_count": 23,
+  "reddit_url": "https://www.reddit.com/r/sanandreas/",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 2368,
+  "twitch_count": 139,
+  "youtube_count": 1000000,
+  "reviews_text_count": 29,
+  "ratings_count": 4123,
+  "suggestions_count": 486,
+  "alternative_names": [
+    "GTA SA",
+    "GTA San Andreas",
+    "serise"
+  ],
+  "metacritic_url": "",
+  "parents_count": 0,
+  "additions_count": 1,
+  "game_series_count": 12,
+  "user_game": null,
+  "reviews_count": 4152,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "iOS",
+        "slug": "ios"
+      }
+    },
+    {
+      "platform": {
+        "id": 8,
+        "name": "Android",
+        "slug": "android"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {
+        "minimum": "OS: Mac OS X Snow Leopard 10.6.8 or higher\nProcessor: Intel Core 2 Duo Processor or better\nMemory: 1GB of RAM\nHard Disk Space: 5.2GB of free hard disk space \nVideo Card: ATI X1600, NVIDIA 7300GT, Intel X3100 integrated graphics chip, or better\nAdditional: This game will NOT run on PowerPC (G3/G4/G5) based Mac systems (PowerMac)"
+      }
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {
+        "minimum": "Minimum:\nOS: Microsoft® Windows® 2000/XP\nProcessor: 1Ghz Pentium III or AMD Athlon Processor\nMemory: 256MB of RAM\nGraphics: 64MB Video Card (Geforce 3 or better)\nHard Drive: 3.6GB of free hard disk space (minimal install)\nOther Requirements: Software installations required including DirectX and Sony DADC SecuROM\nPartner Requirements: Please check the terms of service of this site before purchasing this software.",
+        "recommended": "Recommended:\nProcessor: Intel Pentium 4 or AMD Athlon XP Processor\nMemory: 384MB of RAM (the more the better!)\nGraphics: 128MB (or greater) Video Card (Geforce 6 Series Recommended)\nHard Drive: 4.7GB of free hard disk space (full install)\nSound Card: DirectX 9 compatible Sound Card (Sound Blaster Auidgy 2 Recommended)"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "iOS",
+        "slug": "ios",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 77458,
+        "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {
+        "minimum": "iPad 2 Wifi, iPad 2 3G, iPhone 4S, iPad Third Gen, iPad Third Gen 4G, iPhone 5, iPod Touch Fifth Gen, iPad Fourth Gen, iPad Fourth Gen 4G, iPad Mini, iPad Mini 4G, iPhone 5c, iPhone 5s, iPad Air, iPad Air Cellular, iPad Mini Retina, iPad Mini Retina Cellular, iPhone 6, iPhone 6 Plus, iPad Air 2, iPad Air 2 Cellular, iPad Mini 3, iPad Mini 3 Cellular, iPod Touch Sixth Gen, iPhone 6s, iPhone 6s Plus, iPad Mini 4, iPad Mini 4 Cellular, iPad Pro, iPad Pro Cellular, iPad Pro 9.7, iPad Pro 9.7 Cellular, iPhone SE, iPhone 7, iPhone 7 Plus, iPad 6 1 1, iPad 6 1 2, iPad 7 1, iPad 7 2, iPad 7 3, iPad 7 4, iPhone 8, iPhone 8 Plus, iPhone X, iPad 7 5, iPad 7 6, iPhone X S, iPhone X S Max, iPhone X R, iPad 8 1 2, iPad 8 3 4, iPad 8 5 6, iPad 8 7 8, iPad Mini 5, iPad Mini 5 Cellular, iPad Air 3, iPad Air 3 Cellular, iPod Touch Seventh Gen"
+      }
+    },
+    {
+      "platform": {
+        "id": 80,
+        "name": "Xbox",
+        "slug": "xbox-old",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 881,
+        "image_background": "https://media.rawg.io/media/games/662/6625a20ca1d13699ee7c191b20a02408.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 21,
+        "name": "Android",
+        "slug": "android",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 52539,
+        "image_background": "https://media.rawg.io/media/games/198/1988a337305e008b41d7f536ce9b73f6.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {
+        "minimum": "7.0 and up"
+      }
+    },
+    {
+      "platform": {
+        "id": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 7056,
+        "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 16,
+        "name": "PlayStation 3",
+        "slug": "playstation3",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 3209,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 15,
+        "name": "PlayStation 2",
+        "slug": "playstation2",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 3151,
+        "image_background": "https://media.rawg.io/media/games/6fd/6fd971ffa72faa1758960d25ef6196bc.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 14,
+        "name": "Xbox 360",
+        "slug": "xbox360",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 2833,
+        "image_background": "https://media.rawg.io/media/games/5c0/5c0dd63002cb23f804aab327d40ef119.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2004-10-26",
+      "requirements": {}
+    }
+  ],
+  "stores": [
+    {
+      "id": 958554,
+      "url": "",
+      "store": {
+        "id": 11,
+        "name": "Epic Games",
+        "slug": "epic-games",
+        "domain": "epicgames.com",
+        "games_count": 1461,
+        "image_background": "https://media.rawg.io/media/games/9dd/9ddabb34840ea9227556670606cf8ea3.jpg"
+      }
+    },
+    {
+      "id": 3159,
+      "url": "",
+      "store": {
+        "id": 3,
+        "name": "PlayStation Store",
+        "slug": "playstation-store",
+        "domain": "store.playstation.com",
+        "games_count": 8092,
+        "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+      }
+    },
+    {
+      "id": 466983,
+      "url": "",
+      "store": {
+        "id": 2,
+        "name": "Xbox Store",
+        "slug": "xbox-store",
+        "domain": "microsoft.com",
+        "games_count": 4944,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 12383,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 33623,
+      "url": "",
+      "store": {
+        "id": 7,
+        "name": "Xbox 360 Store",
+        "slug": "xbox360",
+        "domain": "marketplace.xbox.com",
+        "games_count": 1915,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 420,
+      "url": "",
+      "store": {
+        "id": 4,
+        "name": "App Store",
+        "slug": "apple-appstore",
+        "domain": "apps.apple.com",
+        "games_count": 75594,
+        "image_background": "https://media.rawg.io/media/games/7a4/7a45e4cdc5b07f316d49cf147b083b27.jpg"
+      }
+    },
+    {
+      "id": 39985,
+      "url": "",
+      "store": {
+        "id": 8,
+        "name": "Google Play",
+        "slug": "google-play",
+        "domain": "play.google.com",
+        "games_count": 17128,
+        "image_background": "https://media.rawg.io/media/games/021/021c4e21a1824d2526f925eff6324653.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 3524,
+      "name": "Rockstar North",
+      "slug": "rockstar-north",
+      "games_count": 30,
+      "image_background": "https://media.rawg.io/media/screenshots/b98/b98adb52b2123a14d1c88e828a6b49f3.jpg"
+    },
+    {
+      "id": 10436,
+      "name": "War Drum Studios",
+      "slug": "war-drum-studios",
+      "games_count": 6,
+      "image_background": "https://media.rawg.io/media/screenshots/878/878193558aca97b9d07d38cee9e16fd4.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Multiplayer",
+      "slug": "multiplayer",
+      "language": "eng",
+      "games_count": 42845,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 42,
+      "name": "Great Soundtrack",
+      "slug": "great-soundtrack",
+      "language": "eng",
+      "games_count": 3450,
+      "image_background": "https://media.rawg.io/media/games/120/1201a40e4364557b124392ee50317b99.jpg"
+    },
+    {
+      "id": 118,
+      "name": "Story Rich",
+      "slug": "story-rich",
+      "language": "eng",
+      "games_count": 27538,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 36,
+      "name": "Open World",
+      "slug": "open-world",
+      "language": "eng",
+      "games_count": 9356,
+      "image_background": "https://media.rawg.io/media/games/ee3/ee3e10193aafc3230ba1cae426967d10.jpg"
+    },
+    {
+      "id": 149,
+      "name": "Third Person",
+      "slug": "third-person",
+      "language": "eng",
+      "games_count": 14852,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 40845,
+      "name": "Partial Controller Support",
+      "slug": "partial-controller-support",
+      "language": "eng",
+      "games_count": 14109,
+      "image_background": "https://media.rawg.io/media/games/960/960b601d9541cec776c5fa42a00bf6c4.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Funny",
+      "slug": "funny",
+      "language": "eng",
+      "games_count": 29028,
+      "image_background": "https://media.rawg.io/media/games/46d/46d98e6910fbc0706e2948a7cc9b10c5.jpg"
+    },
+    {
+      "id": 193,
+      "name": "Classic",
+      "slug": "classic",
+      "language": "eng",
+      "games_count": 1843,
+      "image_background": "https://media.rawg.io/media/games/9c4/9c47f320eb73c9a02d462e12f6206b26.jpg"
+    },
+    {
+      "id": 37,
+      "name": "Sandbox",
+      "slug": "sandbox",
+      "language": "eng",
+      "games_count": 8615,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 123,
+      "name": "Comedy",
+      "slug": "comedy",
+      "language": "eng",
+      "games_count": 15004,
+      "image_background": "https://media.rawg.io/media/games/8ca/8ca40b562a755d6a0e30d48e6c74b178.jpg"
+    },
+    {
+      "id": 62,
+      "name": "Moddable",
+      "slug": "moddable",
+      "language": "eng",
+      "games_count": 1149,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 192,
+      "name": "Mature",
+      "slug": "mature",
+      "language": "eng",
+      "games_count": 4787,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 144,
+      "name": "Crime",
+      "slug": "crime",
+      "language": "eng",
+      "games_count": 3306,
+      "image_background": "https://media.rawg.io/media/games/960/960b601d9541cec776c5fa42a00bf6c4.jpg"
+    },
+    {
+      "id": 130,
+      "name": "Driving",
+      "slug": "driving",
+      "language": "eng",
+      "games_count": 5674,
+      "image_background": "https://media.rawg.io/media/games/367/367463d43c2a1465f27e830b5b1334ee.jpg"
+    },
+    {
+      "id": 62348,
+      "name": "first person mod",
+      "slug": "first-person-mod",
+      "language": "eng",
+      "games_count": 14,
+      "image_background": "https://media.rawg.io/media/games/a3a/a3a13c2a388a44a28401e8bd705eec77.jpg"
+    },
+    {
+      "id": 43578,
+      "name": "Remote Play on Tablet",
+      "slug": "remote-play-on-tablet",
+      "language": "eng",
+      "games_count": 259,
+      "image_background": "https://media.rawg.io/media/games/473/473bd9a5e9522629d6cb28b701fb836a.jpg"
+    },
+    {
+      "id": 43577,
+      "name": "Remote Play on Phone",
+      "slug": "remote-play-on-phone",
+      "language": "eng",
+      "games_count": 252,
+      "image_background": "https://media.rawg.io/media/screenshots/83f/83f468db8414758062e7d777a329c16f.jpg"
+    },
+    {
+      "id": 18188,
+      "name": "controversial",
+      "slug": "controversial",
+      "language": "eng",
+      "games_count": 51,
+      "image_background": "https://media.rawg.io/media/screenshots/5e1/5e1e605067767d85c0dd47d962111f7f.jpg"
+    },
+    {
+      "id": 74338,
+      "name": "karaihb",
+      "slug": "karaihb",
+      "language": "eng",
+      "games_count": 1,
+      "image_background": "https://media.rawg.io/media/games/960/960b601d9541cec776c5fa42a00bf6c4.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 2150,
+      "name": "Capcom",
+      "slug": "capcom",
+      "games_count": 648,
+      "image_background": "https://media.rawg.io/media/games/974/974342a3959981a17bdbbff2fd7f97b0.jpg"
+    },
+    {
+      "id": 2155,
+      "name": "Rockstar Games",
+      "slug": "rockstar-games",
+      "games_count": 83,
+      "image_background": "https://media.rawg.io/media/games/bcd/bcdadb5dd2be66dd4dd1f657275b3f8e.jpg"
+    },
+    {
+      "id": 4879,
+      "name": "1C-SoftClub",
+      "slug": "1c-softclub",
+      "games_count": 51,
+      "image_background": "https://media.rawg.io/media/games/7ea/7ea3575b85ee2a8097b99583aa7c86f3.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 4,
+    "name": "Mature",
+    "slug": "mature"
+  },
+  "clip": null,
+  "description_raw": "Grand Theft Auto - San Andreas is the seventh entry in the series in the GTA franchise, but only second big title after GTA - Vice City. Setting up in fictional state San Andreas, you follow the story of CJ, a member of one of the multiple gangs in the city. CJ's family is being attacked in drive shooting which resulted in the death of CJ's mother, so he returns to home from Liberty City. Meeting the rest of the family at his mom's funeral, he decides to rebuild the gang and gain control of the state.\r\n\r\nThe game makes a brilliant connection with missions and open world actions that you are able to do around the cities. You can steal cars, buy guns, hunt for collectables and do some side quests, while different characters give you specific missions in order to push the plot forward. Streets are filled with people as well as plenty of vehicles to steal. Fictional brands of cars, tanks, bikes are available to be stolen from any place around the city. Armoury contains pistols, rifles, hand-machine guns or a rocket launcher as well as melee weapons giving player freedom in anything he's doing in GTA."
+}

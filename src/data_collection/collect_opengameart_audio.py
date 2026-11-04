@@ -720,7 +720,7 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
-def main() -> None:
+def main() -> int:
     args = parse_args()
     output = Path(args.output)
 
@@ -1177,7 +1177,8 @@ def main() -> None:
 
     print("\n=== SUMMARY ===")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
+    return 1 if stats["errors"] else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -278,6 +278,16 @@ def test_second_run_measures_nothing(pipeline):
     assert len(pipeline.measured) == 2
 
 
+def test_unchanged_run_restores_deleted_local_quality_report(pipeline):
+    put_formatted(pipeline.s3, a=b"one")
+    assert pipeline.run() == 0
+    original = pipeline.csv.read_bytes()
+    pipeline.csv.unlink()
+    assert pipeline.run() == 0
+    assert pipeline.csv.read_bytes() == original
+    assert len(pipeline.measured) == 1
+
+
 def test_second_run_repairs_a_missing_trusted_image_without_measuring(pipeline):
     put_formatted(pipeline.s3, a=b"one", b=b"two")
     pipeline.run()

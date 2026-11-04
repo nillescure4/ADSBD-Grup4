@@ -5,6 +5,7 @@ import hashlib
 import math
 
 from PIL import Image, ImageOps, UnidentifiedImageError
+from src.common.chroma_reads import ReliableReads
 
 from src.app.text_search import DB_PATH
 from src.exploitation.images.build_embeddings import COLLECTION as IMAGE_COLLECTION, configuration as image_configuration, encode_images
@@ -18,7 +19,7 @@ def connect_images(db_path=DB_PATH):
     import chromadb
     from chromadb.errors import NotFoundError
     try:
-        return chromadb.PersistentClient(path=str(db_path)).get_collection(IMAGE_COLLECTION, embedding_function=None)
+        return ReliableReads(chromadb.PersistentClient(path=str(db_path)).get_collection(IMAGE_COLLECTION, embedding_function=None))
     except NotFoundError:
         raise ValueError("Prepare the Jina image embeddings before searching images.") from None
 

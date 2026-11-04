@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import sys
 from datetime import timezone
 from pathlib import PurePosixPath
@@ -36,13 +37,31 @@ def same_object(a: dict, b: dict) -> bool:
     return a["ContentLength"] == b["ContentLength"] and a["ETag"] == b["ETag"]
 
 
+def same_content(client, bucket, source_key, destination, source_meta, destination_meta):
+    """Multipart uploads can have different ETags after a byte-identical copy."""
+    if same_object(source_meta, destination_meta):
+        return True
+    if source_meta["ContentLength"] != destination_meta["ContentLength"]:
+        return False
+    def digest(key):
+        body = client.get_object(Bucket=bucket, Key=key)["Body"]
+        result = hashlib.sha256()
+        try:
+            for chunk in iter(lambda: body.read(1024 * 1024), b""):
+                result.update(chunk)
+        finally:
+            body.close()
+        return result.digest()
+    return digest(source_key) == digest(destination)
+
+
 def move_object(client, bucket: str, source_key: str, destination: str) -> None:
     """Copy to destination, verify, then delete the source. Never overwrites different content."""
     source_meta = client.head_object(Bucket=bucket, Key=source_key)
     existing = head_or_none(client, bucket, destination)
 
     if existing is not None:
-        if not same_object(existing, source_meta):
+        if not same_content(client, bucket, source_key, destination, source_meta, existing):
             raise ValueError("destination already exists with different content")
     else:
         client.copy_object(
@@ -50,7 +69,8 @@ def move_object(client, bucket: str, source_key: str, destination: str) -> None:
             Key=destination,
             CopySource={"Bucket": bucket, "Key": source_key},
         )
-        if not same_object(client.head_object(Bucket=bucket, Key=destination), source_meta):
+        if not same_content(client, bucket, source_key, destination, source_meta,
+                            client.head_object(Bucket=bucket, Key=destination)):
             raise ValueError("copy does not match the original")
 
     client.delete_object(Bucket=bucket, Key=source_key)

@@ -1,0 +1,477 @@
+{
+  "id": 10035,
+  "slug": "hitman",
+  "name": "Hitman",
+  "name_original": "Hitman",
+  "description": "<p>Hitman is a six episodes game with different contracts. The action takes place as a prequel to Hitman: Agent 47 (only prologue) and episodes take place six years after Hitman: Absolution. All contracts are being ordered by a &quot;shadow client&quot; and seem to be unrelated. But as you fulfil those contracts, you start to realise that all of the targets somehow are a part of a secret organisation called the Providence.</p>\n<p>While playing Agent 47, you have a large amount of free will in completing those contracts. The main target is all that matters, and you can do anything to kill this person in your style and fashion. You can disguise as a different person and infiltrate secured area to perform the kill manually or use a long-range sniper rifle to do the trick. Your surroundings help you a lot as well by listening to nearby chat or news reports. Players are given as much freedom as possible to find your professional style in the art of killing. A large amount of DLC and expanded missions can either give you gimmick-based contracts and travel to Japan, Serbia and other countries.</p>",
+  "metacritic": 83,
+  "metacritic_platforms": [],
+  "released": "2016-03-11",
+  "tba": false,
+  "updated": "2026-10-28T02:07:28",
+  "background_image": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/8e3/8e3eebc3a4a1605b5d7625c25faddd4c.jpg",
+  "website": "http://www.Hitman.com/",
+  "rating": 3.93,
+  "rating_top": 4,
+  "ratings": [
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 1140,
+      "percent": 55.56
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 495,
+      "percent": 24.12
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 308,
+      "percent": 15.01
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 109,
+      "percent": 5.31
+    }
+  ],
+  "reactions": {
+    "1": 3,
+    "2": 4,
+    "3": 4,
+    "4": 2,
+    "5": 1,
+    "6": 2,
+    "7": 2,
+    "8": 1,
+    "9": 3,
+    "11": 1,
+    "12": 1,
+    "15": 1,
+    "16": 1,
+    "17": 1,
+    "21": 1
+  },
+  "added": 10913,
+  "added_by_status": {
+    "yet": 792,
+    "owned": 7624,
+    "beaten": 1269,
+    "toplay": 381,
+    "dropped": 716,
+    "playing": 131
+  },
+  "playtime": 7,
+  "screenshots_count": 14,
+  "movies_count": 7,
+  "creators_count": 5,
+  "achievements_count": 538,
+  "parent_achievements_count": 50,
+  "reddit_url": "https://www.reddit.com/r/HiTMAN/",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 8784,
+  "twitch_count": 0,
+  "youtube_count": 1000000,
+  "reviews_text_count": 12,
+  "ratings_count": 2040,
+  "suggestions_count": 577,
+  "alternative_names": [
+    "Hitman: The Complete First Season"
+  ],
+  "metacritic_url": "",
+  "parents_count": 0,
+  "additions_count": 17,
+  "game_series_count": 9,
+  "user_game": null,
+  "reviews_count": 2052,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    },
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 7056,
+        "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+      },
+      "released_at": "2016-03-11",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 80676,
+        "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+      },
+      "released_at": "2016-03-11",
+      "requirements": {
+        "minimum": "Minimum:\nOS: Ubuntu 16.04 or Steam OS 2.0\nProcessor: Intel Core i5-2500K/AMD FX-8350\nMemory: 8 GB RAM\nGraphics: Nvidia GeForce GTX 680/AMD R9 270X graphics card or better*\nStorage: 67 GB available space\nAdditional Notes: *NVIDIA graphics cards require driver version 375.26. AMD graphics cards require MESA 13.0.3 or better. Intel graphics cards will not be supported on release.",
+        "recommended": "Recommended:\nOS: Ubuntu 16.10 or Steam OS 2.0\nProcessor: Intel Core i7 3770\nMemory: 16 GB RAM\nGraphics: Nvidia GeForce GTX 970/AMD R9 290 graphics card or better*\nStorage: 67 GB available space\nAdditional Notes: *NVIDIA graphics cards require driver version 375.26. AMD graphics cards require MESA 13.0.3 or better. Intel graphics cards will not be supported on release."
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2016-03-11",
+      "requirements": {
+        "minimum": "Minimum:\nOS: macOS 10.12.5\nProcessor: 2.0Ghz Intel Core i5\nMemory: 8 GB RAM\nGraphics: 2GB AMD M290 or better (see notes for more details)\nStorage: 68 GB available space\nAdditional Notes: The game is supported on the following Macs. To check your Mac model and when it was released, select About This Mac from the Apple menu on your menu bar.     *    All 27&quot; iMacs released since Late 2014 *    All 15&quot; MacBook Pros released since 2016  *    All Mac Pros released since Late 2013     ——— The following Macs are capable of running the game but do not consistently meet the standards required for official support.   *    All 15&quot; MacBook Pros with an AMD graphics card released in 2015  ——— Please note: HITMAN for macOS will launch with support for AMD graphics cards only. We hope to announce more details regarding support for Nvidia and Intel graphics cards shortly."
+      }
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2016-03-11",
+      "requirements": {
+        "minimum": "Minimum:\nOS: OS 64-bit Windows 7\nProcessor: Intel CPU Core i5-2500K 3.3GHz / AMD CPU Phenom II X4 940\nMemory: 8 GB RAM\nGraphics: NVIDIA GeForce GTX 660 / Radeon HD 7870\nDirectX: Version 11\nStorage: 50 GB available space",
+        "recommended": "Recommended:\nOS: OS 64-bit Windows 7 / 64-bit Windows 8 (8.1) or Windows 10\nProcessor: Intel CPU Core i7 3770 3,4 GHz / AMD CPU AMD FX-8350 4 GHz\nMemory: 8 GB RAM\nGraphics: Nvidia GPU GeForce GTX 770 / AMD GPU Radeon R9 290\nDirectX: Version 11\nStorage: 50 GB available space"
+      }
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2016-03-11",
+      "requirements": {}
+    }
+  ],
+  "stores": [
+    {
+      "id": 38172,
+      "url": "",
+      "store": {
+        "id": 3,
+        "name": "PlayStation Store",
+        "slug": "playstation-store",
+        "domain": "store.playstation.com",
+        "games_count": 8092,
+        "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+      }
+    },
+    {
+      "id": 10947,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 35171,
+      "url": "",
+      "store": {
+        "id": 2,
+        "name": "Xbox Store",
+        "slug": "xbox-store",
+        "domain": "microsoft.com",
+        "games_count": 4944,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 593095,
+      "url": "",
+      "store": {
+        "id": 11,
+        "name": "Epic Games",
+        "slug": "epic-games",
+        "domain": "epicgames.com",
+        "games_count": 1461,
+        "image_background": "https://media.rawg.io/media/games/9dd/9ddabb34840ea9227556670606cf8ea3.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 18893,
+      "name": "Feral Interactive",
+      "slug": "feral-interactive",
+      "games_count": 107,
+      "image_background": "https://media.rawg.io/media/screenshots/a8c/a8cd58ee985ab6d509370bddada91dbd.jpeg"
+    },
+    {
+      "id": 4132,
+      "name": "Square Enix",
+      "slug": "square-enix",
+      "games_count": 379,
+      "image_background": "https://media.rawg.io/media/games/683/6833fbb183fd72a61c032501e3bc6d36.jpg"
+    },
+    {
+      "id": 4033,
+      "name": "IO Interactive",
+      "slug": "io-interactive-2",
+      "games_count": 38,
+      "image_background": "https://media.rawg.io/media/screenshots/c5c/c5cf501bbcd24706ead483539f2bcec8.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Shooter",
+      "slug": "shooter",
+      "games_count": 59655,
+      "image_background": "https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg"
+    },
+    {
+      "id": 14,
+      "name": "Simulation",
+      "slug": "simulation",
+      "games_count": 77433,
+      "image_background": "https://media.rawg.io/media/games/5f4/5f4780690dbf04900cbac5f05b9305f3.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 40836,
+      "name": "Full controller support",
+      "slug": "full-controller-support",
+      "language": "eng",
+      "games_count": 24451,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 42,
+      "name": "Great Soundtrack",
+      "slug": "great-soundtrack",
+      "language": "eng",
+      "games_count": 3450,
+      "image_background": "https://media.rawg.io/media/games/120/1201a40e4364557b124392ee50317b99.jpg"
+    },
+    {
+      "id": 118,
+      "name": "Story Rich",
+      "slug": "story-rich",
+      "language": "eng",
+      "games_count": 27538,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 36,
+      "name": "Open World",
+      "slug": "open-world",
+      "language": "eng",
+      "games_count": 9356,
+      "image_background": "https://media.rawg.io/media/games/ee3/ee3e10193aafc3230ba1cae426967d10.jpg"
+    },
+    {
+      "id": 149,
+      "name": "Third Person",
+      "slug": "third-person",
+      "language": "eng",
+      "games_count": 14852,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 37,
+      "name": "Sandbox",
+      "slug": "sandbox",
+      "language": "eng",
+      "games_count": 8615,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 15,
+      "name": "Stealth",
+      "slug": "stealth",
+      "language": "eng",
+      "games_count": 7217,
+      "image_background": "https://media.rawg.io/media/games/f6b/f6bed028b02369d4cab548f4f9337e81.jpg"
+    },
+    {
+      "id": 80,
+      "name": "Tactical",
+      "slug": "tactical",
+      "language": "eng",
+      "games_count": 6718,
+      "image_background": "https://media.rawg.io/media/games/d46/d46373f39458670305704ef089387520.jpg"
+    },
+    {
+      "id": 150,
+      "name": "Third-Person Shooter",
+      "slug": "third-person-shooter",
+      "language": "eng",
+      "games_count": 4199,
+      "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
+    },
+    {
+      "id": 44,
+      "name": "Nudity",
+      "slug": "nudity",
+      "language": "eng",
+      "games_count": 8909,
+      "image_background": "https://media.rawg.io/media/games/67f/67f62d1f062a6164f57575e0604ee9f6.jpg"
+    },
+    {
+      "id": 144,
+      "name": "Crime",
+      "slug": "crime",
+      "language": "eng",
+      "games_count": 3306,
+      "image_background": "https://media.rawg.io/media/games/960/960b601d9541cec776c5fa42a00bf6c4.jpg"
+    },
+    {
+      "id": 278,
+      "name": "Assassin",
+      "slug": "assassin",
+      "language": "eng",
+      "games_count": 962,
+      "image_background": "https://media.rawg.io/media/games/f6b/f6bed028b02369d4cab548f4f9337e81.jpg"
+    },
+    {
+      "id": 232,
+      "name": "Episodic",
+      "slug": "episodic",
+      "language": "eng",
+      "games_count": 524,
+      "image_background": "https://media.rawg.io/media/games/24d/24df5a8d70c80c15dade8304dd4370a5.jpg"
+    },
+    {
+      "id": 178,
+      "name": "Illuminati",
+      "slug": "illuminati",
+      "language": "eng",
+      "games_count": 378,
+      "image_background": "https://media.rawg.io/media/games/214/2140885d34e3a3398b45036e5d870971.jpg"
+    },
+    {
+      "id": 216,
+      "name": "Heist",
+      "slug": "heist",
+      "language": "eng",
+      "games_count": 607,
+      "image_background": "https://media.rawg.io/media/games/1e5/1e5e33b88be978f451196a751424a72e.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 308,
+      "name": "Square Enix",
+      "slug": "square-enix",
+      "games_count": 616,
+      "image_background": "https://media.rawg.io/media/games/883/883bc3050f9a4115d1968ece56bddfc2.jpg"
+    },
+    {
+      "id": 19651,
+      "name": "Feral Interactive",
+      "slug": "feral-interactive",
+      "games_count": 111,
+      "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+    },
+    {
+      "id": 350,
+      "name": "Warner Bros. Interactive",
+      "slug": "warner-bros-interactive",
+      "games_count": 219,
+      "image_background": "https://media.rawg.io/media/games/fd8/fd882c8267a44621a0de6f9cec77ae90.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 5,
+    "name": "Adults Only",
+    "slug": "adults-only"
+  },
+  "clip": null,
+  "description_raw": "Hitman is a six episodes game with different contracts. The action takes place as a prequel to Hitman: Agent 47 (only prologue) and episodes take place six years after Hitman: Absolution. All contracts are being ordered by a \"shadow client\" and seem to be unrelated. But as you fulfil those contracts, you start to realise that all of the targets somehow are a part of a secret organisation called the Providence.\r\n\r\nWhile playing Agent 47, you have a large amount of free will in completing those contracts. The main target is all that matters, and you can do anything to kill this person in your style and fashion. You can disguise as a different person and infiltrate secured area to perform the kill manually or use a long-range sniper rifle to do the trick. Your surroundings help you a lot as well by listening to nearby chat or news reports. Players are given as much freedom as possible to find your professional style in the art of killing. A large amount of DLC and expanded missions can either give you gimmick-based contracts and travel to Japan, Serbia and other countries."
+}
