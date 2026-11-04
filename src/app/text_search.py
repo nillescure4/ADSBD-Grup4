@@ -8,6 +8,7 @@ each game is returned once, optionally considering only its latest capture.
 from pathlib import Path
 import os
 from typing import Any
+from src.common.chroma_reads import ReliableReads
 
 from src.exploitation.text.build_embeddings import (
     COLLECTION, PROJECT_ROOT, configuration,
@@ -25,9 +26,9 @@ def connect(db_path: Path = DB_PATH) -> Any:
     from chromadb.errors import NotFoundError
 
     try:
-        return chromadb.PersistentClient(path=str(db_path)).get_collection(
+        return ReliableReads(chromadb.PersistentClient(path=str(db_path)).get_collection(
             COLLECTION, embedding_function=None,
-        )
+        ))
     except NotFoundError as exc:
         raise ValueError("The text embedding collection has not been created yet.") from exc
 
