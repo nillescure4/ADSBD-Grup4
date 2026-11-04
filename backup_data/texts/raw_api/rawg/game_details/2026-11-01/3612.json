@@ -1,0 +1,496 @@
+{
+  "id": 3612,
+  "slug": "hotline-miami",
+  "name": "Hotline Miami",
+  "name_original": "Hotline Miami",
+  "description": "<p>Several chapters of top-down shooter action, Hotline Miami is a violent game, where the player takes control of the unnamed man, that receives orders to clear out stages from bandits and mobsters, using every weapon he can get. Over the course of the game, the player will be able to collect the masks that provide buffs and abilities. Fluid and tight combat includes various melee and ranged weapons, that can be used as intended or just thrown at the enemy. Once Jacket, dubbed so for his distinct letterman jacket by fans, arrives at the mission, players will have to clear out every floor from the enemies, using rooms and doors for cover or ambushes. As the story moves on, Jackets mental health will visibly deteriorate, and he will be shown to suffer from hallucinations, which is in tone with acid 80’s theme.</p>",
+  "metacritic": 85,
+  "metacritic_platforms": [],
+  "released": "2012-10-22",
+  "tba": false,
+  "updated": "2026-10-25T17:38:34",
+  "background_image": "https://media.rawg.io/media/games/9fa/9fa63622543e5d4f6d99aa9d73b043de.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/7fa/7fa605c8eeeb4f6199a7bc58eb6aaac4.jpg",
+  "website": "",
+  "rating": 4.38,
+  "rating_top": 5,
+  "ratings": [
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 1465,
+      "percent": 54.32
+    },
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 958,
+      "percent": 35.52
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 187,
+      "percent": 6.93
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 87,
+      "percent": 3.23
+    }
+  ],
+  "reactions": {
+    "1": 12,
+    "2": 9,
+    "3": 8,
+    "4": 4,
+    "5": 2,
+    "6": 10,
+    "7": 1,
+    "9": 2,
+    "10": 3,
+    "11": 8,
+    "12": 16,
+    "14": 1,
+    "21": 1
+  },
+  "added": 10952,
+  "added_by_status": {
+    "yet": 390,
+    "owned": 7205,
+    "beaten": 2402,
+    "toplay": 216,
+    "dropped": 652,
+    "playing": 87
+  },
+  "playtime": 5,
+  "screenshots_count": 29,
+  "movies_count": 0,
+  "creators_count": 2,
+  "achievements_count": 119,
+  "parent_achievements_count": 30,
+  "reddit_url": "",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 0,
+  "twitch_count": 110,
+  "youtube_count": 1000000,
+  "reviews_text_count": 29,
+  "ratings_count": 2668,
+  "suggestions_count": 303,
+  "alternative_names": [],
+  "metacritic_url": "",
+  "parents_count": 0,
+  "additions_count": 1,
+  "game_series_count": 1,
+  "user_game": null,
+  "reviews_count": 2697,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux"
+      }
+    },
+    {
+      "platform": {
+        "id": 7,
+        "name": "Nintendo",
+        "slug": "nintendo"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 80676,
+        "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+      },
+      "released_at": "2012-10-22",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 7,
+        "name": "Nintendo Switch",
+        "slug": "nintendo-switch",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5809,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      },
+      "released_at": "2012-10-22",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2012-10-22",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 7056,
+        "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+      },
+      "released_at": "2012-10-22",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 19,
+        "name": "PS Vita",
+        "slug": "ps-vita",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 1462,
+        "image_background": "https://media.rawg.io/media/games/b4e/b4e4c73d5aa4ec66bbf75375c4847a2b.jpg"
+      },
+      "released_at": "2012-10-22",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2012-10-22",
+      "requirements": {
+        "minimum": "Minimum:\nOS:Microsoft® Windows® XP / Vista / 7\nProcessor:1.2GHz processor\nMemory:512 MB RAM\nGraphics:DirectX 8-compatible graphics card with at least 32MB of video memory\nDirectX®:9.0c\nHard Drive:250 MB HD space\nAdditional:Microsoft Xbox 360 Controller or Direct Input compatible controller, OpenGL 2.x or better highly recommended.",
+        "recommended": "Recommended:\nOS:Microsoft® Windows® XP / Vista / 7\nProcessor:1.4GHz processor or faster\nMemory:1 GB RAM\nGraphics:DirectX 8-compatible graphics card with at least 32MB of video memory\nDirectX®:9.0c\nHard Drive:250 MB HD space\nAdditional:Microsoft Xbox 360 Controller or Direct Input compatible controller"
+      }
+    }
+  ],
+  "stores": [
+    {
+      "id": 25947,
+      "url": "",
+      "store": {
+        "id": 5,
+        "name": "GOG",
+        "slug": "gog",
+        "domain": "gog.com",
+        "games_count": 7770,
+        "image_background": "https://media.rawg.io/media/games/8e4/8e4de3f54ac659e08a7ba6a2b731682a.jpg"
+      }
+    },
+    {
+      "id": 3905,
+      "url": "",
+      "store": {
+        "id": 3,
+        "name": "PlayStation Store",
+        "slug": "playstation-store",
+        "domain": "store.playstation.com",
+        "games_count": 8092,
+        "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+      }
+    },
+    {
+      "id": 19491,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 214847,
+      "url": "",
+      "store": {
+        "id": 8,
+        "name": "Google Play",
+        "slug": "google-play",
+        "domain": "play.google.com",
+        "games_count": 17128,
+        "image_background": "https://media.rawg.io/media/games/021/021c4e21a1824d2526f925eff6324653.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 436,
+      "name": "Devolver Digital",
+      "slug": "devolver-digital",
+      "games_count": 61,
+      "image_background": "https://media.rawg.io/media/screenshots/2fc/2fc6994425146f9dba3133400b414e29.jpg"
+    },
+    {
+      "id": 5838,
+      "name": "Dennaton Games",
+      "slug": "dennaton-games",
+      "games_count": 6,
+      "image_background": "https://media.rawg.io/media/games/003/0031c0067559d41df19cf98ad87e02aa.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Shooter",
+      "slug": "shooter",
+      "games_count": 59655,
+      "image_background": "https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Arcade",
+      "slug": "arcade",
+      "games_count": 22733,
+      "image_background": "https://media.rawg.io/media/games/370/3703c683968a54f09630dcf03366ea35.jpg"
+    },
+    {
+      "id": 51,
+      "name": "Indie",
+      "slug": "indie",
+      "games_count": 87779,
+      "image_background": "https://media.rawg.io/media/games/ffe/ffed87105b14f5beff72ff44a7793fd5.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 40847,
+      "name": "Steam Achievements",
+      "slug": "steam-achievements",
+      "language": "eng",
+      "games_count": 52601,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 7808,
+      "name": "steam-trading-cards",
+      "slug": "steam-trading-cards",
+      "language": "eng",
+      "games_count": 7568,
+      "image_background": "https://media.rawg.io/media/games/8cc/8cce7c0e99dcc43d66c8efd42f9d03e3.jpg"
+    },
+    {
+      "id": 42,
+      "name": "Great Soundtrack",
+      "slug": "great-soundtrack",
+      "language": "eng",
+      "games_count": 3450,
+      "image_background": "https://media.rawg.io/media/games/120/1201a40e4364557b124392ee50317b99.jpg"
+    },
+    {
+      "id": 45,
+      "name": "2D",
+      "slug": "2d",
+      "language": "eng",
+      "games_count": 208566,
+      "image_background": "https://media.rawg.io/media/games/1f4/1f47a270b8f241e4676b14d39ec620f7.jpg"
+    },
+    {
+      "id": 40845,
+      "name": "Partial Controller Support",
+      "slug": "partial-controller-support",
+      "language": "eng",
+      "games_count": 14109,
+      "image_background": "https://media.rawg.io/media/games/960/960b601d9541cec776c5fa42a00bf6c4.jpg"
+    },
+    {
+      "id": 26,
+      "name": "Gore",
+      "slug": "gore",
+      "language": "eng",
+      "games_count": 6729,
+      "image_background": "https://media.rawg.io/media/games/569/56978b5a77f13aa2ec5d09ec81d01cad.jpg"
+    },
+    {
+      "id": 49,
+      "name": "Difficult",
+      "slug": "difficult",
+      "language": "eng",
+      "games_count": 14367,
+      "image_background": "https://media.rawg.io/media/games/04a/04a7e7e185fb51493bdcbe1693a8b3dc.jpg"
+    },
+    {
+      "id": 34,
+      "name": "Violent",
+      "slug": "violent",
+      "language": "eng",
+      "games_count": 7909,
+      "image_background": "https://media.rawg.io/media/games/cee/cee577e2097a59b77193fe2bce94667d.jpg"
+    },
+    {
+      "id": 122,
+      "name": "Pixel Graphics",
+      "slug": "pixel-graphics",
+      "language": "eng",
+      "games_count": 99702,
+      "image_background": "https://media.rawg.io/media/screenshots/2fc/2fc6994425146f9dba3133400b414e29.jpg"
+    },
+    {
+      "id": 74,
+      "name": "Retro",
+      "slug": "retro",
+      "language": "eng",
+      "games_count": 44854,
+      "image_background": "https://media.rawg.io/media/games/abd/abdb7e589f0a8ccd36c0582673120b1e.jpg"
+    },
+    {
+      "id": 336,
+      "name": "controller support",
+      "slug": "controller-support",
+      "language": "eng",
+      "games_count": 293,
+      "image_background": "https://media.rawg.io/media/screenshots/2fc/2fc6994425146f9dba3133400b414e29.jpg"
+    },
+    {
+      "id": 131,
+      "name": "Fast-Paced",
+      "slug": "fast-paced",
+      "language": "eng",
+      "games_count": 10843,
+      "image_background": "https://media.rawg.io/media/games/e04/e04963f3ac4c4fa83a1dc0b9231e50db.jpg"
+    },
+    {
+      "id": 61,
+      "name": "Top-Down",
+      "slug": "top-down",
+      "language": "eng",
+      "games_count": 28849,
+      "image_background": "https://media.rawg.io/media/games/0f4/0f4f4764555736eebfeb01571e44e99e.jpg"
+    },
+    {
+      "id": 337,
+      "name": "overlay",
+      "slug": "overlay",
+      "language": "eng",
+      "games_count": 217,
+      "image_background": "https://media.rawg.io/media/games/7ba/7baf4663962bad7197e2470d59a6e322.jpg"
+    },
+    {
+      "id": 46,
+      "name": "Surreal",
+      "slug": "surreal",
+      "language": "eng",
+      "games_count": 6707,
+      "image_background": "https://media.rawg.io/media/screenshots/65c/65c8b501f8c2a9c9386411d7b5210934.jpg"
+    },
+    {
+      "id": 136,
+      "name": "Music",
+      "slug": "music",
+      "language": "eng",
+      "games_count": 26326,
+      "image_background": "https://media.rawg.io/media/screenshots/dcc/dcce37f6d000c846c7aa23ccebf53a73.jpg"
+    },
+    {
+      "id": 224,
+      "name": "1980s",
+      "slug": "1980s",
+      "language": "eng",
+      "games_count": 3479,
+      "image_background": "https://media.rawg.io/media/games/d1e/d1e9fa31912b1b168adeef6ddb3875d0.jpg"
+    },
+    {
+      "id": 236,
+      "name": "Top-Down Shooter",
+      "slug": "top-down-shooter",
+      "language": "eng",
+      "games_count": 3259,
+      "image_background": "https://media.rawg.io/media/screenshots/4b3/4b3cbf42e305385dd6bdcde65daf7099.jpg"
+    },
+    {
+      "id": 286,
+      "name": "Psychedelic",
+      "slug": "psychedelic",
+      "language": "eng",
+      "games_count": 2870,
+      "image_background": "https://media.rawg.io/media/games/00a/00a7cd04f8376da1144416bcd5adb3af.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 1307,
+      "name": "Devolver Digital",
+      "slug": "devolver-digital",
+      "games_count": 195,
+      "image_background": "https://media.rawg.io/media/screenshots/017/017e1f2c593b4f1a036f96b9ccdbd500.jpg"
+    }
+  ],
+  "esrb_rating": null,
+  "clip": null,
+  "description_raw": "Several chapters of top-down shooter action, Hotline Miami is a violent game, where the player takes control of the unnamed man, that receives orders to clear out stages from bandits and mobsters, using every weapon he can get. Over the course of the game, the player will be able to collect the masks that provide buffs and abilities. Fluid and tight combat includes various melee and ranged weapons, that can be used as intended or just thrown at the enemy. Once Jacket, dubbed so for his distinct letterman jacket by fans, arrives at the mission, players will have to clear out every floor from the enemies, using rooms and doors for cover or ambushes. As the story moves on, Jackets mental health will visibly deteriorate, and he will be shown to suffer from hallucinations, which is in tone with acid 80’s theme."
+}

@@ -1,0 +1,496 @@
+{
+  "id": 41,
+  "slug": "little-nightmares",
+  "name": "Little Nightmares",
+  "name_original": "Little Nightmares",
+  "description": "<p>Heavily inspired by Limbo and Inside, Little Nightmares are telling a story of another lost child. Six is a starving little girl in a yellow raincoat, which is trapped in a mysterious vessel named the Maw. Players are taking control of Six’s movement, in order to help her escape the ship and dangerous inhabitants, that’s been kidnaping and preparing children to be served as a feast for the Guests. <br />\nThe control scheme is not including any combat moves, leaving players defenseless against any threat. Six can run, crawl, climb, push or pull, and in rare cases carry an object she can throw to stagger an enemy or solve a puzzle. The game gives players the ability to carry a lighted match at any time, inviting players to explore and search for the collectible statues. <br />\nLittle Nightmares have 3 DLC levels, expanding the game beyond the perspective of Six, where the Runaway Kid, a young boy, who is trying to catch up to Six and having his own adventure, going through the Maw in the extra chapters, named “The Depths”, “The Hideaway” and “The Residence.”</p>",
+  "metacritic": 81,
+  "metacritic_platforms": [],
+  "released": "2017-04-27",
+  "tba": false,
+  "updated": "2026-10-25T17:13:50",
+  "background_image": "https://media.rawg.io/media/games/8a0/8a02f84a5916ede2f923b88d5f8217ba.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/24c/24c10d2fa9f3dbb4b46ff2c26a9eb9fd.jpg",
+  "website": "http://www.little-nightmares.com",
+  "rating": 4.04,
+  "rating_top": 4,
+  "ratings": [
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 911,
+      "percent": 54.0
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 513,
+      "percent": 30.41
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 168,
+      "percent": 9.96
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 95,
+      "percent": 5.63
+    }
+  ],
+  "reactions": {
+    "1": 6,
+    "2": 2,
+    "3": 4,
+    "4": 3,
+    "5": 3,
+    "6": 2,
+    "8": 1,
+    "9": 5,
+    "10": 8,
+    "11": 2,
+    "12": 1,
+    "13": 1,
+    "15": 1,
+    "16": 1,
+    "17": 2
+  },
+  "added": 11720,
+  "added_by_status": {
+    "yet": 810,
+    "owned": 8485,
+    "beaten": 1559,
+    "toplay": 404,
+    "dropped": 341,
+    "playing": 121
+  },
+  "playtime": 3,
+  "screenshots_count": 47,
+  "movies_count": 3,
+  "creators_count": 10,
+  "achievements_count": 119,
+  "parent_achievements_count": 16,
+  "reddit_url": "",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 0,
+  "twitch_count": 118,
+  "youtube_count": 1000000,
+  "reviews_text_count": 33,
+  "ratings_count": 1654,
+  "suggestions_count": 350,
+  "alternative_names": [],
+  "metacritic_url": "",
+  "parents_count": 0,
+  "additions_count": 4,
+  "game_series_count": 5,
+  "user_game": null,
+  "reviews_count": 1687,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "iOS",
+        "slug": "ios"
+      }
+    },
+    {
+      "platform": {
+        "id": 7,
+        "name": "Nintendo",
+        "slug": "nintendo"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 3,
+        "name": "iOS",
+        "slug": "ios",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 77458,
+        "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
+      },
+      "released_at": "2023-12-12",
+      "requirements": {
+        "minimum": "iPhone X S, iPhone X S Max, iPhone X R, iPad 8 1 2, iPad 8 3 4, iPad 8 5 6, iPad 8 7 8, iPad Mini 5, iPad Mini 5 Cellular, iPad Air 3, iPad Air 3 Cellular, iPhone 1 1, iPhone 1 1 Pro, iPhone 1 1 Pro Max, iPhone SE Second Gen, iPad Pro Second Gen, iPad Pro Second Gen Cellular, iPad Pro Fourth Gen, iPad Pro Fourth Gen Cellular, iPhone 1 2 Mini, iPhone 1 2, iPhone 1 2 Pro, iPhone 1 2 Pro Max, iPad Air 4, iPad Air 4 Cellular, iPad Eighth Gen, iPad Eighth Gen Cellular, iPad Pro Third Gen, iPad Pro Third Gen Cellular, iPad Pro Fifth Gen, iPad Pro Fifth Gen Cellular, iPhone 1 3 Pro, iPhone 1 3 Pro Max, iPhone 1 3 Mini, iPhone 1 3, iPad Mini Sixth Gen, iPad Mini Sixth Gen Cellular, iPad Ninth Gen, iPad Ninth Gen Cellular, iPhone SE Third Gen, iPad Air Fifth Gen, iPad Air Fifth Gen Cellular, iPhone 1 4, iPhone 1 4 Plus, iPhone 1 4 Pro, iPhone 1 4 Pro Max, iPad Tenth Gen, iPad Tenth Gen Cellular, iPad Pro 1 1 Fourth Gen, iPad Pro 1 1 Fourth Gen Cellular, iPad Pro Sixth Gen, iPad Pro Sixth Gen Cellular, iPhone 1 5, iPhone 1 5 Plus, iPhone 1 5 Pro, iPhone 1 5 Pro Max, iPad Air 1 1 M 2, iPad Air 1 1 M 2 Cellular, iPad Air 1 3 M 2, iPad Air 1 3 M 2 Cellular, iPad Pro 1 1 M 4, iPad Pro 1 1 M 4 Cellular, iPad Pro 1 3 M 4, iPad Pro 1 3 M 4 Cellular"
+      }
+    },
+    {
+      "platform": {
+        "id": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 7056,
+        "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+      },
+      "released_at": "2017-04-27",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2017-04-27",
+      "requirements": {
+        "minimum": "Minimum:\nOS:  Windows 7, 64-bit\nProcessor:  Intel CPU Core i3\nMemory: 4 GB RAM\nGraphics: Nvidia GTX 460\nDirectX: Version 11\nNetwork: Broadband Internet connection\nStorage: 10 GB available space\nAdditional Notes: SSE4.2 required",
+        "recommended": "Recommended:\nOS:  Windows 7, 64-bit\nProcessor:  Intel CPU Core i7\nMemory: 8 GB RAM\nGraphics:  Nvidia GPU GeForce GTX 660\nDirectX: Version 11\nNetwork: Broadband Internet connection\nStorage: 10 GB available space\nAdditional Notes: SSE4.2 required"
+      }
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2017-04-27",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 7,
+        "name": "Nintendo Switch",
+        "slug": "nintendo-switch",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5809,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      },
+      "released_at": "2017-04-27",
+      "requirements": {}
+    }
+  ],
+  "stores": [
+    {
+      "id": 985929,
+      "url": "",
+      "store": {
+        "id": 4,
+        "name": "App Store",
+        "slug": "apple-appstore",
+        "domain": "apps.apple.com",
+        "games_count": 75594,
+        "image_background": "https://media.rawg.io/media/games/7a4/7a45e4cdc5b07f316d49cf147b083b27.jpg"
+      }
+    },
+    {
+      "id": 41,
+      "url": "",
+      "store": {
+        "id": 3,
+        "name": "PlayStation Store",
+        "slug": "playstation-store",
+        "domain": "store.playstation.com",
+        "games_count": 8092,
+        "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+      }
+    },
+    {
+      "id": 11257,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 26963,
+      "url": "",
+      "store": {
+        "id": 5,
+        "name": "GOG",
+        "slug": "gog",
+        "domain": "gog.com",
+        "games_count": 7770,
+        "image_background": "https://media.rawg.io/media/games/8e4/8e4de3f54ac659e08a7ba6a2b731682a.jpg"
+      }
+    },
+    {
+      "id": 25310,
+      "url": "",
+      "store": {
+        "id": 2,
+        "name": "Xbox Store",
+        "slug": "xbox-store",
+        "domain": "microsoft.com",
+        "games_count": 4944,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 386,
+      "name": "BANDAI NAMCO Entertainment America",
+      "slug": "bandai-namco-entertainment-america-inc",
+      "games_count": 138,
+      "image_background": "https://media.rawg.io/media/screenshots/104/104603a5c863d6fa6be4d4bb1fed6db6.jpeg"
+    },
+    {
+      "id": 458,
+      "name": "Playdigious",
+      "slug": "playdigious",
+      "games_count": 27,
+      "image_background": "https://media.rawg.io/media/screenshots/351/351ee0915fcd5a64e976791794039d5c.jpg"
+    },
+    {
+      "id": 4294,
+      "name": "Tarsier Studios",
+      "slug": "tarsier-studios",
+      "games_count": 17,
+      "image_background": "https://media.rawg.io/media/screenshots/924/924d300143e317c37d654dee4657ecc1.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Adventure",
+      "slug": "adventure",
+      "games_count": 152593,
+      "image_background": "https://media.rawg.io/media/games/5c0/5c0dd63002cb23f804aab327d40ef119.jpg"
+    },
+    {
+      "id": 83,
+      "name": "Platformer",
+      "slug": "platformer",
+      "games_count": 100953,
+      "image_background": "https://media.rawg.io/media/games/d5a/d5a24f9f71315427fa6e966fdd98dfa6.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 40847,
+      "name": "Steam Achievements",
+      "slug": "steam-achievements",
+      "language": "eng",
+      "games_count": 52601,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 40836,
+      "name": "Full controller support",
+      "slug": "full-controller-support",
+      "language": "eng",
+      "games_count": 24451,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 40849,
+      "name": "Steam Cloud",
+      "slug": "steam-cloud",
+      "language": "eng",
+      "games_count": 26266,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 7808,
+      "name": "steam-trading-cards",
+      "slug": "steam-trading-cards",
+      "language": "eng",
+      "games_count": 7568,
+      "image_background": "https://media.rawg.io/media/games/8cc/8cce7c0e99dcc43d66c8efd42f9d03e3.jpg"
+    },
+    {
+      "id": 42,
+      "name": "Great Soundtrack",
+      "slug": "great-soundtrack",
+      "language": "eng",
+      "games_count": 3450,
+      "image_background": "https://media.rawg.io/media/games/120/1201a40e4364557b124392ee50317b99.jpg"
+    },
+    {
+      "id": 118,
+      "name": "Story Rich",
+      "slug": "story-rich",
+      "language": "eng",
+      "games_count": 27538,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 149,
+      "name": "Third Person",
+      "slug": "third-person",
+      "language": "eng",
+      "games_count": 14852,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 16,
+      "name": "Horror",
+      "slug": "horror",
+      "language": "eng",
+      "games_count": 49444,
+      "image_background": "https://media.rawg.io/media/games/476/476178ef18ab0534771d099f51cdc694.jpg"
+    },
+    {
+      "id": 189,
+      "name": "Female Protagonist",
+      "slug": "female-protagonist",
+      "language": "eng",
+      "games_count": 15686,
+      "image_background": "https://media.rawg.io/media/games/b34/b3419c2706f8f8dbe40d08e23642ad06.jpg"
+    },
+    {
+      "id": 15,
+      "name": "Stealth",
+      "slug": "stealth",
+      "language": "eng",
+      "games_count": 7217,
+      "image_background": "https://media.rawg.io/media/games/f6b/f6bed028b02369d4cab548f4f9337e81.jpg"
+    },
+    {
+      "id": 41,
+      "name": "Dark",
+      "slug": "dark",
+      "language": "eng",
+      "games_count": 18905,
+      "image_background": "https://media.rawg.io/media/games/6a2/6a2e48933245e2cd3c92248c75c925e1.jpg"
+    },
+    {
+      "id": 17,
+      "name": "Survival Horror",
+      "slug": "survival-horror",
+      "language": "eng",
+      "games_count": 10043,
+      "image_background": "https://media.rawg.io/media/games/1be/1be575aa6de86de328433a63fb534d9a.jpg"
+    },
+    {
+      "id": 336,
+      "name": "controller support",
+      "slug": "controller-support",
+      "language": "eng",
+      "games_count": 293,
+      "image_background": "https://media.rawg.io/media/screenshots/2fc/2fc6994425146f9dba3133400b414e29.jpg"
+    },
+    {
+      "id": 111,
+      "name": "Short",
+      "slug": "short",
+      "language": "eng",
+      "games_count": 58253,
+      "image_background": "https://media.rawg.io/media/games/562/562553814dd54e001a541e4ee83a591c.jpg"
+    },
+    {
+      "id": 334,
+      "name": "achievements",
+      "slug": "achievements",
+      "language": "eng",
+      "games_count": 4938,
+      "image_background": "https://media.rawg.io/media/games/6cc/6cc68fa183b905ac9d85efb9797776f6.jpg"
+    },
+    {
+      "id": 83,
+      "name": "Puzzle-Platformer",
+      "slug": "puzzle-platformer",
+      "language": "eng",
+      "games_count": 9499,
+      "image_background": "https://media.rawg.io/media/games/23a/23acbd56da0c30bca0227967a5720c96.jpg"
+    },
+    {
+      "id": 116,
+      "name": "2.5D",
+      "slug": "25d",
+      "language": "eng",
+      "games_count": 2998,
+      "image_background": "https://media.rawg.io/media/games/04a/04a7e7e185fb51493bdcbe1693a8b3dc.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 8352,
+      "name": "Bandai Namco Entertainment",
+      "slug": "bandai-namco-entertainment",
+      "games_count": 625,
+      "image_background": "https://media.rawg.io/media/games/91b/91be1a00c767f9e3d79353e505d7f85a.jpg"
+    },
+    {
+      "id": 31896,
+      "name": "BANDAI NAMCO Entertainment US",
+      "slug": "bandai-namco-entertainment-us",
+      "games_count": 160,
+      "image_background": "https://media.rawg.io/media/games/27c/27cb94ed1763fec383fb99151580095a.jpg"
+    },
+    {
+      "id": 334,
+      "name": "Playdigious",
+      "slug": "playdigious",
+      "games_count": 25,
+      "image_background": "https://media.rawg.io/media/screenshots/351/351ee0915fcd5a64e976791794039d5c.jpg"
+    }
+  ],
+  "esrb_rating": null,
+  "clip": null,
+  "description_raw": "Heavily inspired by Limbo and Inside, Little Nightmares are telling a story of another lost child. Six is a starving little girl in a yellow raincoat, which is trapped in a mysterious vessel named the Maw. Players are taking control of Six’s movement, in order to help her escape the ship and dangerous inhabitants, that’s been kidnaping and preparing children to be served as a feast for the Guests. \nThe control scheme is not including any combat moves, leaving players defenseless against any threat. Six can run, crawl, climb, push or pull, and in rare cases carry an object she can throw to stagger an enemy or solve a puzzle. The game gives players the ability to carry a lighted match at any time, inviting players to explore and search for the collectible statues. \nLittle Nightmares have 3 DLC levels, expanding the game beyond the perspective of Six, where the Runaway Kid, a young boy, who is trying to catch up to Six and having his own adventure, going through the Maw in the extra chapters, named “The Depths”, “The Hideaway” and “The Residence.”"
+}

@@ -1,0 +1,532 @@
+{
+  "id": 10754,
+  "slug": "bioshock-remastered",
+  "name": "BioShock Remastered",
+  "name_original": "BioShock Remastered",
+  "description": "<p>BioShock is set in an alternate dimension in 1960. Our main protagonist Jack is the sole survivor of a plane crash in the Atlantic Ocean. With help, he gets to the Rapture - underwater city created by Andrew Ryan that wanted to create a utopia. After arriving in the city, however, he discovers Little Sisters and Big Daddies, and it is clear to Jack that there is something not okay with the city. </p>\n<p>Being a first-person shooter, BioShock works with an active weapon and a plasmid, on the other hand, giving the player the ability to use some supernatural powers and developing unique combos with it. Many of the weapons have different types of ammunition that are effective against some specific types of enemies. Same goes for plasmids, as you need to know weapon will be effective. By retrieving EVE, you will be able to fill your resources and use plasmid once more. Although the economics of the game is more complicated as you need to gather money for refilling resources and ADAM for purchasing new skills for your plasmid. In Remastered edition, games framerate and technical issues being fully fixed making this a modern-looking game.</p>",
+  "metacritic": null,
+  "metacritic_platforms": [],
+  "released": "2016-09-15",
+  "tba": false,
+  "updated": "2026-10-17T05:32:24",
+  "background_image": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/25a/25ac07efdbf90a2d7e626353ebadc565.jpg",
+  "website": "https://2k.com/en-US/game/bioshock-the-collection",
+  "rating": 4.24,
+  "rating_top": 5,
+  "ratings": [
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 676,
+      "percent": 46.69
+    },
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 582,
+      "percent": 40.19
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 119,
+      "percent": 8.22
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 71,
+      "percent": 4.9
+    }
+  ],
+  "reactions": {
+    "1": 2,
+    "3": 3,
+    "4": 4,
+    "9": 1,
+    "10": 1,
+    "13": 1,
+    "15": 1,
+    "19": 1
+  },
+  "added": 10950,
+  "added_by_status": {
+    "yet": 733,
+    "owned": 8310,
+    "beaten": 1282,
+    "toplay": 176,
+    "dropped": 339,
+    "playing": 110
+  },
+  "playtime": 4,
+  "screenshots_count": 5,
+  "movies_count": 0,
+  "creators_count": 0,
+  "achievements_count": 227,
+  "parent_achievements_count": 65,
+  "reddit_url": "https://www.reddit.com/r/Bioshock",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 125,
+  "twitch_count": 0,
+  "youtube_count": 1000000,
+  "reviews_text_count": 17,
+  "ratings_count": 1431,
+  "suggestions_count": 253,
+  "alternative_names": [],
+  "metacritic_url": "https://www.metacritic.com/game/bioshock-remastered/",
+  "parents_count": 3,
+  "additions_count": 0,
+  "game_series_count": 0,
+  "user_game": null,
+  "reviews_count": 1448,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    },
+    {
+      "platform": {
+        "id": 7,
+        "name": "Nintendo",
+        "slug": "nintendo"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 7056,
+        "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+      },
+      "released_at": "2016-09-15",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 7,
+        "name": "Nintendo Switch",
+        "slug": "nintendo-switch",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5809,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      },
+      "released_at": "2016-09-15",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2016-09-15",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2016-09-15",
+      "requirements": {
+        "minimum": "Minimum:\nOS: Windows 7 Service Pack 1 64-bit. Platform Update for Windows 7 SP1 and Windows Server 2008 R2 SP1\nProcessor: Intel E6750 Core 2 Duo 2.66 GHz / AMD Athlon X2 2.7 GHZ\nMemory: 4 GB RAM\nGraphics: 2GB AMD Radeon HD 7770 / 2GB NVIDIA GeForce GTX 670\nDirectX: Version 11\nStorage: 25 GB available space\nSound Card: DirectX Compatible Sound Device\nAdditional Notes: Other Requirements: Software installations required including DirectX and Microsoft Visual C++ 2010 &amp; 2012 Redistributable Package. Some system components such as mobile chipsets, integrated, and AGP graphics cards may be incompatible. Unlisted specifications may not be supported by publisher. ",
+        "recommended": "Recommended:\nOS: Windows 7 Service Pack 1 64-bit. Platform Update for Windows 7 SP1 and Windows Server 2008 R2 SP1\nProcessor: 3GHz Quad-Core\nMemory: 8 GB RAM\nGraphics: 2GB ATI Radeon HD 7970, 2GB NVIDIA GeForce GTX 770 or better\nDirectX: Version 11\nStorage: 25 GB available space\nSound Card: DirectX Compatible Sound Device"
+      }
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2016-09-15",
+      "requirements": {}
+    }
+  ],
+  "stores": [
+    {
+      "id": 828867,
+      "url": "",
+      "store": {
+        "id": 11,
+        "name": "Epic Games",
+        "slug": "epic-games",
+        "domain": "epicgames.com",
+        "games_count": 1461,
+        "image_background": "https://media.rawg.io/media/games/9dd/9ddabb34840ea9227556670606cf8ea3.jpg"
+      }
+    },
+    {
+      "id": 440395,
+      "url": "",
+      "store": {
+        "id": 3,
+        "name": "PlayStation Store",
+        "slug": "playstation-store",
+        "domain": "store.playstation.com",
+        "games_count": 8092,
+        "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+      }
+    },
+    {
+      "id": 525094,
+      "url": "",
+      "store": {
+        "id": 6,
+        "name": "Nintendo Store",
+        "slug": "nintendo",
+        "domain": "nintendo.com",
+        "games_count": 9162,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 11782,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 315633,
+      "url": "",
+      "store": {
+        "id": 4,
+        "name": "App Store",
+        "slug": "apple-appstore",
+        "domain": "apps.apple.com",
+        "games_count": 75594,
+        "image_background": "https://media.rawg.io/media/games/7a4/7a45e4cdc5b07f316d49cf147b083b27.jpg"
+      }
+    },
+    {
+      "id": 276209,
+      "url": "",
+      "store": {
+        "id": 5,
+        "name": "GOG",
+        "slug": "gog",
+        "domain": "gog.com",
+        "games_count": 7770,
+        "image_background": "https://media.rawg.io/media/games/8e4/8e4de3f54ac659e08a7ba6a2b731682a.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 18893,
+      "name": "Feral Interactive",
+      "slug": "feral-interactive",
+      "games_count": 107,
+      "image_background": "https://media.rawg.io/media/screenshots/a8c/a8cd58ee985ab6d509370bddada91dbd.jpeg"
+    },
+    {
+      "id": 1072,
+      "name": "Digital Extremes",
+      "slug": "digital-extremes",
+      "games_count": 21,
+      "image_background": "https://media.rawg.io/media/games/657/657574cd437df9102f511b3be095b0ea.jpg"
+    },
+    {
+      "id": 4149,
+      "name": "2K Australia",
+      "slug": "2k-australia",
+      "games_count": 12,
+      "image_background": "https://media.rawg.io/media/screenshots/f2e/f2e59a790f186dbeb0a0085ef4558385.jpg"
+    },
+    {
+      "id": 5114,
+      "name": "2K Marin",
+      "slug": "2k-marin",
+      "games_count": 8,
+      "image_background": "https://media.rawg.io/media/games/4ba/4ba9b4b68ffcc7019b112174883ba4d6.jpg"
+    },
+    {
+      "id": 9914,
+      "name": "Virtuos",
+      "slug": "virtuos",
+      "games_count": 21,
+      "image_background": "https://media.rawg.io/media/screenshots/93b/93b0b6d7033ddc93dc8031a65c35ff44.jpg"
+    },
+    {
+      "id": 5113,
+      "name": "2K China",
+      "slug": "2k-china",
+      "games_count": 8,
+      "image_background": "https://media.rawg.io/media/games/d43/d4357402bfcf2cf06650aab2e3bbf2a3.jpg"
+    },
+    {
+      "id": 4738,
+      "name": "Blind Squirrel",
+      "slug": "blind-squirrel",
+      "games_count": 2,
+      "image_background": "https://media.rawg.io/media/games/4ba/4ba9b4b68ffcc7019b112174883ba4d6.jpg"
+    },
+    {
+      "id": 4739,
+      "name": "2K Boston",
+      "slug": "2k-boston",
+      "games_count": 3,
+      "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 2,
+      "name": "Shooter",
+      "slug": "shooter",
+      "games_count": 59655,
+      "image_background": "https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 40847,
+      "name": "Steam Achievements",
+      "slug": "steam-achievements",
+      "language": "eng",
+      "games_count": 52601,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 40836,
+      "name": "Full controller support",
+      "slug": "full-controller-support",
+      "language": "eng",
+      "games_count": 24451,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 40849,
+      "name": "Steam Cloud",
+      "slug": "steam-cloud",
+      "language": "eng",
+      "games_count": 26266,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 42,
+      "name": "Great Soundtrack",
+      "slug": "great-soundtrack",
+      "language": "eng",
+      "games_count": 3450,
+      "image_background": "https://media.rawg.io/media/games/120/1201a40e4364557b124392ee50317b99.jpg"
+    },
+    {
+      "id": 24,
+      "name": "RPG",
+      "slug": "rpg",
+      "language": "eng",
+      "games_count": 26941,
+      "image_background": "https://media.rawg.io/media/games/26d/26d4437715bee60138dab4a7c8c59c92.jpg"
+    },
+    {
+      "id": 118,
+      "name": "Story Rich",
+      "slug": "story-rich",
+      "language": "eng",
+      "games_count": 27538,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 8,
+      "name": "First-Person",
+      "slug": "first-person",
+      "language": "eng",
+      "games_count": 37709,
+      "image_background": "https://media.rawg.io/media/games/b7b/b7b8381707152afc7d91f5d95de70e39.jpg"
+    },
+    {
+      "id": 32,
+      "name": "Sci-fi",
+      "slug": "sci-fi",
+      "language": "eng",
+      "games_count": 22219,
+      "image_background": "https://media.rawg.io/media/games/174/174fabfca02d5730531bab2153a7dfcb.jpg"
+    },
+    {
+      "id": 16,
+      "name": "Horror",
+      "slug": "horror",
+      "language": "eng",
+      "games_count": 49444,
+      "image_background": "https://media.rawg.io/media/games/476/476178ef18ab0534771d099f51cdc694.jpg"
+    },
+    {
+      "id": 30,
+      "name": "FPS",
+      "slug": "fps",
+      "language": "eng",
+      "games_count": 15082,
+      "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    {
+      "id": 193,
+      "name": "Classic",
+      "slug": "classic",
+      "language": "eng",
+      "games_count": 1843,
+      "image_background": "https://media.rawg.io/media/games/9c4/9c47f320eb73c9a02d462e12f6206b26.jpg"
+    },
+    {
+      "id": 41,
+      "name": "Dark",
+      "slug": "dark",
+      "language": "eng",
+      "games_count": 18905,
+      "image_background": "https://media.rawg.io/media/games/6a2/6a2e48933245e2cd3c92248c75c925e1.jpg"
+    },
+    {
+      "id": 119,
+      "name": "Dystopian",
+      "slug": "dystopian",
+      "language": "eng",
+      "games_count": 2731,
+      "image_background": "https://media.rawg.io/media/games/4e6/4e6e8e7f50c237d76f38f3c885dae3d2.jpg"
+    },
+    {
+      "id": 271,
+      "name": "Remake",
+      "slug": "remake",
+      "language": "eng",
+      "games_count": 1742,
+      "image_background": "https://media.rawg.io/media/games/509/509c81a5da92a8d0645d9e160d155017.jpg"
+    },
+    {
+      "id": 154,
+      "name": "Steampunk",
+      "slug": "steampunk",
+      "language": "eng",
+      "games_count": 1350,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 40834,
+      "name": "Commentary available",
+      "slug": "commentary-available",
+      "language": "eng",
+      "games_count": 300,
+      "image_background": "https://media.rawg.io/media/games/a12/a12f806432cb385bc286f0935c49cd14.jpg"
+    },
+    {
+      "id": 208,
+      "name": "Alternate History",
+      "slug": "alternate-history",
+      "language": "eng",
+      "games_count": 2228,
+      "image_background": "https://media.rawg.io/media/games/702/7020d1319d09e0c6a840aa08c5ce120f.jpg"
+    },
+    {
+      "id": 250,
+      "name": "Underwater",
+      "slug": "underwater",
+      "language": "eng",
+      "games_count": 2310,
+      "image_background": "https://media.rawg.io/media/screenshots/c4f/c4ff8e9330d00c0da3a64984cc71a827.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 358,
+      "name": "2K Games",
+      "slug": "2k-games",
+      "games_count": 222,
+      "image_background": "https://media.rawg.io/media/games/74c/74ca0ec569682a150f3c6f9f661fb6a5.jpg"
+    },
+    {
+      "id": 19651,
+      "name": "Feral Interactive",
+      "slug": "feral-interactive",
+      "games_count": 111,
+      "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+    },
+    {
+      "id": 11279,
+      "name": "Take Two Interactive",
+      "slug": "take-two-interactive",
+      "games_count": 62,
+      "image_background": "https://media.rawg.io/media/screenshots/3f5/3f5f1764b5321962e40d663e301769c1.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 4,
+    "name": "Mature",
+    "slug": "mature"
+  },
+  "clip": null,
+  "description_raw": "BioShock is set in an alternate dimension in 1960. Our main protagonist Jack is the sole survivor of a plane crash in the Atlantic Ocean. With help, he gets to the Rapture - underwater city created by Andrew Ryan that wanted to create a utopia. After arriving in the city, however, he discovers Little Sisters and Big Daddies, and it is clear to Jack that there is something not okay with the city. \n\nBeing a first-person shooter, BioShock works with an active weapon and a plasmid, on the other hand, giving the player the ability to use some supernatural powers and developing unique combos with it. Many of the weapons have different types of ammunition that are effective against some specific types of enemies. Same goes for plasmids, as you need to know weapon will be effective. By retrieving EVE, you will be able to fill your resources and use plasmid once more. Although the economics of the game is more complicated as you need to gather money for refilling resources and ADAM for purchasing new skills for your plasmid. In Remastered edition, games framerate and technical issues being fully fixed making this a modern-looking game."
+}

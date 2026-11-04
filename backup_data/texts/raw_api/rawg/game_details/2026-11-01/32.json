@@ -1,0 +1,659 @@
+{
+  "id": 32,
+  "slug": "destiny-2",
+  "name": "Destiny 2",
+  "name_original": "Destiny 2",
+  "description": "<p>Destiny 2 is an online multiplayer first-person shooter. You take on the role of a Guardian that needs to protect the last city on Earth from alien invaders. The game follows its predecessor, Destiny. The goal of the game is to return the Light that was stolen from the Guardians by the aliens.<br />\nDestiny 2 features two main activity types: player versus environment and player versus player. PvE is focused on exploration, story missions interaction with NPCs and side quests. PvP features 4v4 team matches in different modes. The game also allows taking part in group missions, such as three-player strikes and six-player raids.<br />\nDestiny 2 has a strong RPG aspect that includes character customization and development. There are three classes in the game - Warlock, Hunter, and Titan; they provide different playstyles depending on their specialization and unique abilities. To develop the character you can gain experience points completing the story and side missions.</p>",
+  "metacritic": 82,
+  "metacritic_platforms": [],
+  "released": "2017-09-06",
+  "tba": false,
+  "updated": "2026-10-28T02:05:46",
+  "background_image": "https://media.rawg.io/media/games/34b/34b1f1850a1c06fd971bc6ab3ac0ce0e.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/9dd/9dd2669387f9a1519dfda2a0b7030e45.jpg",
+  "website": "https://www.bungie.net/7/en/Destiny/NewLight",
+  "rating": 3.52,
+  "rating_top": 4,
+  "ratings": [
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 1190,
+      "percent": 44.03
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 887,
+      "percent": 32.82
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 364,
+      "percent": 13.47
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 262,
+      "percent": 9.69
+    }
+  ],
+  "reactions": {
+    "1": 2,
+    "2": 3,
+    "3": 9,
+    "4": 1,
+    "5": 1,
+    "6": 1,
+    "7": 3,
+    "8": 5,
+    "9": 2,
+    "11": 1,
+    "12": 3,
+    "13": 1,
+    "14": 3,
+    "15": 6,
+    "16": 5,
+    "18": 1,
+    "21": 4
+  },
+  "added": 14605,
+  "added_by_status": {
+    "yet": 485,
+    "owned": 11102,
+    "beaten": 811,
+    "toplay": 178,
+    "dropped": 1617,
+    "playing": 412
+  },
+  "playtime": 6,
+  "screenshots_count": 21,
+  "movies_count": 0,
+  "creators_count": 21,
+  "achievements_count": 124,
+  "parent_achievements_count": 21,
+  "reddit_url": "https://www.reddit.com/r/destiny2/",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 9824,
+  "twitch_count": 117,
+  "youtube_count": 1000000,
+  "reviews_text_count": 27,
+  "ratings_count": 2676,
+  "suggestions_count": 1224,
+  "alternative_names": [
+    "Destiny 2: New Light",
+    "Destiny: Guardians"
+  ],
+  "metacritic_url": "",
+  "parents_count": 0,
+  "additions_count": 7,
+  "game_series_count": 1,
+  "user_game": null,
+  "reviews_count": 2703,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 14,
+        "name": "Web",
+        "slug": "web"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 7056,
+        "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+      },
+      "released_at": "2017-09-06",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2017-09-06",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2017-09-06",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 171,
+        "name": "Web",
+        "slug": "web",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 260067,
+        "image_background": "https://media.rawg.io/media/games/8ba/8ba1178d043aa752838d68b14fffb922.jpg"
+      },
+      "released_at": "2017-09-06",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 186,
+        "name": "Xbox Series S/X",
+        "slug": "xbox-series-x",
+        "image": null,
+        "year_end": null,
+        "year_start": 2020,
+        "games_count": 1307,
+        "image_background": "https://media.rawg.io/media/games/253/2534a46f3da7fa7c315f1387515ca393.jpg"
+      },
+      "released_at": "2017-09-06",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 187,
+        "name": "PlayStation 5",
+        "slug": "playstation5",
+        "image": null,
+        "year_end": null,
+        "year_start": 2020,
+        "games_count": 1571,
+        "image_background": "https://media.rawg.io/media/games/9fb/9fbf956a16249def7625ab5dc3d09515.jpg"
+      },
+      "released_at": "2017-09-06",
+      "requirements": {}
+    }
+  ],
+  "stores": [
+    {
+      "id": 837910,
+      "url": "",
+      "store": {
+        "id": 11,
+        "name": "Epic Games",
+        "slug": "epic-games",
+        "domain": "epicgames.com",
+        "games_count": 1461,
+        "image_background": "https://media.rawg.io/media/games/9dd/9ddabb34840ea9227556670606cf8ea3.jpg"
+      }
+    },
+    {
+      "id": 32,
+      "url": "",
+      "store": {
+        "id": 3,
+        "name": "PlayStation Store",
+        "slug": "playstation-store",
+        "domain": "store.playstation.com",
+        "games_count": 8092,
+        "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+      }
+    },
+    {
+      "id": 808,
+      "url": "",
+      "store": {
+        "id": 2,
+        "name": "Xbox Store",
+        "slug": "xbox-store",
+        "domain": "microsoft.com",
+        "games_count": 4944,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 326831,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 3232,
+      "name": "Bungie",
+      "slug": "bungie-inc",
+      "games_count": 30,
+      "image_background": "https://media.rawg.io/media/games/34b/34b1f1850a1c06fd971bc6ab3ac0ce0e.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Shooter",
+      "slug": "shooter",
+      "games_count": 59655,
+      "image_background": "https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Multiplayer",
+      "slug": "multiplayer",
+      "language": "eng",
+      "games_count": 42845,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 40836,
+      "name": "Full controller support",
+      "slug": "full-controller-support",
+      "language": "eng",
+      "games_count": 24451,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 42,
+      "name": "Great Soundtrack",
+      "slug": "great-soundtrack",
+      "language": "eng",
+      "games_count": 3450,
+      "image_background": "https://media.rawg.io/media/games/120/1201a40e4364557b124392ee50317b99.jpg"
+    },
+    {
+      "id": 18,
+      "name": "Co-op",
+      "slug": "co-op",
+      "language": "eng",
+      "games_count": 14562,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 36,
+      "name": "Open World",
+      "slug": "open-world",
+      "language": "eng",
+      "games_count": 9356,
+      "image_background": "https://media.rawg.io/media/games/ee3/ee3e10193aafc3230ba1cae426967d10.jpg"
+    },
+    {
+      "id": 411,
+      "name": "cooperative",
+      "slug": "cooperative",
+      "language": "eng",
+      "games_count": 6673,
+      "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    {
+      "id": 8,
+      "name": "First-Person",
+      "slug": "first-person",
+      "language": "eng",
+      "games_count": 37709,
+      "image_background": "https://media.rawg.io/media/games/b7b/b7b8381707152afc7d91f5d95de70e39.jpg"
+    },
+    {
+      "id": 32,
+      "name": "Sci-fi",
+      "slug": "sci-fi",
+      "language": "eng",
+      "games_count": 22219,
+      "image_background": "https://media.rawg.io/media/games/174/174fabfca02d5730531bab2153a7dfcb.jpg"
+    },
+    {
+      "id": 30,
+      "name": "FPS",
+      "slug": "fps",
+      "language": "eng",
+      "games_count": 15082,
+      "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Online Co-Op",
+      "slug": "online-co-op",
+      "language": "eng",
+      "games_count": 7825,
+      "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Exploration",
+      "slug": "exploration",
+      "language": "eng",
+      "games_count": 29562,
+      "image_background": "https://media.rawg.io/media/games/b7d/b7d3f1715fa8381a4e780173a197a615.jpg"
+    },
+    {
+      "id": 79,
+      "name": "Free to Play",
+      "slug": "free-to-play",
+      "language": "eng",
+      "games_count": 10074,
+      "image_background": "https://media.rawg.io/media/games/dcb/dcbb67f371a9a28ea38ffd73ee0f53f3.jpg"
+    },
+    {
+      "id": 397,
+      "name": "Online multiplayer",
+      "slug": "online-multiplayer",
+      "language": "eng",
+      "games_count": 3804,
+      "image_background": "https://media.rawg.io/media/games/9fb/9fbf956a16249def7625ab5dc3d09515.jpg"
+    },
+    {
+      "id": 69,
+      "name": "Action-Adventure",
+      "slug": "action-adventure",
+      "language": "eng",
+      "games_count": 21216,
+      "image_background": "https://media.rawg.io/media/games/b45/b45575f34285f2c4479c9a5f719d972e.jpg"
+    },
+    {
+      "id": 157,
+      "name": "PvP",
+      "slug": "pvp",
+      "language": "eng",
+      "games_count": 12220,
+      "image_background": "https://media.rawg.io/media/games/ac7/ac7b8327343da12c971cfc418f390a11.jpg"
+    },
+    {
+      "id": 25,
+      "name": "Space",
+      "slug": "space",
+      "language": "eng",
+      "games_count": 44328,
+      "image_background": "https://media.rawg.io/media/games/174/1743b3dd185bda4a7be349347d4064df.jpg"
+    },
+    {
+      "id": 1465,
+      "name": "combat",
+      "slug": "combat",
+      "language": "eng",
+      "games_count": 16689,
+      "image_background": "https://media.rawg.io/media/games/34b/34b1f1850a1c06fd971bc6ab3ac0ce0e.jpg"
+    },
+    {
+      "id": 167,
+      "name": "Futuristic",
+      "slug": "futuristic",
+      "language": "eng",
+      "games_count": 6991,
+      "image_background": "https://media.rawg.io/media/games/e1f/e1ffbeb1bac25b19749ad285ca29e158.jpg"
+    },
+    {
+      "id": 172,
+      "name": "Aliens",
+      "slug": "aliens",
+      "language": "eng",
+      "games_count": 7573,
+      "image_background": "https://media.rawg.io/media/screenshots/bf7/bf71c819eace914e6c42ae3ecb667308.jpg"
+    },
+    {
+      "id": 406,
+      "name": "Story",
+      "slug": "story",
+      "language": "eng",
+      "games_count": 11629,
+      "image_background": "https://media.rawg.io/media/games/708/7080e6c87e0825cb02888bf3c44b3889.jpg"
+    },
+    {
+      "id": 478,
+      "name": "3rd-Person Perspective",
+      "slug": "3rd-person-perspective",
+      "language": "eng",
+      "games_count": 86,
+      "image_background": "https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg"
+    },
+    {
+      "id": 413,
+      "name": "online",
+      "slug": "online",
+      "language": "eng",
+      "games_count": 6554,
+      "image_background": "https://media.rawg.io/media/screenshots/772/77272915ed66e464986ad6afcdf52407.jpg"
+    },
+    {
+      "id": 158,
+      "name": "MMORPG",
+      "slug": "mmorpg",
+      "language": "eng",
+      "games_count": 1649,
+      "image_background": "https://media.rawg.io/media/games/f63/f63bb0916d982394dfedc1900375c88e.jpg"
+    },
+    {
+      "id": 171,
+      "name": "PvE",
+      "slug": "pve",
+      "language": "eng",
+      "games_count": 8197,
+      "image_background": "https://media.rawg.io/media/games/95a/95a10817d1fc648cff1153f3fa8ef6c5.jpg"
+    },
+    {
+      "id": 98,
+      "name": "Loot",
+      "slug": "loot",
+      "language": "eng",
+      "games_count": 2943,
+      "image_background": "https://media.rawg.io/media/games/920/92039cd19460532b76f6244b2bb3e4ac.jpg"
+    },
+    {
+      "id": 205,
+      "name": "Lore-Rich",
+      "slug": "lore-rich",
+      "language": "eng",
+      "games_count": 2284,
+      "image_background": "https://media.rawg.io/media/games/466/4667f17fdee9ebbcea2049e54f8e2b96.jpg"
+    },
+    {
+      "id": 2030,
+      "name": "city",
+      "slug": "city",
+      "language": "eng",
+      "games_count": 9310,
+      "image_background": "https://media.rawg.io/media/games/b5a/b5a1226bfd971284a735a4a0969086b3.jpg"
+    },
+    {
+      "id": 5816,
+      "name": "console",
+      "slug": "console",
+      "language": "eng",
+      "games_count": 1390,
+      "image_background": "https://media.rawg.io/media/games/d51/d51ada3b94bfd617bf91d4344ab81ce9.jpg"
+    },
+    {
+      "id": 744,
+      "name": "friends",
+      "slug": "friends",
+      "language": "eng",
+      "games_count": 15199,
+      "image_background": "https://media.rawg.io/media/games/dd4/dd43f221a21fce6eb3d27381569779d5.jpg"
+    },
+    {
+      "id": 578,
+      "name": "Masterpiece",
+      "slug": "masterpiece",
+      "language": "eng",
+      "games_count": 303,
+      "image_background": "https://media.rawg.io/media/games/a4b/a4bb55f42fe837ae7bf1307e7b41cc85.jpg"
+    },
+    {
+      "id": 3109,
+      "name": "weapons",
+      "slug": "weapons",
+      "language": "eng",
+      "games_count": 2336,
+      "image_background": "https://media.rawg.io/media/games/6b1/6b14dc4cc1785e396580c69165e55d2d.jpg"
+    },
+    {
+      "id": 1484,
+      "name": "skill",
+      "slug": "skill",
+      "language": "eng",
+      "games_count": 3539,
+      "image_background": "https://media.rawg.io/media/games/6b4/6b4353172a07d3c4c83fa731f7ddaee6.jpg"
+    },
+    {
+      "id": 3046,
+      "name": "destroy",
+      "slug": "destroy",
+      "language": "eng",
+      "games_count": 4621,
+      "image_background": "https://media.rawg.io/media/screenshots/d78/d780252de14a2d9d7a53284bd32d6b94.jpg"
+    },
+    {
+      "id": 1743,
+      "name": "collect",
+      "slug": "collect",
+      "language": "eng",
+      "games_count": 8089,
+      "image_background": "https://media.rawg.io/media/games/34b/34b1f1850a1c06fd971bc6ab3ac0ce0e.jpg"
+    },
+    {
+      "id": 2184,
+      "name": "hunt",
+      "slug": "hunt",
+      "language": "eng",
+      "games_count": 2363,
+      "image_background": "https://media.rawg.io/media/games/163/163004f22c5bd859a962b9187c967284.jpg"
+    },
+    {
+      "id": 754,
+      "name": "gun",
+      "slug": "gun",
+      "language": "eng",
+      "games_count": 3221,
+      "image_background": "https://media.rawg.io/media/screenshots/ad9/ad94ac60de3ce1cd995df7e897a3c74a.jpg"
+    },
+    {
+      "id": 1527,
+      "name": "rain",
+      "slug": "rain",
+      "language": "eng",
+      "games_count": 870,
+      "image_background": "https://media.rawg.io/media/screenshots/7b1/7b1d0f5e157ceb1937878cc8f0b95142.jpg"
+    },
+    {
+      "id": 18426,
+      "name": "enemy",
+      "slug": "enemy",
+      "language": "eng",
+      "games_count": 2607,
+      "image_background": "https://media.rawg.io/media/screenshots/399/399fc6a2a51d4bcad25c9d9d56e94bd3.jpg"
+    },
+    {
+      "id": 691,
+      "name": "quick",
+      "slug": "quick",
+      "language": "eng",
+      "games_count": 932,
+      "image_background": "https://media.rawg.io/media/screenshots/6bd/6bd22b4673875b836639941e6a0e7e05.jpg"
+    },
+    {
+      "id": 2863,
+      "name": "darkness",
+      "slug": "darkness",
+      "language": "eng",
+      "games_count": 492,
+      "image_background": "https://media.rawg.io/media/screenshots/ead/eadedfa15d4d08212995d06aca94e3f0.jpg"
+    },
+    {
+      "id": 6580,
+      "name": "defender",
+      "slug": "defender",
+      "language": "eng",
+      "games_count": 185,
+      "image_background": "https://media.rawg.io/media/screenshots/682/682672d2ec65f478dc89ae7d2fefe359.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 10830,
+      "name": "Activision Blizzard",
+      "slug": "activision-blizzard",
+      "games_count": 693,
+      "image_background": "https://media.rawg.io/media/games/4ea/4ea507ceebeabb43edbc09468f5aaac6.jpg"
+    },
+    {
+      "id": 34753,
+      "name": "Bungie",
+      "slug": "bungie",
+      "games_count": 12,
+      "image_background": "https://media.rawg.io/media/games/6ae/6ae2cede5020fa0406db96a3dde4fb61.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 3,
+    "name": "Teen",
+    "slug": "teen"
+  },
+  "clip": null,
+  "description_raw": "Destiny 2 is an online multiplayer first-person shooter. You take on the role of a Guardian that needs to protect the last city on Earth from alien invaders. The game follows its predecessor, Destiny. The goal of the game is to return the Light that was stolen from the Guardians by the aliens.\nDestiny 2 features two main activity types: player versus environment and player versus player. PvE is focused on exploration, story missions interaction with NPCs and side quests. PvP features 4v4 team matches in different modes. The game also allows taking part in group missions, such as three-player strikes and six-player raids.\nDestiny 2 has a strong RPG aspect that includes character customization and development. There are three classes in the game - Warlock, Hunter, and Titan; they provide different playstyles depending on their specialization and unique abilities. To develop the character you can gain experience points completing the story and side missions."
+}

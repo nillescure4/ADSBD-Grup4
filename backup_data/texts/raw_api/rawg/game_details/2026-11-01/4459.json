@@ -1,0 +1,463 @@
+{
+  "id": 4459,
+  "slug": "grand-theft-auto-iv",
+  "name": "Grand Theft Auto IV",
+  "name_original": "Grand Theft Auto IV",
+  "description": "<p>Every crime story is a story of a search for success. The player will become Niko Bellic, immigrant arriving at the Liberty City to reunite with his cousin Roman and find the man that betrayed him and his army unit fifteen years prior to the events of the game. While protecting his cousin, Niko has to deal with loan sharks, Russian mobsters, and other gangs. After the third game, GTA brought more realism to the player, in order to make the city and its people look more believable. Street vendors on every corner will sell food that replenishes health, bars with playable dart boards, bowling alleys and even comedy clubs and movie theatres. Open world will allow players not only hang out with important NPC in order to receive bonuses and unlocks but taking girls on the dates as well, to help Niko settle. Multiplayer mode allows up to 32 players to explore the copy of the single-player city and initiate multiplayer activities, like races or Deathmatches.</p>",
+  "metacritic": 95,
+  "metacritic_platforms": [
+    {
+      "metascore": 98,
+      "url": "https://www.metacritic.com/game/xbox-360/grand-theft-auto-iv",
+      "platform": {
+        "platform": 14,
+        "name": "Xbox 360",
+        "slug": "xbox360"
+      }
+    },
+    {
+      "metascore": 90,
+      "url": "https://www.metacritic.com/game/pc/grand-theft-auto-iv",
+      "platform": {
+        "platform": 4,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "metascore": 98,
+      "url": "https://www.metacritic.com/game/playstation-3/grand-theft-auto-iv",
+      "platform": {
+        "platform": 16,
+        "name": "PlayStation 3",
+        "slug": "playstation3"
+      }
+    }
+  ],
+  "released": "2008-04-29",
+  "tba": false,
+  "updated": "2026-10-30T12:00:07",
+  "background_image": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/85c/85cc6203e2735d51ec112088e664f3c5.jpg",
+  "website": "http://www.rockstargames.com/iv",
+  "rating": 4.26,
+  "rating_top": 4,
+  "ratings": [
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 1415,
+      "percent": 44.74
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 1359,
+      "percent": 42.97
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 323,
+      "percent": 10.21
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 66,
+      "percent": 2.09
+    }
+  ],
+  "reactions": {
+    "1": 6,
+    "2": 1,
+    "3": 8,
+    "4": 5,
+    "6": 2,
+    "7": 1,
+    "8": 1,
+    "9": 3,
+    "10": 4,
+    "11": 8,
+    "12": 10,
+    "13": 1,
+    "15": 4,
+    "16": 3,
+    "17": 2,
+    "18": 2,
+    "21": 1
+  },
+  "added": 13270,
+  "added_by_status": {
+    "yet": 393,
+    "owned": 8348,
+    "beaten": 2972,
+    "toplay": 277,
+    "dropped": 1155,
+    "playing": 125
+  },
+  "playtime": 10,
+  "screenshots_count": 34,
+  "movies_count": 0,
+  "creators_count": 8,
+  "achievements_count": 174,
+  "parent_achievements_count": 55,
+  "reddit_url": "https://www.reddit.com/r/GTA/",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 4397,
+  "twitch_count": 114,
+  "youtube_count": 1000000,
+  "reviews_text_count": 35,
+  "ratings_count": 3128,
+  "suggestions_count": 506,
+  "alternative_names": [
+    "GTA 4",
+    "GTA IV",
+    "Grand Theft Auto 4"
+  ],
+  "metacritic_url": "https://www.metacritic.com/game/playstation-3/grand-theft-auto-iv",
+  "parents_count": 0,
+  "additions_count": 4,
+  "game_series_count": 12,
+  "user_game": null,
+  "reviews_count": 3163,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 14,
+        "name": "Xbox 360",
+        "slug": "xbox360",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 2833,
+        "image_background": "https://media.rawg.io/media/games/5c0/5c0dd63002cb23f804aab327d40ef119.jpg"
+      },
+      "released_at": "2008-04-29",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2008-04-29",
+      "requirements": {
+        "minimum": "OS: Windows Vista - Service Pack 1 / Windows XP - Service Pack 3                    \nProcessor: Intel Core 2 Duo 1.8GHz, AMD Athlon X2 64 2.4GHz                    \nMemory: 1.5GB XP / 1.5GB Vista                    \nGraphics: 256MB Nvidia 7900 / 256MB ATI X1900                    \nDirectX Version: DirectX 9.0c Compliant Card                     \nHard Drive: 16GB of Hard Disc Space                     \nSound Card: 5.1 Channel Audio Card                     \nOther Requirements: Initial activation requires internet connection; Online play requires log-in to Games For Windows - Live and Rockstar Games Social Club (13+ to register); software installations required including Adobe Flash, DirectX, Microsoft’s .NET Framework 3.0, Games For Windows - LIVE, and Internet Explorer.                    "
+      }
+    },
+    {
+      "platform": {
+        "id": 16,
+        "name": "PlayStation 3",
+        "slug": "playstation3",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 3209,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      },
+      "released_at": "2008-04-29",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2008-04-29",
+      "requirements": {}
+    }
+  ],
+  "stores": [
+    {
+      "id": 4787,
+      "url": "",
+      "store": {
+        "id": 3,
+        "name": "PlayStation Store",
+        "slug": "playstation-store",
+        "domain": "store.playstation.com",
+        "games_count": 8092,
+        "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+      }
+    },
+    {
+      "id": 465944,
+      "url": "",
+      "store": {
+        "id": 2,
+        "name": "Xbox Store",
+        "slug": "xbox-store",
+        "domain": "microsoft.com",
+        "games_count": 4944,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 17290,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 42864,
+      "url": "",
+      "store": {
+        "id": 7,
+        "name": "Xbox 360 Store",
+        "slug": "xbox360",
+        "domain": "marketplace.xbox.com",
+        "games_count": 1915,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 3524,
+      "name": "Rockstar North",
+      "slug": "rockstar-north",
+      "games_count": 30,
+      "image_background": "https://media.rawg.io/media/screenshots/b98/b98adb52b2123a14d1c88e828a6b49f3.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Adventure",
+      "slug": "adventure",
+      "games_count": 152593,
+      "image_background": "https://media.rawg.io/media/games/5c0/5c0dd63002cb23f804aab327d40ef119.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Multiplayer",
+      "slug": "multiplayer",
+      "language": "eng",
+      "games_count": 42845,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 18,
+      "name": "Co-op",
+      "slug": "co-op",
+      "language": "eng",
+      "games_count": 14562,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 36,
+      "name": "Open World",
+      "slug": "open-world",
+      "language": "eng",
+      "games_count": 9356,
+      "image_background": "https://media.rawg.io/media/games/ee3/ee3e10193aafc3230ba1cae426967d10.jpg"
+    },
+    {
+      "id": 411,
+      "name": "cooperative",
+      "slug": "cooperative",
+      "language": "eng",
+      "games_count": 6673,
+      "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    {
+      "id": 149,
+      "name": "Third Person",
+      "slug": "third-person",
+      "language": "eng",
+      "games_count": 14852,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 40845,
+      "name": "Partial Controller Support",
+      "slug": "partial-controller-support",
+      "language": "eng",
+      "games_count": 14109,
+      "image_background": "https://media.rawg.io/media/games/960/960b601d9541cec776c5fa42a00bf6c4.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Funny",
+      "slug": "funny",
+      "language": "eng",
+      "games_count": 29028,
+      "image_background": "https://media.rawg.io/media/games/46d/46d98e6910fbc0706e2948a7cc9b10c5.jpg"
+    },
+    {
+      "id": 26,
+      "name": "Gore",
+      "slug": "gore",
+      "language": "eng",
+      "games_count": 6729,
+      "image_background": "https://media.rawg.io/media/games/569/56978b5a77f13aa2ec5d09ec81d01cad.jpg"
+    },
+    {
+      "id": 193,
+      "name": "Classic",
+      "slug": "classic",
+      "language": "eng",
+      "games_count": 1843,
+      "image_background": "https://media.rawg.io/media/games/9c4/9c47f320eb73c9a02d462e12f6206b26.jpg"
+    },
+    {
+      "id": 37,
+      "name": "Sandbox",
+      "slug": "sandbox",
+      "language": "eng",
+      "games_count": 8615,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 150,
+      "name": "Third-Person Shooter",
+      "slug": "third-person-shooter",
+      "language": "eng",
+      "games_count": 4199,
+      "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
+    },
+    {
+      "id": 62,
+      "name": "Moddable",
+      "slug": "moddable",
+      "language": "eng",
+      "games_count": 1149,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 144,
+      "name": "Crime",
+      "slug": "crime",
+      "language": "eng",
+      "games_count": 3306,
+      "image_background": "https://media.rawg.io/media/games/960/960b601d9541cec776c5fa42a00bf6c4.jpg"
+    },
+    {
+      "id": 148,
+      "name": "Dark Humor",
+      "slug": "dark-humor",
+      "language": "eng",
+      "games_count": 3819,
+      "image_background": "https://media.rawg.io/media/games/6bc/6bc337100b6f6b7afb638bc0806c0b6d.jpg"
+    },
+    {
+      "id": 62348,
+      "name": "first person mod",
+      "slug": "first-person-mod",
+      "language": "eng",
+      "games_count": 14,
+      "image_background": "https://media.rawg.io/media/games/a3a/a3a13c2a388a44a28401e8bd705eec77.jpg"
+    },
+    {
+      "id": 153,
+      "name": "Satire",
+      "slug": "satire",
+      "language": "eng",
+      "games_count": 1597,
+      "image_background": "https://media.rawg.io/media/games/e2b/e2b2bf36ff4af8f8495d2f4e08b1d392.jpg"
+    },
+    {
+      "id": 321,
+      "name": "Bowling",
+      "slug": "bowling",
+      "language": "eng",
+      "games_count": 230,
+      "image_background": "https://media.rawg.io/media/screenshots/fa7/fa7f45a0c0e38986662e39728efe8254.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 2155,
+      "name": "Rockstar Games",
+      "slug": "rockstar-games",
+      "games_count": 83,
+      "image_background": "https://media.rawg.io/media/games/bcd/bcdadb5dd2be66dd4dd1f657275b3f8e.jpg"
+    },
+    {
+      "id": 11279,
+      "name": "Take Two Interactive",
+      "slug": "take-two-interactive",
+      "games_count": 62,
+      "image_background": "https://media.rawg.io/media/screenshots/3f5/3f5f1764b5321962e40d663e301769c1.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 4,
+    "name": "Mature",
+    "slug": "mature"
+  },
+  "clip": null,
+  "description_raw": "Every crime story is a story of a search for success. The player will become Niko Bellic, immigrant arriving at the Liberty City to reunite with his cousin Roman and find the man that betrayed him and his army unit fifteen years prior to the events of the game. While protecting his cousin, Niko has to deal with loan sharks, Russian mobsters, and other gangs. After the third game, GTA brought more realism to the player, in order to make the city and its people look more believable. Street vendors on every corner will sell food that replenishes health, bars with playable dart boards, bowling alleys and even comedy clubs and movie theatres. Open world will allow players not only hang out with important NPC in order to receive bonuses and unlocks but taking girls on the dates as well, to help Niko settle. Multiplayer mode allows up to 32 players to explore the copy of the single-player city and initiate multiplayer activities, like races or Deathmatches."
+}

@@ -1,0 +1,468 @@
+{
+  "id": 7689,
+  "slug": "rise-of-the-tomb-raider",
+  "name": "Rise of the Tomb Raider",
+  "name_original": "Rise of the Tomb Raider",
+  "description": "<p>Rise of the Tomb Raider is the eleventh entry in the franchise, being a sequel to its predecessor, Tomb Raider, a reboot of the franchise. This story follows Lara Croft, one year after battling her supernatural experiences in Yamatai. This time she is trying to find the legendary city of Kitezh in Siberia, Russia. The legend behind the city begins in the 12th century and still comes nowadays, that this ancient city grants with a promise of immortality. While Lara tries to solve the mystery of Siberia, she encounters an organisation called Trinity. They want to retrieve this gift to themselves. Following the notes of her father, Lara tries to discover the secrets of the ancient city and stop Trinity in doing so.</p>\n<p>Exploring the Soviet motive, even more, the game has the DLC&#39;s - Baba Yaga, the Temple of the Witch, which follows Lara in the Soviet mine and confronting the legendary witch of Russian folk-tales, Cold Darkness Awakened, the story about a secret biological weapon and Blood Ties and Lara&#39;s Nightmare - a fight for ownership of the Croft estate. </p>\n<p>Besides craftmanship and exploring, the game focuses on a very progressive combat system giving a player a wide variety of strategic options. There is a way to evade your opponents in the bushes; stealth kills with bow and arrows or open combat with firearms like shotguns, pistols and other guns. WIth earning experience, you can give Lara new ways of encountering her enemies by three different specialisations - Hunter, Survivor or Brawler. Each skill tree offers various options of combat, for example using Lara&#39;s surroundings and fauna, traps or better aim. With these options, you can choose how to guide Lara Croft in her adventures.</p>",
+  "metacritic": 86,
+  "metacritic_platforms": [],
+  "released": "2015-11-10",
+  "tba": false,
+  "updated": "2026-10-30T04:09:14",
+  "background_image": "https://media.rawg.io/media/games/b45/b45575f34285f2c4479c9a5f719d972e.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/770/7700aced3abce5100a8162a136cb3d63.jpg",
+  "website": "http://www.tombraider.com/us/",
+  "rating": 4.04,
+  "rating_top": 4,
+  "ratings": [
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 1717,
+      "percent": 60.29
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 697,
+      "percent": 24.47
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 364,
+      "percent": 12.78
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 70,
+      "percent": 2.46
+    }
+  ],
+  "reactions": {
+    "1": 2,
+    "3": 3,
+    "4": 1,
+    "7": 4,
+    "9": 1,
+    "11": 2
+  },
+  "added": 12459,
+  "added_by_status": {
+    "yet": 696,
+    "owned": 7859,
+    "beaten": 2893,
+    "toplay": 410,
+    "dropped": 440,
+    "playing": 161
+  },
+  "playtime": 14,
+  "screenshots_count": 20,
+  "movies_count": 1,
+  "creators_count": 11,
+  "achievements_count": 1119,
+  "parent_achievements_count": 134,
+  "reddit_url": "",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 0,
+  "twitch_count": 104,
+  "youtube_count": 598544,
+  "reviews_text_count": 23,
+  "ratings_count": 2825,
+  "suggestions_count": 667,
+  "alternative_names": [
+    "Tomb Raider"
+  ],
+  "metacritic_url": "",
+  "parents_count": 0,
+  "additions_count": 6,
+  "game_series_count": 23,
+  "user_game": null,
+  "reviews_count": 2848,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 7056,
+        "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+      },
+      "released_at": "2015-11-10",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2015-11-10",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2015-11-10",
+      "requirements": {
+        "minimum": "Minimum:\nOS: Windows 7 64bit\nProcessor: Intel Core i3-2100 or AMD equivalent\nMemory: 6 GB RAM\nGraphics: NVIDIA GTX 650 2GB or AMD HD7770 2GB\nDirectX: Version 11\nStorage: 25 GB available space",
+        "recommended": "Recommended:\nOS: Windows 10 64 bit\nProcessor: Intel Core i7-3770K\nMemory: 8 GB RAM\nGraphics: NVIDIA GTX 980Ti 2560x1440  or NVIDIA GTX 970 1920x1080\nDirectX: Version 11\nStorage: 25 GB available space"
+      }
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2015-11-10",
+      "requirements": {}
+    }
+  ],
+  "stores": [
+    {
+      "id": 8374,
+      "url": "",
+      "store": {
+        "id": 2,
+        "name": "Xbox Store",
+        "slug": "xbox-store",
+        "domain": "microsoft.com",
+        "games_count": 4944,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 11947,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 33645,
+      "url": "",
+      "store": {
+        "id": 7,
+        "name": "Xbox 360 Store",
+        "slug": "xbox360",
+        "domain": "marketplace.xbox.com",
+        "games_count": 1915,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 315625,
+      "url": "",
+      "store": {
+        "id": 4,
+        "name": "App Store",
+        "slug": "apple-appstore",
+        "domain": "apps.apple.com",
+        "games_count": 75594,
+        "image_background": "https://media.rawg.io/media/games/7a4/7a45e4cdc5b07f316d49cf147b083b27.jpg"
+      }
+    },
+    {
+      "id": 713687,
+      "url": "",
+      "store": {
+        "id": 11,
+        "name": "Epic Games",
+        "slug": "epic-games",
+        "domain": "epicgames.com",
+        "games_count": 1461,
+        "image_background": "https://media.rawg.io/media/games/9dd/9ddabb34840ea9227556670606cf8ea3.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 18893,
+      "name": "Feral Interactive",
+      "slug": "feral-interactive",
+      "games_count": 107,
+      "image_background": "https://media.rawg.io/media/screenshots/a8c/a8cd58ee985ab6d509370bddada91dbd.jpeg"
+    },
+    {
+      "id": 4037,
+      "name": "Crystal Dynamics",
+      "slug": "crystal-dynamics",
+      "games_count": 48,
+      "image_background": "https://media.rawg.io/media/screenshots/0eb/0eb9b0a21acefe84e6604dc9a7f5ce67.jpg"
+    },
+    {
+      "id": 14007,
+      "name": "Nixxes",
+      "slug": "nixxes",
+      "games_count": 4,
+      "image_background": "https://media.rawg.io/media/games/451/451e5c6d5420d4862b9de70441cdc11a.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 40847,
+      "name": "Steam Achievements",
+      "slug": "steam-achievements",
+      "language": "eng",
+      "games_count": 52601,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 40836,
+      "name": "Full controller support",
+      "slug": "full-controller-support",
+      "language": "eng",
+      "games_count": 24451,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 40849,
+      "name": "Steam Cloud",
+      "slug": "steam-cloud",
+      "language": "eng",
+      "games_count": 26266,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 7808,
+      "name": "steam-trading-cards",
+      "slug": "steam-trading-cards",
+      "language": "eng",
+      "games_count": 7568,
+      "image_background": "https://media.rawg.io/media/games/8cc/8cce7c0e99dcc43d66c8efd42f9d03e3.jpg"
+    },
+    {
+      "id": 42,
+      "name": "Great Soundtrack",
+      "slug": "great-soundtrack",
+      "language": "eng",
+      "games_count": 3450,
+      "image_background": "https://media.rawg.io/media/games/120/1201a40e4364557b124392ee50317b99.jpg"
+    },
+    {
+      "id": 24,
+      "name": "RPG",
+      "slug": "rpg",
+      "language": "eng",
+      "games_count": 26941,
+      "image_background": "https://media.rawg.io/media/games/26d/26d4437715bee60138dab4a7c8c59c92.jpg"
+    },
+    {
+      "id": 118,
+      "name": "Story Rich",
+      "slug": "story-rich",
+      "language": "eng",
+      "games_count": 27538,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 36,
+      "name": "Open World",
+      "slug": "open-world",
+      "language": "eng",
+      "games_count": 9356,
+      "image_background": "https://media.rawg.io/media/games/ee3/ee3e10193aafc3230ba1cae426967d10.jpg"
+    },
+    {
+      "id": 149,
+      "name": "Third Person",
+      "slug": "third-person",
+      "language": "eng",
+      "games_count": 14852,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Exploration",
+      "slug": "exploration",
+      "language": "eng",
+      "games_count": 29562,
+      "image_background": "https://media.rawg.io/media/games/b7d/b7d3f1715fa8381a4e780173a197a615.jpg"
+    },
+    {
+      "id": 40850,
+      "name": "Steam Leaderboards",
+      "slug": "steam-leaderboards",
+      "language": "eng",
+      "games_count": 8583,
+      "image_background": "https://media.rawg.io/media/games/1fb/1fb1c5f7a71d771f440b27ce7f71e7eb.jpg"
+    },
+    {
+      "id": 189,
+      "name": "Female Protagonist",
+      "slug": "female-protagonist",
+      "language": "eng",
+      "games_count": 15686,
+      "image_background": "https://media.rawg.io/media/games/b34/b3419c2706f8f8dbe40d08e23642ad06.jpg"
+    },
+    {
+      "id": 1,
+      "name": "Survival",
+      "slug": "survival",
+      "language": "eng",
+      "games_count": 10985,
+      "image_background": "https://media.rawg.io/media/games/15c/15c95a4915f88a3e89c821526afe05fc.jpg"
+    },
+    {
+      "id": 15,
+      "name": "Stealth",
+      "slug": "stealth",
+      "language": "eng",
+      "games_count": 7217,
+      "image_background": "https://media.rawg.io/media/games/f6b/f6bed028b02369d4cab548f4f9337e81.jpg"
+    },
+    {
+      "id": 69,
+      "name": "Action-Adventure",
+      "slug": "action-adventure",
+      "language": "eng",
+      "games_count": 21216,
+      "image_background": "https://media.rawg.io/media/games/b45/b45575f34285f2c4479c9a5f719d972e.jpg"
+    },
+    {
+      "id": 150,
+      "name": "Third-Person Shooter",
+      "slug": "third-person-shooter",
+      "language": "eng",
+      "games_count": 4199,
+      "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
+    },
+    {
+      "id": 188,
+      "name": "Parkour",
+      "slug": "parkour",
+      "language": "eng",
+      "games_count": 4125,
+      "image_background": "https://media.rawg.io/media/games/849/849414b978db37d4563ff9e4b0d3a787.jpg"
+    },
+    {
+      "id": 269,
+      "name": "Quick-Time Events",
+      "slug": "quick-time-events",
+      "language": "eng",
+      "games_count": 964,
+      "image_background": "https://media.rawg.io/media/games/34e/34ecf9a17fbd9344b0bd8f044ca3f277.jpg"
+    },
+    {
+      "id": 306,
+      "name": "Lara Croft",
+      "slug": "lara-croft",
+      "language": "eng",
+      "games_count": 14,
+      "image_background": "https://media.rawg.io/media/games/e6b/e6b025951f9a72673f41c0588fb85758.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 308,
+      "name": "Square Enix",
+      "slug": "square-enix",
+      "games_count": 616,
+      "image_background": "https://media.rawg.io/media/games/883/883bc3050f9a4115d1968ece56bddfc2.jpg"
+    },
+    {
+      "id": 20987,
+      "name": "Microsoft Studios",
+      "slug": "microsoft-studios",
+      "games_count": 501,
+      "image_background": "https://media.rawg.io/media/games/fad/fadc4be043ed07904012d47cd02671e4.jpg"
+    },
+    {
+      "id": 19651,
+      "name": "Feral Interactive",
+      "slug": "feral-interactive",
+      "games_count": 111,
+      "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+    }
+  ],
+  "esrb_rating": null,
+  "clip": null,
+  "description_raw": "Rise of the Tomb Raider is the eleventh entry in the franchise, being a sequel to its predecessor, Tomb Raider, a reboot of the franchise. This story follows Lara Croft, one year after battling her supernatural experiences in Yamatai. This time she is trying to find the legendary city of Kitezh in Siberia, Russia. The legend behind the city begins in the 12th century and still comes nowadays, that this ancient city grants with a promise of immortality. While Lara tries to solve the mystery of Siberia, she encounters an organisation called Trinity. They want to retrieve this gift to themselves. Following the notes of her father, Lara tries to discover the secrets of the ancient city and stop Trinity in doing so.\r\n\r\nExploring the Soviet motive, even more, the game has the DLC's - Baba Yaga, the Temple of the Witch, which follows Lara in the Soviet mine and confronting the legendary witch of Russian folk-tales, Cold Darkness Awakened, the story about a secret biological weapon and Blood Ties and Lara's Nightmare - a fight for ownership of the Croft estate. \r\n\r\nBesides craftmanship and exploring, the game focuses on a very progressive combat system giving a player a wide variety of strategic options. There is a way to evade your opponents in the bushes; stealth kills with bow and arrows or open combat with firearms like shotguns, pistols and other guns. WIth earning experience, you can give Lara new ways of encountering her enemies by three different specialisations - Hunter, Survivor or Brawler. Each skill tree offers various options of combat, for example using Lara's surroundings and fauna, traps or better aim. With these options, you can choose how to guide Lara Croft in her adventures."
+}

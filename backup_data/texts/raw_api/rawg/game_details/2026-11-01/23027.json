@@ -1,0 +1,638 @@
+{
+  "id": 23027,
+  "slug": "the-walking-dead",
+  "name": "The Walking Dead: Season 1",
+  "name_original": "The Walking Dead: Season 1",
+  "description": "<p>The Walking Dead is a five-part game series set in the same universe as Robert Kirkman’s award-winning comic book series. Play as Lee Everett, a convicted criminal, who has been given a second chance at life in a world devastated by the undead. With corpses returning to life and survivors stopping at nothing to maintain their own safety, protecting an orphaned girl named Clementine may offer him redemption in a world gone to hell.<br />\nA continuing story of adventure horror spanning across 5 episodes:</p>\n<p>Episode 1 – A New Day (Available Now)<br />\nEpisode 2 – Starved for Help (Available Now)</p>\n<p>Episode 3 – Long Road Ahead (Available Now)<br />\nEpisode 4 – Around Every Corner (Available Now)<br />\nEpisode 5 – No Time Left (Available Now)<br />\nAll five episodes are now available immediately upon purchasing Season 1. Based on Robert Kirkman’s Eisner-Award winning comic book series, The Walking Dead allows gamers to experience the true horror of the zombie apocalypse<br />\nA tailored game experience – Live with the profound and lasting consequences of the decisions that you make in each episode. Your actions and choices will affect how your story plays out across the entire series.<br />\nExperience events, meet people and visit locations that foreshadow the story of Deputy Sheriff Rick Grimes<br />\nMeet Glenn before he heads to Atlanta, explore Hershel’s farm before Rick and his group of survivors arrive and before the barn becomes a notorious location in Walking Dead lore<br />\nYou’ll be forced to make decisions that are not only difficult, but that will require you to make an almost immediate choice. There’s no time to ponder when the undead are pounding the door down!<br />\nFeatures meaningful decision-making, exploration, problem solving and a constant fight for survival in a world overrun by the undead<br />\nArtwork inspired by the original comic books</p>",
+  "metacritic": 92,
+  "metacritic_platforms": [
+    {
+      "metascore": 92,
+      "url": "https://www.metacritic.com/game/xbox-360/the-walking-dead-a-telltale-games-series",
+      "platform": {
+        "platform": 14,
+        "name": "Xbox 360",
+        "slug": "xbox360"
+      }
+    },
+    {
+      "metascore": 94,
+      "url": "https://www.metacritic.com/game/playstation-3/the-walking-dead-a-telltale-games-series",
+      "platform": {
+        "platform": 16,
+        "name": "PlayStation 3",
+        "slug": "playstation3"
+      }
+    },
+    {
+      "metascore": 89,
+      "url": "https://www.metacritic.com/game/pc/the-walking-dead-a-telltale-games-series",
+      "platform": {
+        "platform": 4,
+        "name": "PC",
+        "slug": "pc"
+      }
+    }
+  ],
+  "released": "2012-04-23",
+  "tba": false,
+  "updated": "2026-10-17T05:32:01",
+  "background_image": "https://media.rawg.io/media/games/8d6/8d69eb6c32ed6acfd75f82d532144993.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/e6c/e6c8cd1ed67ba3afd09fb2222ef046af.jpg",
+  "website": "",
+  "rating": 4.36,
+  "rating_top": 5,
+  "ratings": [
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 1376,
+      "percent": 54.47
+    },
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 870,
+      "percent": 34.44
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 190,
+      "percent": 7.52
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 90,
+      "percent": 3.56
+    }
+  ],
+  "reactions": {
+    "1": 6,
+    "2": 1,
+    "3": 3,
+    "4": 3,
+    "5": 1,
+    "6": 1,
+    "7": 1,
+    "9": 2,
+    "10": 8,
+    "11": 5,
+    "12": 4,
+    "15": 1,
+    "16": 1
+  },
+  "added": 11718,
+  "added_by_status": {
+    "yet": 366,
+    "owned": 7993,
+    "beaten": 2804,
+    "toplay": 180,
+    "dropped": 330,
+    "playing": 45
+  },
+  "playtime": 8,
+  "screenshots_count": 124,
+  "movies_count": 0,
+  "creators_count": 15,
+  "achievements_count": 437,
+  "parent_achievements_count": 98,
+  "reddit_url": "https://www.reddit.com/r/TheWalkingDeadGame/",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 3998,
+  "twitch_count": 0,
+  "youtube_count": 1000000,
+  "reviews_text_count": 24,
+  "ratings_count": 2502,
+  "suggestions_count": 674,
+  "alternative_names": [
+    "TWD",
+    "TWD1",
+    "The Walking Dead",
+    "The Walking Dead: Season One",
+    "walking dead",
+    "walking dead 1",
+    "ходячие 1",
+    "ходячие мертвецы",
+    "ходячие мертвецы 1"
+  ],
+  "metacritic_url": "https://www.metacritic.com/game/pc/the-walking-dead-a-telltale-games-series",
+  "parents_count": 0,
+  "additions_count": 7,
+  "game_series_count": 4,
+  "user_game": null,
+  "reviews_count": 2526,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "iOS",
+        "slug": "ios"
+      }
+    },
+    {
+      "platform": {
+        "id": 8,
+        "name": "Android",
+        "slug": "android"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    },
+    {
+      "platform": {
+        "id": 7,
+        "name": "Nintendo",
+        "slug": "nintendo"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 21,
+        "name": "Android",
+        "slug": "android",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 52539,
+        "image_background": "https://media.rawg.io/media/games/198/1988a337305e008b41d7f536ce9b73f6.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {
+        "minimum": "2.3.3 and up"
+      }
+    },
+    {
+      "platform": {
+        "id": 19,
+        "name": "PS Vita",
+        "slug": "ps-vita",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 1462,
+        "image_background": "https://media.rawg.io/media/games/b4e/b4e4c73d5aa4ec66bbf75375c4847a2b.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {
+        "minimum": "OS X 10.9.0 or laterProcessor: 2.3 Ghz Intel Memory: 4 GB RAM Hard Disk Space: 2 GB Space Free Video Card: 512 MB NVidia or ATI graphics card Additional: Not recommended for Intel integrated graphics or Mac Minis or early-generation MacBooksMouse &amp; Keyboard",
+        "recommended": "OS X 10.9.0 or laterProcessor: Core 2 Duo 2GHz Memory: 4 GB RAM Hard Disk Space: 2 GB Space Free Video Card: 1024 MB NVidia or ATI graphics card Additional: Not recommended for Intel integrated graphics or Mac Minis or early-generation MacBooksMouse &amp; Keyboard"
+      }
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {
+        "minimum": "XP / Vista / 7 / 8 / 10Processor: 2.0 GHz Pentium 4 or equivalent, Memory: 3 GB RAM, Hard Disk Space: 2 GB Space Free, Video Card: ATI or NVidia card w/ 512 MB RAM (Not recommended for Intel integrated graphics),Direct X 9.0cSound: Direct X 9.0c sound device.Mouse &amp; Keyboard",
+        "recommended": "7 / 8 / 10Processor: Core 2 Duo 2GHz or equivalentMemory: 3 GB RAM Hard Disk Space: 2 GB Space FreeVideo Card: ATI or NVidia card w/ 1024 MB RAM (Not recommended for Intel integrated graphics), Direct X 9.0cSound: Direct X 9.0c sound deviceMouse &amp; Keyboard"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "iOS",
+        "slug": "ios",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 77458,
+        "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {
+        "minimum": "iPhone 3G S, iPhone 4, iPod Touch Fourth Gen, iPad 2 Wifi, iPad 2 3G, iPhone 4S, iPad Third Gen, iPad Third Gen 4G, iPhone 5, iPod Touch Fifth Gen, iPad Fourth Gen, iPad Fourth Gen 4G, iPad Mini, iPad Mini 4G, iPhone 5c, iPhone 5s, iPad Air, iPad Air Cellular, iPad Mini Retina, iPad Mini Retina Cellular, iPhone 6, iPhone 6 Plus, iPad Air 2, iPad Air 2 Cellular, iPad Mini 3, iPad Mini 3 Cellular, iPod Touch Sixth Gen, iPhone 6s, iPhone 6s Plus, iPad Mini 4, iPad Mini 4 Cellular, iPad Pro, iPad Pro Cellular, iPad Pro 9.7, iPad Pro 9.7 Cellular, iPhone SE, iPhone 7, iPhone 7 Plus, iPad 6 1 1, iPad 6 1 2, iPad 7 1, iPad 7 2, iPad 7 3, iPad 7 4, iPhone 8, iPhone 8 Plus, iPhone X, iPad 7 5, iPad 7 6, iPhone X S, iPhone X S Max, iPhone X R, iPad 8 1 2, iPad 8 3 4, iPad 8 5 6, iPad 8 7 8,  Watch 4, iPad Mini 5, iPad Mini 5 Cellular, iPad Air 3, iPad Air 3 Cellular, iPod Touch Seventh Gen"
+      }
+    },
+    {
+      "platform": {
+        "id": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 7056,
+        "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 16,
+        "name": "PlayStation 3",
+        "slug": "playstation3",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 3209,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 14,
+        "name": "Xbox 360",
+        "slug": "xbox360",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 2833,
+        "image_background": "https://media.rawg.io/media/games/5c0/5c0dd63002cb23f804aab327d40ef119.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 7,
+        "name": "Nintendo Switch",
+        "slug": "nintendo-switch",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5809,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2012-04-23",
+      "requirements": {}
+    }
+  ],
+  "stores": [
+    {
+      "id": 257751,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 257752,
+      "url": "",
+      "store": {
+        "id": 7,
+        "name": "Xbox 360 Store",
+        "slug": "xbox360",
+        "domain": "marketplace.xbox.com",
+        "games_count": 1915,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 257753,
+      "url": "",
+      "store": {
+        "id": 2,
+        "name": "Xbox Store",
+        "slug": "xbox-store",
+        "domain": "microsoft.com",
+        "games_count": 4944,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 257754,
+      "url": "",
+      "store": {
+        "id": 6,
+        "name": "Nintendo Store",
+        "slug": "nintendo",
+        "domain": "nintendo.com",
+        "games_count": 9162,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 26433,
+      "url": "",
+      "store": {
+        "id": 5,
+        "name": "GOG",
+        "slug": "gog",
+        "domain": "gog.com",
+        "games_count": 7770,
+        "image_background": "https://media.rawg.io/media/games/8e4/8e4de3f54ac659e08a7ba6a2b731682a.jpg"
+      }
+    },
+    {
+      "id": 27260,
+      "url": "",
+      "store": {
+        "id": 3,
+        "name": "PlayStation Store",
+        "slug": "playstation-store",
+        "domain": "store.playstation.com",
+        "games_count": 8092,
+        "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+      }
+    },
+    {
+      "id": 43950,
+      "url": "",
+      "store": {
+        "id": 8,
+        "name": "Google Play",
+        "slug": "google-play",
+        "domain": "play.google.com",
+        "games_count": 17128,
+        "image_background": "https://media.rawg.io/media/games/021/021c4e21a1824d2526f925eff6324653.jpg"
+      }
+    },
+    {
+      "id": 308532,
+      "url": "",
+      "store": {
+        "id": 11,
+        "name": "Epic Games",
+        "slug": "epic-games",
+        "domain": "epicgames.com",
+        "games_count": 1461,
+        "image_background": "https://media.rawg.io/media/games/9dd/9ddabb34840ea9227556670606cf8ea3.jpg"
+      }
+    },
+    {
+      "id": 257765,
+      "url": "",
+      "store": {
+        "id": 4,
+        "name": "App Store",
+        "slug": "apple-appstore",
+        "domain": "apps.apple.com",
+        "games_count": 75594,
+        "image_background": "https://media.rawg.io/media/games/7a4/7a45e4cdc5b07f316d49cf147b083b27.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 694,
+      "name": "Telltale Games",
+      "slug": "telltale-games",
+      "games_count": 131,
+      "image_background": "https://media.rawg.io/media/games/674/674b67b66f510f5b273f50ca09341ee2.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Adventure",
+      "slug": "adventure",
+      "games_count": 152593,
+      "image_background": "https://media.rawg.io/media/games/5c0/5c0dd63002cb23f804aab327d40ef119.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 40836,
+      "name": "Full controller support",
+      "slug": "full-controller-support",
+      "language": "eng",
+      "games_count": 24451,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 118,
+      "name": "Story Rich",
+      "slug": "story-rich",
+      "language": "eng",
+      "games_count": 27538,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 149,
+      "name": "Third Person",
+      "slug": "third-person",
+      "language": "eng",
+      "games_count": 14852,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 16,
+      "name": "Horror",
+      "slug": "horror",
+      "language": "eng",
+      "games_count": 49444,
+      "image_background": "https://media.rawg.io/media/games/476/476178ef18ab0534771d099f51cdc694.jpg"
+    },
+    {
+      "id": 26,
+      "name": "Gore",
+      "slug": "gore",
+      "language": "eng",
+      "games_count": 6729,
+      "image_background": "https://media.rawg.io/media/games/569/56978b5a77f13aa2ec5d09ec81d01cad.jpg"
+    },
+    {
+      "id": 1,
+      "name": "Survival",
+      "slug": "survival",
+      "language": "eng",
+      "games_count": 10985,
+      "image_background": "https://media.rawg.io/media/games/15c/15c95a4915f88a3e89c821526afe05fc.jpg"
+    },
+    {
+      "id": 63,
+      "name": "Zombies",
+      "slug": "zombies",
+      "language": "eng",
+      "games_count": 11253,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 141,
+      "name": "Point & Click",
+      "slug": "point-click",
+      "language": "eng",
+      "games_count": 15673,
+      "image_background": "https://media.rawg.io/media/games/c81/c812e158129e00c9b0f096ae8a0bb7d6.jpg"
+    },
+    {
+      "id": 43,
+      "name": "Post-apocalyptic",
+      "slug": "post-apocalyptic",
+      "language": "eng",
+      "games_count": 4984,
+      "image_background": "https://media.rawg.io/media/games/471/4712c9ac591f556f553556b864a7e92b.jpg"
+    },
+    {
+      "id": 145,
+      "name": "Choices Matter",
+      "slug": "choices-matter",
+      "language": "eng",
+      "games_count": 8552,
+      "image_background": "https://media.rawg.io/media/games/40a/40ab95c1639aa1d7ec04d4cd523af6b1.jpg"
+    },
+    {
+      "id": 192,
+      "name": "Mature",
+      "slug": "mature",
+      "language": "eng",
+      "games_count": 4787,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 90,
+      "name": "Visual Novel",
+      "slug": "visual-novel",
+      "language": "eng",
+      "games_count": 10162,
+      "image_background": "https://media.rawg.io/media/screenshots/234/2341a78cfc68acd460228fafcf7f9ccc.jpg"
+    },
+    {
+      "id": 209,
+      "name": "Drama",
+      "slug": "drama",
+      "language": "eng",
+      "games_count": 5998,
+      "image_background": "https://media.rawg.io/media/games/0af/0af85e8edddfa55368e47c539914a220.jpg"
+    },
+    {
+      "id": 232,
+      "name": "Episodic",
+      "slug": "episodic",
+      "language": "eng",
+      "games_count": 524,
+      "image_background": "https://media.rawg.io/media/games/24d/24df5a8d70c80c15dade8304dd4370a5.jpg"
+    },
+    {
+      "id": 268,
+      "name": "Comic Book",
+      "slug": "comic-book",
+      "language": "eng",
+      "games_count": 2173,
+      "image_background": "https://media.rawg.io/media/games/b30/b30d472a13528007721f4a236b04ae7f.jpg"
+    },
+    {
+      "id": 222,
+      "name": "Choose Your Own Adventure",
+      "slug": "choose-your-own-adventure",
+      "language": "eng",
+      "games_count": 5207,
+      "image_background": "https://media.rawg.io/media/screenshots/b9c/b9cb8c4e69907a68e33a4ebb2580f82a.jpg"
+    },
+    {
+      "id": 269,
+      "name": "Quick-Time Events",
+      "slug": "quick-time-events",
+      "language": "eng",
+      "games_count": 964,
+      "image_background": "https://media.rawg.io/media/games/34e/34ecf9a17fbd9344b0bd8f044ca3f277.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 221,
+      "name": "Telltale Games",
+      "slug": "telltale-games",
+      "games_count": 121,
+      "image_background": "https://media.rawg.io/media/games/471/4712c9ac591f556f553556b864a7e92b.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 4,
+    "name": "Mature",
+    "slug": "mature"
+  },
+  "clip": null,
+  "description_raw": "The Walking Dead is a five-part game series set in the same universe as Robert Kirkman’s award-winning comic book series. Play as Lee Everett, a convicted criminal, who has been given a second chance at life in a world devastated by the undead. With corpses returning to life and survivors stopping at nothing to maintain their own safety, protecting an orphaned girl named Clementine may offer him redemption in a world gone to hell.\r\nA continuing story of adventure horror spanning across 5 episodes:\r\n\r\nEpisode 1 – A New Day (Available Now)\r\nEpisode 2 – Starved for Help (Available Now)\r\n\r\nEpisode 3 – Long Road Ahead (Available Now)\r\nEpisode 4 – Around Every Corner (Available Now)\r\nEpisode 5 – No Time Left (Available Now)\r\nAll five episodes are now available immediately upon purchasing Season 1. Based on Robert Kirkman’s Eisner-Award winning comic book series, The Walking Dead allows gamers to experience the true horror of the zombie apocalypse\r\nA tailored game experience – Live with the profound and lasting consequences of the decisions that you make in each episode. Your actions and choices will affect how your story plays out across the entire series.\r\nExperience events, meet people and visit locations that foreshadow the story of Deputy Sheriff Rick Grimes\r\nMeet Glenn before he heads to Atlanta, explore Hershel’s farm before Rick and his group of survivors arrive and before the barn becomes a notorious location in Walking Dead lore\r\nYou’ll be forced to make decisions that are not only difficult, but that will require you to make an almost immediate choice. There’s no time to ponder when the undead are pounding the door down!\r\nFeatures meaningful decision-making, exploration, problem solving and a constant fight for survival in a world overrun by the undead\r\nArtwork inspired by the original comic books"
+}

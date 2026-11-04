@@ -1,0 +1,583 @@
+{
+  "id": 11973,
+  "slug": "shadow-of-mordor",
+  "name": "Middle-earth: Shadow of Mordor",
+  "name_original": "Middle-earth: Shadow of Mordor",
+  "description": "<p>Lord of the rings franchise brought a new title to the collection, an open world action-adventure game, that follows Talion, Gondor captain, that survived the sacrifice that was meant to bring the Elf Lord Celebrimbor as a wraith. Losing his wife and his son, Talion is merged with Celebrimor, escaping death.  Players will have to gain EXP in order to upgrade abilities through completing various missions and defeating Uruk warlords. Some missions might require special conditions for the greater reward.<br />\nShadow of Mordor implemented the Nemesis System. It tracks the progress of every special Uruk warrior. Each special Uruk has a set of strengths and weaknesses, and players can assassinate higher ranked officers in order to promote easy to defeat Uruk to defeat them at a higher rank, weakening the Sauron’s army. This planning allows players to adapt, and use mechanics of stealth kills, ranged combat, wraith skills and head-on melee more effective.</p>",
+  "metacritic": 85,
+  "metacritic_platforms": [
+    {
+      "metascore": 84,
+      "url": null,
+      "platform": {
+        "platform": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4"
+      }
+    },
+    {
+      "metascore": 84,
+      "url": null,
+      "platform": {
+        "platform": 4,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "metascore": 87,
+      "url": null,
+      "platform": {
+        "platform": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one"
+      }
+    }
+  ],
+  "released": "2014-09-30",
+  "tba": false,
+  "updated": "2026-10-28T15:00:38",
+  "background_image": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/76b/76bc0a5a181c6ae8f9e480f84999cb8d.jpg",
+  "website": "http://www.shadowofmordor.com",
+  "rating": 3.91,
+  "rating_top": 4,
+  "ratings": [
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 1555,
+      "percent": 59.65
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 506,
+      "percent": 19.41
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 448,
+      "percent": 17.18
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 98,
+      "percent": 3.76
+    }
+  ],
+  "reactions": {
+    "1": 4,
+    "2": 1,
+    "3": 4,
+    "4": 1,
+    "15": 1
+  },
+  "added": 11829,
+  "added_by_status": {
+    "yet": 576,
+    "owned": 7772,
+    "beaten": 2294,
+    "toplay": 360,
+    "dropped": 745,
+    "playing": 82
+  },
+  "playtime": 13,
+  "screenshots_count": 25,
+  "movies_count": 1,
+  "creators_count": 9,
+  "achievements_count": 624,
+  "parent_achievements_count": 75,
+  "reddit_url": "https://www.reddit.com/r/shadowofmordor/",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 3911,
+  "twitch_count": 119,
+  "youtube_count": 1000000,
+  "reviews_text_count": 31,
+  "ratings_count": 2576,
+  "suggestions_count": 657,
+  "alternative_names": [],
+  "metacritic_url": "",
+  "parents_count": 0,
+  "additions_count": 0,
+  "game_series_count": 1,
+  "user_game": null,
+  "reviews_count": 2607,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 2,
+        "name": "PlayStation",
+        "slug": "playstation"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    },
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 80676,
+        "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+      },
+      "released_at": "2014-09-30",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 1,
+        "name": "Xbox One",
+        "slug": "xbox-one",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 5751,
+        "image_background": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+      },
+      "released_at": "2014-09-30",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 14,
+        "name": "Xbox 360",
+        "slug": "xbox360",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 2833,
+        "image_background": "https://media.rawg.io/media/games/5c0/5c0dd63002cb23f804aab327d40ef119.jpg"
+      },
+      "released_at": "2014-09-30",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 16,
+        "name": "PlayStation 3",
+        "slug": "playstation3",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 3209,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      },
+      "released_at": "2014-09-30",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 18,
+        "name": "PlayStation 4",
+        "slug": "playstation4",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 7056,
+        "image_background": "https://media.rawg.io/media/games/be0/be01c3d7d8795a45615da139322ca080.jpg"
+      },
+      "released_at": "2014-09-30",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2014-09-30",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2014-09-30",
+      "requirements": {
+        "minimum": "OS: 64-bit: Vista SP2, Win 7 SP1, Win 8.1\r\nProcessor: Intel Core i5-750, 2.67 GHz | AMD Phenom II X4 965, 3.4 GHz\r\nMemory: 3 GB RAM\r\nGraphics: NVIDIA GeForce GTX 460 | AMD Radeon HD 5850\r\nDirectX: Version 11\r\nNetwork: Broadband Internet connection\r\nStorage: 44 GB available space",
+        "recommended": "OS: 64-bit: Win 7 SP1, Win 8.1\r\nProcessor: Intel Core i7-3770, 3.4 GHz | AMD FX-8350, 4.0 GHz\r\nMemory: 8 GB RAM\r\nGraphics: NVIDIA GeForce GTX 660 | AMD Radeon HD 7950\r\nDirectX: Version 11\r\nNetwork: Broadband Internet connection\r\nStorage: 57 GB available space"
+      }
+    }
+  ],
+  "stores": [
+    {
+      "id": 856811,
+      "url": "",
+      "store": {
+        "id": 5,
+        "name": "GOG",
+        "slug": "gog",
+        "domain": "gog.com",
+        "games_count": 7770,
+        "image_background": "https://media.rawg.io/media/games/8e4/8e4de3f54ac659e08a7ba6a2b731682a.jpg"
+      }
+    },
+    {
+      "id": 13149,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 49397,
+      "url": "",
+      "store": {
+        "id": 3,
+        "name": "PlayStation Store",
+        "slug": "playstation-store",
+        "domain": "store.playstation.com",
+        "games_count": 8092,
+        "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+      }
+    },
+    {
+      "id": 49398,
+      "url": "",
+      "store": {
+        "id": 2,
+        "name": "Xbox Store",
+        "slug": "xbox-store",
+        "domain": "microsoft.com",
+        "games_count": 4944,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 284606,
+      "url": "",
+      "store": {
+        "id": 7,
+        "name": "Xbox 360 Store",
+        "slug": "xbox360",
+        "domain": "marketplace.xbox.com",
+        "games_count": 1915,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    },
+    {
+      "id": 300508,
+      "url": "",
+      "store": {
+        "id": 4,
+        "name": "App Store",
+        "slug": "apple-appstore",
+        "domain": "apps.apple.com",
+        "games_count": 75594,
+        "image_background": "https://media.rawg.io/media/games/7a4/7a45e4cdc5b07f316d49cf147b083b27.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 18893,
+      "name": "Feral Interactive",
+      "slug": "feral-interactive",
+      "games_count": 107,
+      "image_background": "https://media.rawg.io/media/screenshots/a8c/a8cd58ee985ab6d509370bddada91dbd.jpeg"
+    },
+    {
+      "id": 3813,
+      "name": "Monolith Productions",
+      "slug": "monolith-productions",
+      "games_count": 33,
+      "image_background": "https://media.rawg.io/media/games/89a/89a8378d49732505cdb28babe505df9e.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 5,
+      "name": "RPG",
+      "slug": "role-playing-games-rpg",
+      "games_count": 62302,
+      "image_background": "https://media.rawg.io/media/games/b7d/b7d3f1715fa8381a4e780173a197a615.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 40847,
+      "name": "Steam Achievements",
+      "slug": "steam-achievements",
+      "language": "eng",
+      "games_count": 52601,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 40836,
+      "name": "Full controller support",
+      "slug": "full-controller-support",
+      "language": "eng",
+      "games_count": 24451,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 40849,
+      "name": "Steam Cloud",
+      "slug": "steam-cloud",
+      "language": "eng",
+      "games_count": 26266,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 7808,
+      "name": "steam-trading-cards",
+      "slug": "steam-trading-cards",
+      "language": "eng",
+      "games_count": 7568,
+      "image_background": "https://media.rawg.io/media/games/8cc/8cce7c0e99dcc43d66c8efd42f9d03e3.jpg"
+    },
+    {
+      "id": 24,
+      "name": "RPG",
+      "slug": "rpg",
+      "language": "eng",
+      "games_count": 26941,
+      "image_background": "https://media.rawg.io/media/games/26d/26d4437715bee60138dab4a7c8c59c92.jpg"
+    },
+    {
+      "id": 118,
+      "name": "Story Rich",
+      "slug": "story-rich",
+      "language": "eng",
+      "games_count": 27538,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 36,
+      "name": "Open World",
+      "slug": "open-world",
+      "language": "eng",
+      "games_count": 9356,
+      "image_background": "https://media.rawg.io/media/games/ee3/ee3e10193aafc3230ba1cae426967d10.jpg"
+    },
+    {
+      "id": 149,
+      "name": "Third Person",
+      "slug": "third-person",
+      "language": "eng",
+      "games_count": 14852,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 64,
+      "name": "Fantasy",
+      "slug": "fantasy",
+      "language": "eng",
+      "games_count": 33212,
+      "image_background": "https://media.rawg.io/media/games/6fc/6fcf4cd3b17c288821388e6085bb0fc9.jpg"
+    },
+    {
+      "id": 26,
+      "name": "Gore",
+      "slug": "gore",
+      "language": "eng",
+      "games_count": 6729,
+      "image_background": "https://media.rawg.io/media/games/569/56978b5a77f13aa2ec5d09ec81d01cad.jpg"
+    },
+    {
+      "id": 37,
+      "name": "Sandbox",
+      "slug": "sandbox",
+      "language": "eng",
+      "games_count": 8615,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 15,
+      "name": "Stealth",
+      "slug": "stealth",
+      "language": "eng",
+      "games_count": 7217,
+      "image_background": "https://media.rawg.io/media/games/f6b/f6bed028b02369d4cab548f4f9337e81.jpg"
+    },
+    {
+      "id": 97,
+      "name": "Action RPG",
+      "slug": "action-rpg",
+      "language": "eng",
+      "games_count": 8770,
+      "image_background": "https://media.rawg.io/media/games/33d/33df5a032898b8ab7e3773c7a5f1d336.jpg"
+    },
+    {
+      "id": 68,
+      "name": "Hack and Slash",
+      "slug": "hack-and-slash",
+      "language": "eng",
+      "games_count": 5401,
+      "image_background": "https://media.rawg.io/media/games/1f4/1f47a270b8f241e4676b14d39ec620f7.jpg"
+    },
+    {
+      "id": 40,
+      "name": "Dark Fantasy",
+      "slug": "dark-fantasy",
+      "language": "eng",
+      "games_count": 5783,
+      "image_background": "https://media.rawg.io/media/games/8fc/8fc59e74133fd8a8a436b7e2d0fb36c2.jpg"
+    },
+    {
+      "id": 82,
+      "name": "Magic",
+      "slug": "magic",
+      "language": "eng",
+      "games_count": 11440,
+      "image_background": "https://media.rawg.io/media/screenshots/6d3/6d367773c06886535620f2d7fb1cb866.jpg"
+    },
+    {
+      "id": 188,
+      "name": "Parkour",
+      "slug": "parkour",
+      "language": "eng",
+      "games_count": 4125,
+      "image_background": "https://media.rawg.io/media/games/849/849414b978db37d4563ff9e4b0d3a787.jpg"
+    },
+    {
+      "id": 278,
+      "name": "Assassin",
+      "slug": "assassin",
+      "language": "eng",
+      "games_count": 962,
+      "image_background": "https://media.rawg.io/media/games/f6b/f6bed028b02369d4cab548f4f9337e81.jpg"
+    },
+    {
+      "id": 205,
+      "name": "Lore-Rich",
+      "slug": "lore-rich",
+      "language": "eng",
+      "games_count": 2284,
+      "image_background": "https://media.rawg.io/media/games/466/4667f17fdee9ebbcea2049e54f8e2b96.jpg"
+    },
+    {
+      "id": 283,
+      "name": "Based On A Novel",
+      "slug": "based-on-a-novel",
+      "language": "eng",
+      "games_count": 58,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    },
+    {
+      "id": 5842,
+      "name": "steam",
+      "slug": "steam",
+      "language": "eng",
+      "games_count": 825,
+      "image_background": "https://media.rawg.io/media/screenshots/b5b/b5bffc6e51615e9347e35e7d2e7bb23b.jpg"
+    },
+    {
+      "id": 7517,
+      "name": "category",
+      "slug": "category",
+      "language": "eng",
+      "games_count": 5,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    },
+    {
+      "id": 44631,
+      "name": "microtranzations",
+      "slug": "microtranzations",
+      "language": "eng",
+      "games_count": 1,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 19651,
+      "name": "Feral Interactive",
+      "slug": "feral-interactive",
+      "games_count": 111,
+      "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+    },
+    {
+      "id": 350,
+      "name": "Warner Bros. Interactive",
+      "slug": "warner-bros-interactive",
+      "games_count": 219,
+      "image_background": "https://media.rawg.io/media/games/fd8/fd882c8267a44621a0de6f9cec77ae90.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 4,
+    "name": "Mature",
+    "slug": "mature"
+  },
+  "clip": null,
+  "description_raw": "Lord of the rings franchise brought a new title to the collection, an open world action-adventure game, that follows Talion, Gondor captain, that survived the sacrifice that was meant to bring the Elf Lord Celebrimbor as a wraith. Losing his wife and his son, Talion is merged with Celebrimor, escaping death.  Players will have to gain EXP in order to upgrade abilities through completing various missions and defeating Uruk warlords. Some missions might require special conditions for the greater reward.\r\nShadow of Mordor implemented the Nemesis System. It tracks the progress of every special Uruk warrior. Each special Uruk has a set of strengths and weaknesses, and players can assassinate higher ranked officers in order to promote easy to defeat Uruk to defeat them at a higher rank, weakening the Sauron’s army. This planning allows players to adapt, and use mechanics of stealth kills, ranged combat, wraith skills and head-on melee more effective."
+}

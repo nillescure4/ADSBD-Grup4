@@ -1,0 +1,616 @@
+{
+  "version": 1,
+  "created_at_utc": "2026-11-04T01:23:46.912360+00:00",
+  "counts": {
+    "descriptions": 50,
+    "images": 50,
+    "audio": 16
+  },
+  "files": [
+    {
+      "path": "audio/manifests/files.jsonl",
+      "bytes": 9777,
+      "sha256": "899982a1b979c0476e870b711b5bf38db9afa25575ec045f64ac87fbf4992667"
+    },
+    {
+      "path": "audio/manifests/submissions.jsonl",
+      "bytes": 23296,
+      "sha256": "fe481a7ea5949b13c07102d1e8f9edabe97f6aca475f4ceb276233e3987259a8"
+    },
+    {
+      "path": "audio/raw/files/18888/song18_0.mp3",
+      "bytes": 534852,
+      "sha256": "42349d7c615fe947866100a90289d61a1e64620e11f2d041b37166eaaa4e5840"
+    },
+    {
+      "path": "audio/raw/files/20592/battleThemeA.mp3",
+      "bytes": 3289143,
+      "sha256": "6042399782e581d753d616bc703e66483d5eccb5fb687a20c9a552d68c49e620"
+    },
+    {
+      "path": "audio/raw/files/20593/TownTheme.mp3",
+      "bytes": 1316581,
+      "sha256": "2657861d5107d4a3c01ef81cb6a4d61ddd5e7a054b6da57e658373d79d0c3466"
+    },
+    {
+      "path": "audio/raw/files/22231/Dark_Rainy_Night%28ambience%29.ogg",
+      "bytes": 6770906,
+      "sha256": "115c233f9f8bc793f12723030aaae6cfda923e565c32a8e54bb274b2a8199ee1"
+    },
+    {
+      "path": "audio/raw/files/30344/fight.wav",
+      "bytes": 4684024,
+      "sha256": "b61753b48a59ac66d429cdac42728a11f4d452cda54ffd8421befe47d11a6d6d"
+    },
+    {
+      "path": "audio/raw/files/3922/cave%20themeb4.ogg",
+      "bytes": 3203408,
+      "sha256": "1ddf7a0845c808136edfda7ea829e48fa2b7c57793e008d706dadbb5917dff9c"
+    },
+    {
+      "path": "audio/raw/files/4102/forest.ogg",
+      "bytes": 10806965,
+      "sha256": "84e01136955db71b33f144a80384e23dfeb6b31bec02a0abb5d17fc34ea2c3d6"
+    },
+    {
+      "path": "audio/raw/files/4148/b423b42.wav",
+      "bytes": 3963916,
+      "sha256": "e599ec70a7ff2987584af237fd75fad8d02ed8092480e4f75ed1aafe2b4402df"
+    },
+    {
+      "path": "audio/raw/files/4148/TremLoadingloopl.wav",
+      "bytes": 3641852,
+      "sha256": "1d169377c84b4c62362cd21144daad68f41e56e8a7e2ab837723e9b01200f44c"
+    },
+    {
+      "path": "audio/raw/files/4422/the_field_of_dreams.mp3",
+      "bytes": 3385581,
+      "sha256": "103a7032a49be7e8399c5cb771f7759eac9ac1a0d2bf227f41fff42ad8d78194"
+    },
+    {
+      "path": "audio/raw/files/4503/awesomeness.wav",
+      "bytes": 8418176,
+      "sha256": "8fa296fe15051c7030ae16f61f825c83ef50c9d25fa0a9dfc7bf7e38769e1ee7"
+    },
+    {
+      "path": "audio/raw/files/4523/ambientmain_0.ogg",
+      "bytes": 1972219,
+      "sha256": "9dbe685e40d6cc8876ff08938b011424b802c2757ac4052e3eb93f8634208969"
+    },
+    {
+      "path": "audio/raw/files/49460/enchanted%20tiki%2086_0.mp3",
+      "bytes": 3714527,
+      "sha256": "3d6a51a5f20e885d93f2c8e8ef7ea189fca701063ab7f72aa37d114701c32dcf"
+    },
+    {
+      "path": "audio/raw/files/65317/8bit%20Bossa.mp3",
+      "bytes": 1196325,
+      "sha256": "0ee835fd279ac5fa15f9346744cbafc2ba800c1c0671b78ca9abe2b4353402f7"
+    },
+    {
+      "path": "audio/raw/files/73188/Cyberpunk%20Moonlight%20Sonata%20v2.mp3",
+      "bytes": 2338920,
+      "sha256": "c195845dab8b18c1086dafd1d70e5efd5350db3762d58a4abdaaee36bc82bff8"
+    },
+    {
+      "path": "audio/raw/files/73188/Cyberpunk%20Moonlight%20Sonata_0.mp3",
+      "bytes": 2338920,
+      "sha256": "75da0c212b36cab3556dfe2928d10d996fa4a6e4ad1e068e06a565389cc2c90c"
+    },
+    {
+      "path": "rawg/images/game_10035_backup.jpg",
+      "bytes": 1063462,
+      "sha256": "36d2d1b610cd062ef9836cec41d5eaa8ad4640b83831b829073615c1e28b969f"
+    },
+    {
+      "path": "rawg/images/game_10213_backup.jpg",
+      "bytes": 709326,
+      "sha256": "19cc6f33dbc1738e3f76d16a4b219131ece207ca9ff2ad1d7dcb66666baf4974"
+    },
+    {
+      "path": "rawg/images/game_1030_backup.jpg",
+      "bytes": 164892,
+      "sha256": "e2957c91915d02ef806785732680f3dbda97583ec8ed24015ad526e93e1ab1b4"
+    },
+    {
+      "path": "rawg/images/game_10754_backup.jpg",
+      "bytes": 143991,
+      "sha256": "b306257d5d4f4fbad23442b8526a96ac3e323ab17013bd790c8a09ca5cd7efd5"
+    },
+    {
+      "path": "rawg/images/game_11936_backup.jpg",
+      "bytes": 106871,
+      "sha256": "b87e73cb999844a50ef61d4cc0a711fce0fe9685bcf8095cd975e899fa68a57d"
+    },
+    {
+      "path": "rawg/images/game_11973_backup.jpg",
+      "bytes": 532001,
+      "sha256": "31e9e494d40414d17e72dfe8ed882efa03e7ae0e5e937a1d67adce35205237a3"
+    },
+    {
+      "path": "rawg/images/game_12020_backup.jpg",
+      "bytes": 472546,
+      "sha256": "86969b06d442749f3c67218c6e13558664331ca02a01ddfe2568ac0d06e1ad0d"
+    },
+    {
+      "path": "rawg/images/game_13537_backup.jpg",
+      "bytes": 120764,
+      "sha256": "ab2edd5241a1a5a550bb97c7eba4b2025d1def63fb2f147480f4f34a713e9c7e"
+    },
+    {
+      "path": "rawg/images/game_16944_backup.jpg",
+      "bytes": 154194,
+      "sha256": "6da9cefa13e75c0dc386350e0edce7d5f1abe4350a9b949d271098adf3ead1ff"
+    },
+    {
+      "path": "rawg/images/game_17822_backup.jpg",
+      "bytes": 1233398,
+      "sha256": "da2677adb04c042d407b100d20be9838fab6162c5897382164bc8e04767f7b87"
+    },
+    {
+      "path": "rawg/images/game_18080_backup.jpg",
+      "bytes": 56528,
+      "sha256": "cfb536527a43437c18e182f732eb3890567b9c48c1e139c59d797ca37560a86e"
+    },
+    {
+      "path": "rawg/images/game_19103_backup.jpg",
+      "bytes": 83631,
+      "sha256": "d784c51fd3328c8aba508f3fc73c5d1e81d6935f638fea10b13d4fd6eb25b1e6"
+    },
+    {
+      "path": "rawg/images/game_19709_backup.jpg",
+      "bytes": 342478,
+      "sha256": "985c27982fb5ed8ee9e3e248cfe239c0de6a3774ff0914953c8f2c3275d585af"
+    },
+    {
+      "path": "rawg/images/game_19710_backup.jpg",
+      "bytes": 431782,
+      "sha256": "ef25971b303a975b6c1d715dc016b4739b795e17e96ac3ced1492dfd675fa3b1"
+    },
+    {
+      "path": "rawg/images/game_23027_backup.jpg",
+      "bytes": 394422,
+      "sha256": "a2e14d81fb9d19bb9d8652b535885345c4e560deb606a6a08d62d46d0c31d268"
+    },
+    {
+      "path": "rawg/images/game_2454_backup.jpg",
+      "bytes": 250853,
+      "sha256": "6a79aad04057f6d5c6042f93af92c4bdad087ba3634f3f35274259eafca1b06d"
+    },
+    {
+      "path": "rawg/images/game_2551_backup.jpg",
+      "bytes": 604287,
+      "sha256": "ee9c468a9f9c3b72a4109494ec390578024afddf060abd1b77317e25c1870435"
+    },
+    {
+      "path": "rawg/images/game_278_backup.jpg",
+      "bytes": 194286,
+      "sha256": "a424356fb99ccb442328da8aeb0c39590fab5c70523b87defb4ddb2fbf1970b4"
+    },
+    {
+      "path": "rawg/images/game_28_backup.jpg",
+      "bytes": 401876,
+      "sha256": "932bf00b25a5312aedd08b1b2feb00cf92d61e7df0e0318b7855a92637ef3d01"
+    },
+    {
+      "path": "rawg/images/game_29028_backup.jpg",
+      "bytes": 1501709,
+      "sha256": "b260452f7497fb728845e08e0c4f0de8d8df6b002aa21d6c7c4722c78d3e9c22"
+    },
+    {
+      "path": "rawg/images/game_290856_backup.jpg",
+      "bytes": 1007349,
+      "sha256": "3511f5503c4f260701a8d3130751c9d56a949714f69ec5ff31d6d031d3f7a9fb"
+    },
+    {
+      "path": "rawg/images/game_3070_backup.jpg",
+      "bytes": 255103,
+      "sha256": "b52085de65696a86a4ff000db1bb52db37ff38ff34d521e552fbd99bb6faf330"
+    },
+    {
+      "path": "rawg/images/game_3192_backup.jpg",
+      "bytes": 271845,
+      "sha256": "f8a52f9baad1373ab79da32b187a0cc4d37bd2a235067ab1004974250874e8f0"
+    },
+    {
+      "path": "rawg/images/game_3272_backup.jpg",
+      "bytes": 251670,
+      "sha256": "e3559665a7f50cb5a4369d7036830702121e317420bbb65b86ad303b57567ace"
+    },
+    {
+      "path": "rawg/images/game_3287_backup.jpg",
+      "bytes": 298705,
+      "sha256": "0cd04f52aac78ebda27682ab3806d9408e56820cf80ac644b71c4db436fec72a"
+    },
+    {
+      "path": "rawg/images/game_32_backup.jpg",
+      "bytes": 2185564,
+      "sha256": "8a07374c6d300cfffbfcb5b441d22fc5887aae4818806525154e120d9e38204b"
+    },
+    {
+      "path": "rawg/images/game_3328_backup.jpg",
+      "bytes": 290026,
+      "sha256": "24b6bc11c8c7374db5cb2255b091462145e4dacf84a453b8f81c71edcfdeb533"
+    },
+    {
+      "path": "rawg/images/game_3498_backup.jpg",
+      "bytes": 256887,
+      "sha256": "6bac1093ef57573ca5debf0b7014a5455ced151a02a02466787b5641cac0218e"
+    },
+    {
+      "path": "rawg/images/game_3612_backup.jpg",
+      "bytes": 239912,
+      "sha256": "279a0c3e2b75fbf907f568bc3b14561e6e4f7201f918b8453467827845c5cee5"
+    },
+    {
+      "path": "rawg/images/game_3790_backup.jpg",
+      "bytes": 295466,
+      "sha256": "222352609a19a0f648fabdef07e62cdd81024c903d02dad411532e99ac7d9106"
+    },
+    {
+      "path": "rawg/images/game_3939_backup.jpg",
+      "bytes": 403401,
+      "sha256": "ea44460fbc483ee20df37315555f7220da5950501fcd2128d544a259b85077ec"
+    },
+    {
+      "path": "rawg/images/game_4062_backup.jpg",
+      "bytes": 378650,
+      "sha256": "ce0b95ef9f3779d07888c69d18e5899059e3ca709d8a337a58d07504637ddab7"
+    },
+    {
+      "path": "rawg/images/game_41494_backup.jpg",
+      "bytes": 1127731,
+      "sha256": "42ca706ec10921682f65b265905d09cc1eb22cab607f3d7fede6e941b426487b"
+    },
+    {
+      "path": "rawg/images/game_416_backup.jpg",
+      "bytes": 276053,
+      "sha256": "02899b5b02a979c33570f1ea39764d341c971045eaec7ced2ba024bc7e7ef2e6"
+    },
+    {
+      "path": "rawg/images/game_41_backup.jpg",
+      "bytes": 290801,
+      "sha256": "8de5d67c439bb40aedb5092813c05ee4f601d94702b68fd01aeb8ce80a1661a8"
+    },
+    {
+      "path": "rawg/images/game_4200_backup.jpg",
+      "bytes": 302722,
+      "sha256": "0e543cdc9d163ec457c1e7460566057da2c358272732907ff4bf3a3f436c3bf2"
+    },
+    {
+      "path": "rawg/images/game_422_backup.jpg",
+      "bytes": 70415,
+      "sha256": "4c8336acfc507d1e2eb240a3297bd9dc0ea16ce56a4a2e70bd98d28dbce964c7"
+    },
+    {
+      "path": "rawg/images/game_4252_backup.jpg",
+      "bytes": 296166,
+      "sha256": "b9950912ad30f0fd1990b8eb84eeb760020b6d1e7b482decf9d6f7801cfd0f25"
+    },
+    {
+      "path": "rawg/images/game_4286_backup.jpg",
+      "bytes": 200446,
+      "sha256": "75c60274cc1180ba15f32a188b8961239e7951ec0c5c45301d85bb4b4611eab6"
+    },
+    {
+      "path": "rawg/images/game_4291_backup.jpg",
+      "bytes": 662567,
+      "sha256": "58a70986861c7b584fc14b7c1652ce2172c5e9f245ce236045d8c87ffc9ef313"
+    },
+    {
+      "path": "rawg/images/game_4427_backup.jpg",
+      "bytes": 149362,
+      "sha256": "386cfec9e7fb9949d5b39541cde9c55ffe19c6582d03a07861b94290e37a82aa"
+    },
+    {
+      "path": "rawg/images/game_4459_backup.jpg",
+      "bytes": 125669,
+      "sha256": "79423ea93fa47a2bf0f933af81f2116991853b6d570760b97d5b795d0175e51c"
+    },
+    {
+      "path": "rawg/images/game_5286_backup.jpg",
+      "bytes": 393736,
+      "sha256": "538463f85acb76fbb97050ea4dc8e4b5665961bb2be06587f033ba64be497014"
+    },
+    {
+      "path": "rawg/images/game_5679_backup.jpg",
+      "bytes": 294599,
+      "sha256": "2c6a8ea4ee59fd6d6d6492bb2b74491c2a6ae622b09674eaf746f0f9a07491f4"
+    },
+    {
+      "path": "rawg/images/game_58175_backup.jpg",
+      "bytes": 408936,
+      "sha256": "5039fa6faf18c6ecc3e79ba58c8578014b2260b8244bf4206f4d9f847d129dfa"
+    },
+    {
+      "path": "rawg/images/game_654_backup.jpg",
+      "bytes": 267887,
+      "sha256": "262376d57b030165e2e3bb3de2731801a8f48361859c01695c76a2225c4e8e3b"
+    },
+    {
+      "path": "rawg/images/game_766_backup.jpg",
+      "bytes": 198506,
+      "sha256": "ba52351e509e4f205cebb4e45f95bef1b70287837513bfc7c50c547afeac8d85"
+    },
+    {
+      "path": "rawg/images/game_7689_backup.jpg",
+      "bytes": 208137,
+      "sha256": "d059a4e35d6f3012654f6132a46123170ed63d310a36b0c2ac9a99b7c561beff"
+    },
+    {
+      "path": "rawg/images/game_802_backup.jpg",
+      "bytes": 248739,
+      "sha256": "a9074337d595099dd564325f0a2c9ab87b3ba58a90c238cc5e93c58dc2a2d41a"
+    },
+    {
+      "path": "rawg/images/game_9767_backup.jpg",
+      "bytes": 531050,
+      "sha256": "71785aadae321edd2647fce4d4a5b03e2dc16a45814a0c9a542a1ae90d5ff49c"
+    },
+    {
+      "path": "rawg/manifests/games.jsonl",
+      "bytes": 2764,
+      "sha256": "c779e881d98005a726b3e6883cf1b5373603ccc0ac69cfe53752316cef651bc1"
+    },
+    {
+      "path": "rawg/manifests/images.jsonl",
+      "bytes": 21225,
+      "sha256": "1a28fac4fa4ff86b881891a27cb8677bac5c4f475f69802833b7f872664c5810"
+    },
+    {
+      "path": "texts/manifests/text_sources.jsonl",
+      "bytes": 22278,
+      "sha256": "e4d5b7f5653f84f802c9bb8ac6f379a4efaa9be4e67d7ba9b1c1f36470049acf"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-10-22/3328.json",
+      "bytes": 16294,
+      "sha256": "a15175e2a1717276389cb3e35f4278758cc2ed326bc09dffeda5761a9ae2a125"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-10-22/3498.json",
+      "bytes": 21288,
+      "sha256": "a24c1bee721302895858f367177cd4dd97f8dad57cf623f4d543bc3abbd6b610"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-10-22/4200.json",
+      "bytes": 18099,
+      "sha256": "75cb2004647cae4b7a8660a8caf3863a0d19698170033de24029a9f48d304604"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-10-22/4291.json",
+      "bytes": 16197,
+      "sha256": "e09f4318990c55eac5365a97201677a9e76d5f3a5f325bf93433796157c49c92"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/10035.json",
+      "bytes": 17158,
+      "sha256": "ea3633a04ab043cc660ac0593166acb35a8a609b3b32129fd33ba15cf9bbdcf1"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/10213.json",
+      "bytes": 14166,
+      "sha256": "94a3acbd053b047f89af1d1751ff6a90979a715f3d6bdc466fce489b5e890932"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/1030.json",
+      "bytes": 23676,
+      "sha256": "bb9302e42ce3e1bd7ff20f60133bc2c101fb436202d78bef5451c1ea197f47b6"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/10754.json",
+      "bytes": 18097,
+      "sha256": "4ab65c5dee6956fd79aba91bdf50206c15bc290c77dc89c8591e289f9703e223"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/11936.json",
+      "bytes": 10332,
+      "sha256": "853c0a0e7ab5213fb882429abe432bc34312e90943d6d300a84fc17fe03fd045"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/11973.json",
+      "bytes": 18423,
+      "sha256": "6b2629e2bbf4af01264e065f997c51df5c28b717d74ddf81ab878f7bcadadf2e"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/12020.json",
+      "bytes": 16365,
+      "sha256": "ff4d1914d300e075e58c1a6e46589e5a6f7edc66e4d2b0cea7ca28dcee91600f"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/13537.json",
+      "bytes": 15547,
+      "sha256": "1574d87033434cb1cb2f47cfa9314038cb571b530c2a734e71aa9248b0a57933"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/16944.json",
+      "bytes": 14486,
+      "sha256": "032d77a6c6092500a72567eaa19b8ff71ef745d7f7ea1bb23f2ce6bbeb679d94"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/17822.json",
+      "bytes": 13979,
+      "sha256": "79a1e9a86e8549253ce2ae81c77ebf214d6d45214b96396bcd648cabcd819631"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/18080.json",
+      "bytes": 14347,
+      "sha256": "ede7c641252ce272b9041a9fe3271ef0f3daa974d581db5fa6fece549e4c198c"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/19103.json",
+      "bytes": 11182,
+      "sha256": "fe0c77155db330e1a2a0420233b0b7c97d704bf098411fbaf5f1fe1ca14bbaa8"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/19709.json",
+      "bytes": 15230,
+      "sha256": "f41b95b1665fc907beaebd722675c8e52dde4c69823c7fbd1e151411a4ece851"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/19710.json",
+      "bytes": 15087,
+      "sha256": "6ee14398562a6215a08a0ab9ca738d9f01350d82e8dfefdae09cb3b11db37638"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/23027.json",
+      "bytes": 22926,
+      "sha256": "37931078519a1f1c3fd2d0333a1e9aeeaf9dc41c3b5affbc461cc51ef579d56c"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/2454.json",
+      "bytes": 16203,
+      "sha256": "89bc4b6e9aaac8ec01e0b3d6544ae2a3b9437ff34a5d6f866396ee650a5870a2"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/2551.json",
+      "bytes": 15572,
+      "sha256": "18f2ab86c8a0a70dff284448d364e6866971695aa3cefb5449714a6234f9741a"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/278.json",
+      "bytes": 13843,
+      "sha256": "b46c78cb4c40bd359bc1d5a69002e8d6cf8dea997b50b91dddda9d05592a428e"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/28.json",
+      "bytes": 17451,
+      "sha256": "2af177a2d8a4926bc0c91bf29cfe4876827660dc542a7c2adaa4aad109e188ee"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/29028.json",
+      "bytes": 13996,
+      "sha256": "23e0b38f9461a0dba83f4bd713d2684fc8ec516f165bef98699cb3b6d8f97cc5"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/290856.json",
+      "bytes": 15860,
+      "sha256": "7b3e1806c31fda47751e69e8e96a0412cadea6f17ae15724d556138bb8e242c6"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/3070.json",
+      "bytes": 13593,
+      "sha256": "ac52ee4ccb4c8e084e6a12d92efd8da088357733e4fdf179bae1a51b71f2cb3f"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/3192.json",
+      "bytes": 15554,
+      "sha256": "821052e32aa1ca58af9f730b376173550e51d1a51d70d0add6cb505d5a77f86c"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/32.json",
+      "bytes": 20391,
+      "sha256": "f996533dd02a5be65bbf9c3f1b380dd6a24e5eb21a70ec8f24e288b589a209fe"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/3272.json",
+      "bytes": 18303,
+      "sha256": "c86e3bdbb2584146285b10d21c243def16af05d24979c776d8efd74b319eadd3"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/3287.json",
+      "bytes": 15823,
+      "sha256": "4fd7958a1c3067283737255c68409b737640b10748b7e6100b6658f46967ed61"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/3612.json",
+      "bytes": 15774,
+      "sha256": "e7ff4542fe038d77a69ee4dac030ec11535a1acd7c7da8f85defc616d72d8f8b"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/3790.json",
+      "bytes": 17075,
+      "sha256": "7d5d64fd1c320463cfa6470d25b72adfa5ca192f488d3640956c4f336420348d"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/3939.json",
+      "bytes": 14232,
+      "sha256": "73a17d1fbe576c1fa5d134c5a6900b1f2087c8433f1d008f1651fbfb1fe89647"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/4062.json",
+      "bytes": 17779,
+      "sha256": "58a9158e0705fcb5ac58d1744fe8564c0955d59e317b525d08db6675d96cbcdb"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/41.json",
+      "bytes": 17538,
+      "sha256": "d66f632444267b9a895996ddbdde7ffbe4a92357c99913ea546d0729513d0cb6"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/41494.json",
+      "bytes": 21174,
+      "sha256": "2002030fad9590b53b6ecd3a03ce35ac220a15ce0a2c563d5d60186c14ba85c3"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/416.json",
+      "bytes": 20509,
+      "sha256": "6c6cf7e63c79bb56e42407b737644308e789a5ed3a0a3c45572c7047d267337b"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/422.json",
+      "bytes": 25411,
+      "sha256": "86dfe18fa81b42fa0ceb2c300ef043c1f18673d073c37c2f7690a20b5377fd06"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/4252.json",
+      "bytes": 13112,
+      "sha256": "172f3f323b350a4a959b49f65dde0305d66fdfc544fcbb31400e58828cc0d9f7"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/4286.json",
+      "bytes": 15358,
+      "sha256": "5e6575af629e0fcf3bcb2a4b37423daabe63591c741b9f021dbf430221417491"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/4427.json",
+      "bytes": 17202,
+      "sha256": "356dbc2a56331359af84965da41bcf36d7f609e129b7373cb5880e5ebcf9a638"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/4459.json",
+      "bytes": 15201,
+      "sha256": "2199ca93e5c9b88d2780c59e559e8092baf11ab0f5fdbb972761d31b45e67ba5"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/5286.json",
+      "bytes": 14497,
+      "sha256": "d4bd196b020c15d6c83f0fb41de15de3bb4a4696443ea53a617c147697ac7008"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/5679.json",
+      "bytes": 16724,
+      "sha256": "e13aeca67a02b796b8d485261ae2098081b159a41b44e7e713f63eb421484248"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/58175.json",
+      "bytes": 17283,
+      "sha256": "0a8f5de1cbc3db1376fd139c947748d7ecaa018f5c93b85aafa48a2b49b8ff49"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/654.json",
+      "bytes": 20410,
+      "sha256": "8d6503afec94ec01b5968fd482669d4244f487cce7e57926c50ced83e5e7e6ff"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/766.json",
+      "bytes": 19648,
+      "sha256": "873d7996f89cc597aeb6e23ca598ba9fc1d2a0ea690adea20d2fd1d2f7fd51ac"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/7689.json",
+      "bytes": 16862,
+      "sha256": "59acf472bb90b2f1af2f6b673618e8e58d3bc82f522656e5e233393e5fd0bd28"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/802.json",
+      "bytes": 18704,
+      "sha256": "bb3fb720b611894f4e8bffe6948a8632a198304567b921ab48d05e0a99d7d5c9"
+    },
+    {
+      "path": "texts/raw_api/rawg/game_details/2026-11-01/9767.json",
+      "bytes": 17675,
+      "sha256": "29a8fda49b943a390c051993eb2d622a067abb412dfa6e6cb87c3701d4aff20f"
+    }
+  ]
+}

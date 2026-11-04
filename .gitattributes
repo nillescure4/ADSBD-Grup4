@@ -1,0 +1,3 @@
+# Offline source hashes must survive checkout on Windows and Linux unchanged.
+backup_data/** -text
+backup_data/README.md text eol=lf

@@ -1,0 +1,377 @@
+{
+  "id": 17822,
+  "slug": "the-witcher-enhanced-edition-directors-cut",
+  "name": "The Witcher: Enhanced Edition Director's Cut",
+  "name_original": "The Witcher: Enhanced Edition Director's Cut",
+  "description": "<p>The Witcher is the very first instalment of the series that follows the story of Geralt from Rivia. Being found unconscious on the battlefield he must retrieve his memory and help the emperor&#39;s daughter, Adda to stop her from turning in to a feral monster. Facing the biggest enemy, Salamander, Geralt must also help all the fractions around the world to find peace between each other.</p>\n<p>The fighting system is very flexible. Choosing from three different styles, you can adapt Geralt for any kind of a combat situation. Fast style of fighting gives you an opportunity to strike your opponents with your speed. The strong style focuses itself on destroying your enemies with powerful attacks, while sweeping style is very good when facing a number of foes. You can also craft some potions to gain important benefits such as seeing in the dark or having a larger amount HP. Plot style is unique as well. The game never gives a precise definition of evil, which leads the player to convenient situations where the choice is quite bad anyway. Enhanced edition improves every aspect of the game as graphics and the productivity of it, while Director&#39;s Cut does the same without censorship for North America&#39;s version.</p>",
+  "metacritic": 86,
+  "metacritic_platforms": [],
+  "released": "2008-09-16",
+  "tba": false,
+  "updated": "2026-10-30T04:11:13",
+  "background_image": "https://media.rawg.io/media/games/ee3/ee3e10193aafc3230ba1cae426967d10.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/2d0/2d0910033c04ee8779b0d61f0ad9396e.jpg",
+  "website": "http://www.thewitcher.com",
+  "rating": 4.06,
+  "rating_top": 4,
+  "ratings": [
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 889,
+      "percent": 42.86
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 791,
+      "percent": 38.14
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 258,
+      "percent": 12.44
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 136,
+      "percent": 6.56
+    }
+  ],
+  "reactions": {
+    "1": 1,
+    "3": 1,
+    "4": 3,
+    "5": 2,
+    "7": 2,
+    "9": 1,
+    "10": 1,
+    "11": 1,
+    "12": 2,
+    "13": 1,
+    "16": 1,
+    "17": 1
+  },
+  "added": 11948,
+  "added_by_status": {
+    "yet": 741,
+    "owned": 8696,
+    "beaten": 1649,
+    "toplay": 142,
+    "dropped": 614,
+    "playing": 106
+  },
+  "playtime": 5,
+  "screenshots_count": 45,
+  "movies_count": 0,
+  "creators_count": 11,
+  "achievements_count": 0,
+  "parent_achievements_count": 0,
+  "reddit_url": "",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 0,
+  "twitch_count": 0,
+  "youtube_count": 24417,
+  "reviews_text_count": 15,
+  "ratings_count": 2059,
+  "suggestions_count": 669,
+  "alternative_names": [],
+  "metacritic_url": "",
+  "parents_count": 1,
+  "additions_count": 0,
+  "game_series_count": 0,
+  "user_game": null,
+  "reviews_count": 2074,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2008-09-16",
+      "requirements": {
+        "minimum": "Minimum: \nSupported OS: Microsoft® Windows® /XP/Vista\nDirectX Version: DirectX 9.0c (included) or higher\nProcessor: Intel Pentium 4 2.4 GHz or Athlon 64 +2800 (Intel Pentium 4 3.0 GHz or AMD Athlon 64 +3000 recommended). Athlon XP series, such as the Athlon XP +2400, is not supported\nGraphics: NVIDIA GeForce 6600 or ATI Radeon 9800 or better (NVIDIA GeForce 7800 GTX or ATI Radeon X1950 XT or better recommended)\nMemory: 1 GB RAM (2 GB RAM recommended)\nSound: DirectX version 9.0c-compatible sound card\nHard Drive: 15 GB Free"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2008-09-16",
+      "requirements": {
+        "minimum": "Minimum:\nOS: OS X 10.8, 10.9, 10.10\nProcessor: Intel Core i5\nMemory: 4 GB of RAM\nGraphics: nVidia GeForce GT 650m (1440x900), AMD Radeon HD 6750M (1440x900) or Intel HD 5000 (1366x768)\nHard Drive: 14.25 GB free space\n\nDisplay compatibility notice: 1440x900 resolution is the recommended resolution for best performance. It is not recommended to use native Retina resolutions.",
+        "recommended": "Recommended:\nOS: OS X 10.8, 10.9, 10.10\nProcessor: Intel Core i5 or Core i7\nMemory: 4GB RAM\nGraphics: nVidia GeForce GT 650m (1440x900), AMD Radeon HD 6970M (1920x1080) or Intel Iris Pro 5200 (1440x900)\nHard Drive: 14.25 GB free space\n\nDisplay compatibility notice: 1440x900 resolution is the recommended resolution for best performance. It is not recommended to use native Retina resolutions."
+      }
+    }
+  ],
+  "stores": [
+    {
+      "id": 302602,
+      "url": "",
+      "store": {
+        "id": 5,
+        "name": "GOG",
+        "slug": "gog",
+        "domain": "gog.com",
+        "games_count": 7770,
+        "image_background": "https://media.rawg.io/media/games/8e4/8e4de3f54ac659e08a7ba6a2b731682a.jpg"
+      }
+    },
+    {
+      "id": 19891,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 9023,
+      "name": "CD PROJEKT RED",
+      "slug": "cd-projekt-red",
+      "games_count": 27,
+      "image_background": "https://media.rawg.io/media/games/062/06285b425e61623530c5430f20e5d222.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 5,
+      "name": "RPG",
+      "slug": "role-playing-games-rpg",
+      "games_count": 62302,
+      "image_background": "https://media.rawg.io/media/games/b7d/b7d3f1715fa8381a4e780173a197a615.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 40849,
+      "name": "Steam Cloud",
+      "slug": "steam-cloud",
+      "language": "eng",
+      "games_count": 26266,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 42,
+      "name": "Great Soundtrack",
+      "slug": "great-soundtrack",
+      "language": "eng",
+      "games_count": 3450,
+      "image_background": "https://media.rawg.io/media/games/120/1201a40e4364557b124392ee50317b99.jpg"
+    },
+    {
+      "id": 24,
+      "name": "RPG",
+      "slug": "rpg",
+      "language": "eng",
+      "games_count": 26941,
+      "image_background": "https://media.rawg.io/media/games/26d/26d4437715bee60138dab4a7c8c59c92.jpg"
+    },
+    {
+      "id": 118,
+      "name": "Story Rich",
+      "slug": "story-rich",
+      "language": "eng",
+      "games_count": 27538,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 36,
+      "name": "Open World",
+      "slug": "open-world",
+      "language": "eng",
+      "games_count": 9356,
+      "image_background": "https://media.rawg.io/media/games/ee3/ee3e10193aafc3230ba1cae426967d10.jpg"
+    },
+    {
+      "id": 149,
+      "name": "Third Person",
+      "slug": "third-person",
+      "language": "eng",
+      "games_count": 14852,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 64,
+      "name": "Fantasy",
+      "slug": "fantasy",
+      "language": "eng",
+      "games_count": 33212,
+      "image_background": "https://media.rawg.io/media/games/6fc/6fcf4cd3b17c288821388e6085bb0fc9.jpg"
+    },
+    {
+      "id": 193,
+      "name": "Classic",
+      "slug": "classic",
+      "language": "eng",
+      "games_count": 1843,
+      "image_background": "https://media.rawg.io/media/games/9c4/9c47f320eb73c9a02d462e12f6206b26.jpg"
+    },
+    {
+      "id": 97,
+      "name": "Action RPG",
+      "slug": "action-rpg",
+      "language": "eng",
+      "games_count": 8770,
+      "image_background": "https://media.rawg.io/media/games/33d/33df5a032898b8ab7e3773c7a5f1d336.jpg"
+    },
+    {
+      "id": 44,
+      "name": "Nudity",
+      "slug": "nudity",
+      "language": "eng",
+      "games_count": 8909,
+      "image_background": "https://media.rawg.io/media/games/67f/67f62d1f062a6164f57575e0604ee9f6.jpg"
+    },
+    {
+      "id": 145,
+      "name": "Choices Matter",
+      "slug": "choices-matter",
+      "language": "eng",
+      "games_count": 8552,
+      "image_background": "https://media.rawg.io/media/games/40a/40ab95c1639aa1d7ec04d4cd523af6b1.jpg"
+    },
+    {
+      "id": 40,
+      "name": "Dark Fantasy",
+      "slug": "dark-fantasy",
+      "language": "eng",
+      "games_count": 5783,
+      "image_background": "https://media.rawg.io/media/games/8fc/8fc59e74133fd8a8a436b7e2d0fb36c2.jpg"
+    },
+    {
+      "id": 192,
+      "name": "Mature",
+      "slug": "mature",
+      "language": "eng",
+      "games_count": 4787,
+      "image_background": "https://media.rawg.io/media/games/b49/b4912b5dbfc7ed8927b65f05b8507f6c.jpg"
+    },
+    {
+      "id": 66,
+      "name": "Medieval",
+      "slug": "medieval",
+      "language": "eng",
+      "games_count": 8171,
+      "image_background": "https://media.rawg.io/media/games/193/19390fa5e75e9048b22c9a736cf9992f.jpg"
+    },
+    {
+      "id": 82,
+      "name": "Magic",
+      "slug": "magic",
+      "language": "eng",
+      "games_count": 11440,
+      "image_background": "https://media.rawg.io/media/screenshots/6d3/6d367773c06886535620f2d7fb1cb866.jpg"
+    },
+    {
+      "id": 218,
+      "name": "Multiple Endings",
+      "slug": "multiple-endings",
+      "language": "eng",
+      "games_count": 11728,
+      "image_background": "https://media.rawg.io/media/games/744/744adc36e6573dd67a0cb0e373738d19.jpg"
+    },
+    {
+      "id": 283,
+      "name": "Based On A Novel",
+      "slug": "based-on-a-novel",
+      "language": "eng",
+      "games_count": 58,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 4879,
+      "name": "1C-SoftClub",
+      "slug": "1c-softclub",
+      "games_count": 51,
+      "image_background": "https://media.rawg.io/media/games/7ea/7ea3575b85ee2a8097b99583aa7c86f3.jpg"
+    },
+    {
+      "id": 7411,
+      "name": "CD PROJEKT RED",
+      "slug": "cd-projekt-red",
+      "games_count": 30,
+      "image_background": "https://media.rawg.io/media/games/22c/22ce391b3096cd46eadae1a890624f39.jpg"
+    },
+    {
+      "id": 1779,
+      "name": "Atari",
+      "slug": "atari",
+      "games_count": 526,
+      "image_background": "https://media.rawg.io/media/games/ee3/ee3e10193aafc3230ba1cae426967d10.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 4,
+    "name": "Mature",
+    "slug": "mature"
+  },
+  "clip": null,
+  "description_raw": "The Witcher is the very first instalment of the series that follows the story of Geralt from Rivia. Being found unconscious on the battlefield he must retrieve his memory and help the emperor's daughter, Adda to stop her from turning in to a feral monster. Facing the biggest enemy, Salamander, Geralt must also help all the fractions around the world to find peace between each other.\n\nThe fighting system is very flexible. Choosing from three different styles, you can adapt Geralt for any kind of a combat situation. Fast style of fighting gives you an opportunity to strike your opponents with your speed. The strong style focuses itself on destroying your enemies with powerful attacks, while sweeping style is very good when facing a number of foes. You can also craft some potions to gain important benefits such as seeing in the dark or having a larger amount HP. Plot style is unique as well. The game never gives a precise definition of evil, which leads the player to convenient situations where the choice is quite bad anyway. Enhanced edition improves every aspect of the game as graphics and the productivity of it, while Director's Cut does the same without censorship for North America's version."
+}

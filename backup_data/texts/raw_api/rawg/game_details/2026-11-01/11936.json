@@ -1,0 +1,309 @@
+{
+  "id": 11936,
+  "slug": "half-life-2-deathmatch",
+  "name": "Half-Life 2: Deathmatch",
+  "name_original": "Half-Life 2: Deathmatch",
+  "description": "<p>Upon the release of Half-Life 2 players were greatly disappointed in one thing, and that’s the lack of multiplayer. Granted, single-player campaign of Half-Life 2 was impressive, but weapons that have been demonstrated in it made players curious. They questioned if the experience was complete because the first Half-Life included multiplayer mode from the beginning. Valve took the criticism and published Half-Life 2: Deathmatch – multiplayer only addition, based on the main game, which was a separate product, distributed on Steam. <br />\nThe game includes two major modes, which are Deathmatch and Team Deathmatch. Both modes have similar rules. Players must kill as many other players as possible, to gain points. Player or team with the most points win, and points are retracted for self-killing and team killing. Players can expect fast-paced matches with instant respawns.</p>",
+  "metacritic": null,
+  "metacritic_platforms": [],
+  "released": "2004-11-01",
+  "tba": false,
+  "updated": "2026-09-16T03:43:33",
+  "background_image": "https://media.rawg.io/media/games/ec3/ec3a7db7b8ab5a71aad622fe7c62632f.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/1fc/1fcc71ae3d931406dbc4b33e3446d457.jpg",
+  "website": "",
+  "rating": 3.29,
+  "rating_top": 4,
+  "ratings": [
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 373,
+      "percent": 40.94
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 234,
+      "percent": 25.69
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 179,
+      "percent": 19.65
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 125,
+      "percent": 13.72
+    }
+  ],
+  "reactions": {
+    "1": 1,
+    "4": 1,
+    "6": 1,
+    "8": 2,
+    "11": 1
+  },
+  "added": 11258,
+  "added_by_status": {
+    "yet": 576,
+    "owned": 9849,
+    "beaten": 328,
+    "toplay": 28,
+    "dropped": 462,
+    "playing": 15
+  },
+  "playtime": 1,
+  "screenshots_count": 5,
+  "movies_count": 0,
+  "creators_count": 0,
+  "achievements_count": 0,
+  "parent_achievements_count": 0,
+  "reddit_url": "https://www.reddit.com/r/HalfLife/",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 3988,
+  "twitch_count": 105,
+  "youtube_count": 1000000,
+  "reviews_text_count": 3,
+  "ratings_count": 908,
+  "suggestions_count": 193,
+  "alternative_names": [],
+  "metacritic_url": "https://www.metacritic.com/game/pc/half-life-2-deathmatch",
+  "parents_count": 1,
+  "additions_count": 0,
+  "game_series_count": 0,
+  "user_game": null,
+  "reviews_count": 911,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    },
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 80676,
+        "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+      },
+      "released_at": "2004-11-01",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2004-11-01",
+      "requirements": {
+        "minimum": "Minimum: OS X version Leopard 10.5.8, Snow Leopard 10.6.3, 1GB RAM, NVIDIA GeForce 8 or higher, ATI X1600 or higher, or Intel HD 3000 or higher Mouse, Keyboard, Internet Connection"
+      }
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2004-11-01",
+      "requirements": {
+        "minimum": "\r\nMinimum: 1.2 GHz Processor, 256MB RAM, DirectX 7 level graphics card, Windows XP, Mouse, Keyboard, Internet Connection\r\nRecommended: 2.4 GHz Processor, 512MB RAM, DirectX 9 level graphics card, Windows XP, Mouse, Keyboard, Internet Connection\r\n"
+      }
+    }
+  ],
+  "stores": [
+    {
+      "id": 13105,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 1612,
+      "name": "Valve Software",
+      "slug": "valve-software",
+      "games_count": 44,
+      "image_background": "https://media.rawg.io/media/games/46d/46d98e6910fbc0706e2948a7cc9b10c5.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 7,
+      "name": "Multiplayer",
+      "slug": "multiplayer",
+      "language": "eng",
+      "games_count": 42845,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Atmospheric",
+      "slug": "atmospheric",
+      "language": "eng",
+      "games_count": 40111,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 18,
+      "name": "Co-op",
+      "slug": "co-op",
+      "language": "eng",
+      "games_count": 14562,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 411,
+      "name": "cooperative",
+      "slug": "cooperative",
+      "language": "eng",
+      "games_count": 6673,
+      "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    {
+      "id": 8,
+      "name": "First-Person",
+      "slug": "first-person",
+      "language": "eng",
+      "games_count": 37709,
+      "image_background": "https://media.rawg.io/media/games/b7b/b7b8381707152afc7d91f5d95de70e39.jpg"
+    },
+    {
+      "id": 32,
+      "name": "Sci-fi",
+      "slug": "sci-fi",
+      "language": "eng",
+      "games_count": 22219,
+      "image_background": "https://media.rawg.io/media/games/174/174fabfca02d5730531bab2153a7dfcb.jpg"
+    },
+    {
+      "id": 30,
+      "name": "FPS",
+      "slug": "fps",
+      "language": "eng",
+      "games_count": 15082,
+      "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Funny",
+      "slug": "funny",
+      "language": "eng",
+      "games_count": 29028,
+      "image_background": "https://media.rawg.io/media/games/46d/46d98e6910fbc0706e2948a7cc9b10c5.jpg"
+    },
+    {
+      "id": 79,
+      "name": "Free to Play",
+      "slug": "free-to-play",
+      "language": "eng",
+      "games_count": 10074,
+      "image_background": "https://media.rawg.io/media/games/dcb/dcbb67f371a9a28ea38ffd73ee0f53f3.jpg"
+    },
+    {
+      "id": 114,
+      "name": "Physics",
+      "slug": "physics",
+      "language": "eng",
+      "games_count": 21725,
+      "image_background": "https://media.rawg.io/media/screenshots/570/5704316c673fab6994db582e0f43f924.jpg"
+    },
+    {
+      "id": 170,
+      "name": "Competitive",
+      "slug": "competitive",
+      "language": "eng",
+      "games_count": 1326,
+      "image_background": "https://media.rawg.io/media/games/7f0/7f021d4a3577ac9d591a628a431fc2e5.jpg"
+    },
+    {
+      "id": 40856,
+      "name": "Valve Anti-Cheat enabled",
+      "slug": "valve-anti-cheat-enabled",
+      "language": "eng",
+      "games_count": 105,
+      "image_background": "https://media.rawg.io/media/games/78d/78dfae12fb8c5b16cd78648553071e0a.jpg"
+    },
+    {
+      "id": 40839,
+      "name": "Includes Source SDK",
+      "slug": "includes-source-sdk",
+      "language": "eng",
+      "games_count": 66,
+      "image_background": "https://media.rawg.io/media/screenshots/e79/e7935d0c8fcd497c6824f490455988c7.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 3399,
+      "name": "Valve",
+      "slug": "valve",
+      "games_count": 48,
+      "image_background": "https://media.rawg.io/media/games/66e/66e90c9d7b9a17335b310ceb294e9365.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 4,
+    "name": "Mature",
+    "slug": "mature"
+  },
+  "clip": null,
+  "description_raw": "Upon the release of Half-Life 2 players were greatly disappointed in one thing, and that’s the lack of multiplayer. Granted, single-player campaign of Half-Life 2 was impressive, but weapons that have been demonstrated in it made players curious. They questioned if the experience was complete because the first Half-Life included multiplayer mode from the beginning. Valve took the criticism and published Half-Life 2: Deathmatch – multiplayer only addition, based on the main game, which was a separate product, distributed on Steam. \nThe game includes two major modes, which are Deathmatch and Team Deathmatch. Both modes have similar rules. Players must kill as many other players as possible, to gain points. Player or team with the most points win, and points are retracted for self-killing and team killing. Players can expect fast-paced matches with instant respawns."
+}

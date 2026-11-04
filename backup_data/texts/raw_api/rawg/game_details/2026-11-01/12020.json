@@ -1,0 +1,506 @@
+{
+  "id": 12020,
+  "slug": "left-4-dead-2",
+  "name": "Left 4 Dead 2",
+  "name_original": "Left 4 Dead 2",
+  "description": "<p>Cooperative survival continues with a different set of characters. New survivors are making their way through 5 campaigns with an added ability to play through the story of the first game as well, using not only expanded arsenal of 20 ranged and 10 melee weapons but improved AI Director. Your surroundings and weather will change; enemy and item placement will differ from map to map, from difficulty to difficulty. New unique special zombies, placed in the unlucky for the player spot, can end your run.<br />\nHigh compatibility with community mods will allow you not only to add user-created maps but player models, enemy models, and even in-game music, which will help any player to create the unique experience on top of solid game mechanics.<br />\nCompetitive multiplayer mods from arena survival to a head-on competition with another team of survivors are addictive and, in addition to the campaign, will provide you with hundreds of hours of game content.</p>",
+  "metacritic": 89,
+  "metacritic_platforms": [],
+  "released": "2009-11-17",
+  "tba": false,
+  "updated": "2026-10-30T12:00:14",
+  "background_image": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg",
+  "background_image_additional": "https://media.rawg.io/media/screenshots/f01/f0147a2c654b7ace79a7fcebe94bf110.jpg",
+  "website": "http://www.l4d.com",
+  "rating": 4.1,
+  "rating_top": 4,
+  "ratings": [
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 1835,
+      "percent": 53.17
+    },
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 1101,
+      "percent": 31.9
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 389,
+      "percent": 11.27
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 126,
+      "percent": 3.65
+    }
+  ],
+  "reactions": {
+    "1": 3,
+    "2": 3,
+    "3": 4,
+    "4": 5,
+    "5": 1,
+    "6": 5,
+    "7": 2,
+    "8": 12,
+    "9": 1,
+    "11": 4,
+    "12": 1,
+    "13": 1,
+    "14": 1,
+    "15": 1,
+    "16": 2,
+    "17": 1,
+    "18": 1,
+    "19": 1,
+    "20": 1,
+    "21": 1
+  },
+  "added": 17554,
+  "added_by_status": {
+    "yet": 403,
+    "owned": 12918,
+    "beaten": 2685,
+    "toplay": 118,
+    "dropped": 1272,
+    "playing": 158
+  },
+  "playtime": 9,
+  "screenshots_count": 27,
+  "movies_count": 0,
+  "creators_count": 36,
+  "achievements_count": 166,
+  "parent_achievements_count": 102,
+  "reddit_url": "",
+  "reddit_name": "",
+  "reddit_description": "",
+  "reddit_logo": "",
+  "reddit_count": 0,
+  "twitch_count": 132,
+  "youtube_count": 1000000,
+  "reviews_text_count": 27,
+  "ratings_count": 3424,
+  "suggestions_count": 593,
+  "alternative_names": [
+    "L4D2"
+  ],
+  "metacritic_url": "",
+  "parents_count": 0,
+  "additions_count": 0,
+  "game_series_count": 2,
+  "user_game": null,
+  "reviews_count": 3451,
+  "saturated_color": "0f0f0f",
+  "dominant_color": "0f0f0f",
+  "parent_platforms": [
+    {
+      "platform": {
+        "id": 1,
+        "name": "PC",
+        "slug": "pc"
+      }
+    },
+    {
+      "platform": {
+        "id": 3,
+        "name": "Xbox",
+        "slug": "xbox"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "Apple Macintosh",
+        "slug": "mac"
+      }
+    },
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "platform": {
+        "id": 14,
+        "name": "Xbox 360",
+        "slug": "xbox360",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 2833,
+        "image_background": "https://media.rawg.io/media/games/5c0/5c0dd63002cb23f804aab327d40ef119.jpg"
+      },
+      "released_at": "2009-11-17",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 6,
+        "name": "Linux",
+        "slug": "linux",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 80676,
+        "image_background": "https://media.rawg.io/media/games/16b/16b1b7b36e2042d1128d5a3e852b3b2f.jpg"
+      },
+      "released_at": "2009-11-17",
+      "requirements": {}
+    },
+    {
+      "platform": {
+        "id": 4,
+        "name": "PC",
+        "slug": "pc",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 562940,
+        "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+      },
+      "released_at": "2009-11-17",
+      "requirements": {
+        "minimum": "Minimum:\nOS: Windows® 7 32/64-bit / Vista 32/64 / XP\nProcessor: Pentium 4 3.0GHz\nMemory: 2 GB RAM\nGraphics: Video card with 128 MB, Shader model 2.0. ATI X800, NVidia 6600 or better\nDirectX: Version 9.0c\nStorage: 13 GB available space\nSound Card: DirectX 9.0c compatible sound card",
+        "recommended": "Recommended:\nOS: Windows® 7 32/64-bit / Vista 32/64 / XP\nProcessor: Intel core 2 duo 2.4GHz\nMemory: 2 GB RAM\nGraphics: Video Card Shader model 3.0. NVidia 7600, ATI X1600 or better\nDirectX: Version 9.0c\nStorage: 13 GB available space\nSound Card: DirectX 9.0c compatible sound card"
+      }
+    },
+    {
+      "platform": {
+        "id": 5,
+        "name": "macOS",
+        "slug": "macos",
+        "image": null,
+        "year_end": null,
+        "year_start": null,
+        "games_count": 108343,
+        "image_background": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+      },
+      "released_at": "2009-11-17",
+      "requirements": {}
+    }
+  ],
+  "stores": [
+    {
+      "id": 13208,
+      "url": "",
+      "store": {
+        "id": 1,
+        "name": "Steam",
+        "slug": "steam",
+        "domain": "store.steampowered.com",
+        "games_count": 125264,
+        "image_background": "https://media.rawg.io/media/games/f46/f466571d536f2e3ea9e815ad17177501.jpg"
+      }
+    },
+    {
+      "id": 34000,
+      "url": "",
+      "store": {
+        "id": 7,
+        "name": "Xbox 360 Store",
+        "slug": "xbox360",
+        "domain": "marketplace.xbox.com",
+        "games_count": 1915,
+        "image_background": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+      }
+    }
+  ],
+  "developers": [
+    {
+      "id": 1612,
+      "name": "Valve Software",
+      "slug": "valve-software",
+      "games_count": 44,
+      "image_background": "https://media.rawg.io/media/games/46d/46d98e6910fbc0706e2948a7cc9b10c5.jpg"
+    },
+    {
+      "id": 2347,
+      "name": "Turtle Rock Studios",
+      "slug": "turtle-rock-studios",
+      "games_count": 14,
+      "image_background": "https://media.rawg.io/media/games/c30/c304b2c132f6bc1b6bcec5b03417a005.jpg"
+    }
+  ],
+  "genres": [
+    {
+      "id": 4,
+      "name": "Action",
+      "slug": "action",
+      "games_count": 192305,
+      "image_background": "https://media.rawg.io/media/games/bc0/bc06a29ceac58652b684deefe7d56099.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Shooter",
+      "slug": "shooter",
+      "games_count": 59655,
+      "image_background": "https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg"
+    }
+  ],
+  "tags": [
+    {
+      "id": 31,
+      "name": "Singleplayer",
+      "slug": "singleplayer",
+      "language": "eng",
+      "games_count": 252420,
+      "image_background": "https://media.rawg.io/media/games/587/587588c64afbff80e6f444eb2e46f9da.jpg"
+    },
+    {
+      "id": 40847,
+      "name": "Steam Achievements",
+      "slug": "steam-achievements",
+      "language": "eng",
+      "games_count": 52601,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Multiplayer",
+      "slug": "multiplayer",
+      "language": "eng",
+      "games_count": 42845,
+      "image_background": "https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg"
+    },
+    {
+      "id": 40836,
+      "name": "Full controller support",
+      "slug": "full-controller-support",
+      "language": "eng",
+      "games_count": 24451,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg"
+    },
+    {
+      "id": 40849,
+      "name": "Steam Cloud",
+      "slug": "steam-cloud",
+      "language": "eng",
+      "games_count": 26266,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg"
+    },
+    {
+      "id": 7808,
+      "name": "steam-trading-cards",
+      "slug": "steam-trading-cards",
+      "language": "eng",
+      "games_count": 7568,
+      "image_background": "https://media.rawg.io/media/games/8cc/8cce7c0e99dcc43d66c8efd42f9d03e3.jpg"
+    },
+    {
+      "id": 18,
+      "name": "Co-op",
+      "slug": "co-op",
+      "language": "eng",
+      "games_count": 14562,
+      "image_background": "https://media.rawg.io/media/games/da1/da1b267764d77221f07a4386b6548e5a.jpg"
+    },
+    {
+      "id": 411,
+      "name": "cooperative",
+      "slug": "cooperative",
+      "language": "eng",
+      "games_count": 6673,
+      "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    {
+      "id": 8,
+      "name": "First-Person",
+      "slug": "first-person",
+      "language": "eng",
+      "games_count": 37709,
+      "image_background": "https://media.rawg.io/media/games/b7b/b7b8381707152afc7d91f5d95de70e39.jpg"
+    },
+    {
+      "id": 16,
+      "name": "Horror",
+      "slug": "horror",
+      "language": "eng",
+      "games_count": 49444,
+      "image_background": "https://media.rawg.io/media/games/476/476178ef18ab0534771d099f51cdc694.jpg"
+    },
+    {
+      "id": 30,
+      "name": "FPS",
+      "slug": "fps",
+      "language": "eng",
+      "games_count": 15082,
+      "image_background": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Online Co-Op",
+      "slug": "online-co-op",
+      "language": "eng",
+      "games_count": 7825,
+      "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
+    },
+    {
+      "id": 26,
+      "name": "Gore",
+      "slug": "gore",
+      "language": "eng",
+      "games_count": 6729,
+      "image_background": "https://media.rawg.io/media/games/569/56978b5a77f13aa2ec5d09ec81d01cad.jpg"
+    },
+    {
+      "id": 1,
+      "name": "Survival",
+      "slug": "survival",
+      "language": "eng",
+      "games_count": 10985,
+      "image_background": "https://media.rawg.io/media/games/15c/15c95a4915f88a3e89c821526afe05fc.jpg"
+    },
+    {
+      "id": 75,
+      "name": "Local Co-Op",
+      "slug": "local-co-op",
+      "language": "eng",
+      "games_count": 6112,
+      "image_background": "https://media.rawg.io/media/games/85c/85c8ae70e7cdf0105f06ef6bdce63b8b.jpg"
+    },
+    {
+      "id": 80,
+      "name": "Tactical",
+      "slug": "tactical",
+      "language": "eng",
+      "games_count": 6718,
+      "image_background": "https://media.rawg.io/media/games/d46/d46373f39458670305704ef089387520.jpg"
+    },
+    {
+      "id": 11669,
+      "name": "stats",
+      "slug": "stats",
+      "language": "eng",
+      "games_count": 6114,
+      "image_background": "https://media.rawg.io/media/games/736/73619bd336c894d6941d926bfd563946.jpg"
+    },
+    {
+      "id": 40852,
+      "name": "Steam Workshop",
+      "slug": "steam-workshop",
+      "language": "eng",
+      "games_count": 1790,
+      "image_background": "https://media.rawg.io/media/games/46d/46d98e6910fbc0706e2948a7cc9b10c5.jpg"
+    },
+    {
+      "id": 63,
+      "name": "Zombies",
+      "slug": "zombies",
+      "language": "eng",
+      "games_count": 11253,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 62,
+      "name": "Moddable",
+      "slug": "moddable",
+      "language": "eng",
+      "games_count": 1149,
+      "image_background": "https://media.rawg.io/media/games/b8c/b8c243eaa0fbac8115e0cdccac3f91dc.jpg"
+    },
+    {
+      "id": 17,
+      "name": "Survival Horror",
+      "slug": "survival-horror",
+      "language": "eng",
+      "games_count": 10043,
+      "image_background": "https://media.rawg.io/media/games/1be/1be575aa6de86de328433a63fb534d9a.jpg"
+    },
+    {
+      "id": 43,
+      "name": "Post-apocalyptic",
+      "slug": "post-apocalyptic",
+      "language": "eng",
+      "games_count": 4984,
+      "image_background": "https://media.rawg.io/media/games/471/4712c9ac591f556f553556b864a7e92b.jpg"
+    },
+    {
+      "id": 40833,
+      "name": "Captions available",
+      "slug": "captions-available",
+      "language": "eng",
+      "games_count": 1491,
+      "image_background": "https://media.rawg.io/media/games/b54/b54598d1d5cc31899f4f0a7e3122a7b0.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Replay Value",
+      "slug": "replay-value",
+      "language": "eng",
+      "games_count": 2304,
+      "image_background": "https://media.rawg.io/media/games/1f4/1f47a270b8f241e4676b14d39ec620f7.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Team-Based",
+      "slug": "team-based",
+      "language": "eng",
+      "games_count": 2099,
+      "image_background": "https://media.rawg.io/media/games/476/476178ef18ab0534771d099f51cdc694.jpg"
+    },
+    {
+      "id": 40856,
+      "name": "Valve Anti-Cheat enabled",
+      "slug": "valve-anti-cheat-enabled",
+      "language": "eng",
+      "games_count": 105,
+      "image_background": "https://media.rawg.io/media/games/78d/78dfae12fb8c5b16cd78648553071e0a.jpg"
+    },
+    {
+      "id": 40834,
+      "name": "Commentary available",
+      "slug": "commentary-available",
+      "language": "eng",
+      "games_count": 300,
+      "image_background": "https://media.rawg.io/media/games/a12/a12f806432cb385bc286f0935c49cd14.jpg"
+    },
+    {
+      "id": 40839,
+      "name": "Includes Source SDK",
+      "slug": "includes-source-sdk",
+      "language": "eng",
+      "games_count": 66,
+      "image_background": "https://media.rawg.io/media/screenshots/e79/e7935d0c8fcd497c6824f490455988c7.jpg"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 354,
+      "name": "Electronic Arts",
+      "slug": "electronic-arts",
+      "games_count": 1347,
+      "image_background": "https://media.rawg.io/media/games/998/9980c4296f311d8bcc5b451ca51e4fe1.jpg"
+    },
+    {
+      "id": 3399,
+      "name": "Valve",
+      "slug": "valve",
+      "games_count": 48,
+      "image_background": "https://media.rawg.io/media/games/66e/66e90c9d7b9a17335b310ceb294e9365.jpg"
+    },
+    {
+      "id": 5897,
+      "name": "Akella",
+      "slug": "akella",
+      "games_count": 25,
+      "image_background": "https://media.rawg.io/media/screenshots/940/9401541cc45d6f5d1af1355087070160.jpg"
+    }
+  ],
+  "esrb_rating": {
+    "id": 4,
+    "name": "Mature",
+    "slug": "mature"
+  },
+  "clip": null,
+  "description_raw": "Cooperative survival continues with a different set of characters. New survivors are making their way through 5 campaigns with an added ability to play through the story of the first game as well, using not only expanded arsenal of 20 ranged and 10 melee weapons but improved AI Director. Your surroundings and weather will change; enemy and item placement will differ from map to map, from difficulty to difficulty. New unique special zombies, placed in the unlucky for the player spot, can end your run.\r\nHigh compatibility with community mods will allow you not only to add user-created maps but player models, enemy models, and even in-game music, which will help any player to create the unique experience on top of solid game mechanics.\r\nCompetitive multiplayer mods from arena survival to a head-on competition with another team of survivors are addictive and, in addition to the campaign, will provide you with hundreds of hours of game content."
+}
