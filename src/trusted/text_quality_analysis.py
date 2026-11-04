@@ -1,4 +1,4 @@
-"""Perfils descriptius i informes de qualitat; no transforma les dades."""
+"""Descriptive profiling and quality reports; source values are not modified."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ import statistics
 from typing import Any
 
 import pyarrow as pa
+from src.trusted.text_review_registry import documented_review, review_summary
 
 
 def percentile(values: list[int | float], fraction: float) -> int | float | None:
@@ -108,6 +109,7 @@ def review_sample(row: dict[str, Any], analysis: dict[str, Any]) -> dict[str, An
         checks.append("large_character_reduction_check_manually_may_be_html")
     if isinstance(cleaned, str) and re.search(r"</?[A-Za-z][^>]*>", cleaned):
         checks.append("residual_html")
+    assessment = documented_review(analysis["id"], analysis.get("source_sha256"), cleaned)
     return {
         "id": analysis["id"], "collection_date": analysis["collection_date"],
         "input_row": analysis["input_row"], "output_row": analysis["output_row"],
@@ -119,7 +121,8 @@ def review_sample(row: dict[str, Any], analysis: dict[str, Any]) -> dict[str, An
         "changed": original != cleaned, "checks": checks,
         "whitespace_only_change": (isinstance(original, str) and isinstance(cleaned, str)
                                    and original != cleaned and re.sub(r"\s+", " ", original).strip() == re.sub(r"\s+", " ", cleaned).strip()),
-        "review_status": "pending_human_review",
+        "review_status": "documented_assisted_review" if assessment else "pending_human_review",
+        "assessment": assessment,
         "before_excerpt": original[:2000] if isinstance(original, str) else None,
         "after_excerpt": cleaned[:2000] if isinstance(cleaned, str) else None,
         "before_truncated": original_length > 2000, "after_truncated": clean_length > 2000,
@@ -150,15 +153,15 @@ def interpretations(completeness: dict[str, Any], rows: int) -> list[str]:
     notes = []
     for name, profile in completeness.items():
         if rows and profile["missing_count"] == rows:
-            notes.append(f"{name}: absent en el 100% de les captures analitzades. "
-                         "Cal valorar la disponibilitat a la font i la rellevancia per al projecte; "
-                         "no es considera automaticament un error ni s'omple amb zero.")
+            notes.append(f"{name}: absent in 100% of the analysed captures. "
+                         "Assess source availability and relevance to the project; "
+                         "absence is not automatically an error and is not replaced with zero.")
         elif profile["missing_count"]:
-            notes.append(f"{name}: {profile['missing_count']}/{rows} captures sense valor "
-                         f"({profile['missing_pct']:.1f}%). Cal revisar-ne l'aplicabilitat abans d'imputar.")
-    notes += ["Un camp complet no garanteix exactitud semantica. Cap avis nomes significa que passen les regles implementades.",
-              "Els extrems numerics son indicadors descriptius, no errors confirmats; no es modifiquen les dades.",
-              "Les mostres abans/despres requereixen revisio humana de significat, idiomes i paragrafs; no han estat certificades automaticament."]
+            notes.append(f"{name}: {profile['missing_count']}/{rows} captures without a value "
+                         f"({profile['missing_pct']:.1f}%). Check applicability before imputing values.")
+    notes += ["A complete field does not guarantee semantic accuracy. No warnings means only that the implemented checks passed.",
+              "Numerical extremes are descriptive indicators, not confirmed errors; data is not modified.",
+              "Before/after samples require a documented assessment of meaning, languages and paragraphs; automatic checks do not certify semantic quality."]
     return notes
 
 
@@ -188,11 +191,11 @@ def overview_report(partitions: list[tuple[dict[str, Any], pa.Table]]) -> dict[s
         "partitions": [{"date": report["collection_date"], "rows": table.num_rows,
                         "warnings": report["after"]["rows_with_warnings"]} for report, table in partitions],
         "completeness": completeness, "numeric_profile": numeric_profile(rows, numbers),
-        "qualitative_review": {"status": "pending_human_review", "samples": select_review_samples(samples, limit=8)},
-        "interpretation": [f"La mostra conte {len(rows)} captures de {len(games)} jocs diferents. "
-                           "Les captures repetides d'un joc no son observacions independents; "
-                           "els percentatges i distribucions es calculen sobre captures, no sobre jocs unics. "
-                           "La mostra no representa necessariament el cataleg de RAWG.", *interpretations(completeness, len(rows))],
+        "qualitative_review": review_summary(select_review_samples(samples, limit=8)),
+        "interpretation": [f"The sample contains {len(rows)} captures of {len(games)} distinct games. "
+                           "Repeated captures of a game are not independent observations; "
+                           "percentages and distributions describe captures rather than unique games. "
+                           "The sample does not necessarily represent the RAWG catalogue.", *interpretations(completeness, len(rows))],
     }
 
 
@@ -201,35 +204,40 @@ def analysis_markdown(report: dict[str, Any], *, global_report: bool = False) ->
         completeness, numbers = report["completeness"], report["numeric_profile"]
     else:
         completeness, numbers = report["after"]["completeness"], report["after"]["numeric_profile"]
-    lines = ["", "## Interpretacio de la qualitat", ""]
+    lines = ["", "## Quality interpretation", ""]
     lines.extend(f"- {note}" for note in report["interpretation"])
-    lines += ["", "## Perfil numeric descriptiu", "",
-              "Valors finits; NaN/infinits i nuls es compten separadament al JSON. "
-              "Quartils i percentils amb interpolacio lineal. Les distribucions son de les captures.", "",
-              "| Camp | Finits | Nuls % | Minim | Mediana | Maxim | P95 | Extrems IQR orientatius |",
+    lines += ["", "## Descriptive numerical profile", "",
+              "Finite values only; NaN, infinity and nulls are counted separately in JSON. "
+              "Quartiles and percentiles use linear interpolation. Distributions describe captures.", "",
+              "| Field | Finite | Null % | Minimum | Median | Maximum | P95 | Advisory IQR extremes |",
               "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for name, profile in numbers.items():
         lines.append(f"| {name} | {profile['finite_count']} | {profile['null_pct']:.1f} | {profile['min']} | "
                      f"{profile['median']} | {profile['max']} | {profile['p95']} | {profile['potential_extremes']['count']} |")
-    lines += ["", "## Completesa", "", "| Camp amb absencies | Nuls | Text buit | Absents % |", "|---|---:|---:|---:|"]
+    lines += ["", "## Completeness", "", "| Field with missing values | Nulls | Empty text | Missing % |", "|---|---:|---:|---:|"]
     missing = [(name, profile) for name, profile in completeness.items() if profile["missing_count"]]
     for name, profile in missing:
         lines.append(f"| {name} | {profile['null_count']} | {profile['empty_text_count']} | {profile['missing_pct']:.1f} |")
     if not missing:
-        lines.append("| Cap camp amb valors absents | 0 | 0 | 0.0 |")
-    lines += ["", "## Mostra qualitativa abans/despres", "",
-              "Revisio humana pendent: comparar significat, informativitat, idiomes i paragrafs. "
-              "Les reduccions grans son avisos orientatius i poden ser nomes HTML eliminat. "
-              "Fragments de fins a 2000 caracters; les marques de truncament no impliquen perdua al Parquet."]
+        lines.append("| No fields with missing values | 0 | 0 | 0.0 |")
+    lines += ["", "## Before/after qualitative sample", "",
+              "Review meaning, informativeness, languages and paragraph boundaries; sample-specific assessments follow. "
+              "Large reductions are advisory signals and may simply reflect removed HTML. "
+              "Excerpts contain up to 2000 characters; truncated excerpts do not imply loss in Parquet."]
     for sample in report["qualitative_review"]["samples"]:
-        lines += ["", f"### Joc {sample['id']} - {sample['collection_date']} - fila {sample['output_row'] + 1}", "",
-                  f"Origen: `{sample['source_object_key']}`. Camp: {sample['selected_field']}. "
-                  f"Longitud: {sample['source_characters']} -> {sample['clean_characters']}. "
-                  f"Canvi nomes d'espais/salts de linia: {sample['whitespace_only_change']}. "
-                  f"Comprovacions: {', '.join(sample['checks']) or 'cap senyal automatic'}. "
-                  f"Fragments truncats abans/despres: {sample['before_truncated']}/{sample['after_truncated']}."]
-        for label, text in (("Abans", sample["before_excerpt"]), ("Despres", sample["after_excerpt"])):
-            text = text if text is not None else "(sense text utilitzable)"
+        lines += ["", f"### Game {sample['id']} - {sample['collection_date']} - row {sample['output_row'] + 1}", "",
+                  f"Source: `{sample['source_object_key']}`. Field: {sample['selected_field']}. "
+                  f"Length: {sample['source_characters']} -> {sample['clean_characters']}. "
+                  f"Whitespace-only change: {sample['whitespace_only_change']}. "
+                  f"Checks: {', '.join(sample['checks']) or 'no automatic signals'}. "
+                  f"Before/after excerpts truncated: {sample['before_truncated']}/{sample['after_truncated']}."]
+        lines.append(f"Review status: {sample['review_status']}.")
+        if sample.get("assessment"):
+            assessment = sample["assessment"]
+            lines += [f"Reviewer: {assessment['reviewer']}. Reviewed: {assessment['reviewed_on']}.",
+                      f"Assessment: {assessment['notes']}"]
+        for label, text in (("Before", sample["before_excerpt"]), ("After", sample["after_excerpt"])):
+            text = text if text is not None else "(no usable text)"
             fence = "`" * max(3, max((len(value) + 1 for value in re.findall(r"`+", text)), default=3))
             lines += ["", label, "", fence + "text", text, fence]
     return "\n".join(lines) + "\n"

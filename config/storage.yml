@@ -2,7 +2,6 @@ buckets:
   landing: 1.landing-zone
   formatted: 2.formatted-zone
   trusted: 3.trusted-zone
-  exploitation: 4.exploitation-zone
 
 landing:
   temporal_prefix: temporal

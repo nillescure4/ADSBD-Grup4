@@ -1,4 +1,4 @@
-"""Organitza els textos RAWG de Landing temporal a persistent sense alterar-los."""
+"""Promote original RAWG text captures from Temporal to Persistent Landing."""
 
 from __future__ import annotations
 
@@ -51,7 +51,7 @@ def promote_texts(*, dry_run: bool = False) -> int:
         and Path(key).stem.isdigit()
     )
     if not keys:
-        print("No hi ha JSON de jocs pendents a temporal.")
+        print("No game JSON files are pending in Temporal Landing.")
         return 0
 
     manifest_key = f"{temporal}manifests/text_sources.jsonl"
@@ -71,7 +71,7 @@ def promote_texts(*, dry_run: bool = False) -> int:
             row = records[game_id]
             collected = datetime.fromisoformat(row["ingested_at_utc"])
             if collected.tzinfo is None:
-                raise ValueError("La data de recollida ha d'incloure la zona horaria")
+                raise ValueError("The capture timestamp must include a timezone")
             date = collected.astimezone(timezone.utc).strftime("%d-%m-%Y")
             destination = f"{persistent}rawg$game_details_{game_id}${date}.json"
             print(f"{source_key} -> {destination}")
@@ -81,10 +81,10 @@ def promote_texts(*, dry_run: bool = False) -> int:
             original = read_bytes(client, bucket, source_key)
             digest = hashlib.sha256(original).hexdigest()
             if row.get("sha256") and row["sha256"] != digest:
-                raise ValueError("El JSON temporal no coincideix amb el manifest de recollida")
+                raise ValueError("The Temporal JSON does not match its collection manifest")
             existing = read_optional(client, bucket, destination)
             if existing is not None and existing != original:
-                raise ValueError("La destinacio ja existeix amb contingut diferent")
+                raise ValueError("The destination already exists with different content")
             if existing is None:
                 client.copy_object(
                     Bucket=bucket,
@@ -93,7 +93,7 @@ def promote_texts(*, dry_run: bool = False) -> int:
                 )
             copied = read_bytes(client, bucket, destination)
             if hashlib.sha256(copied).hexdigest() != digest:
-                raise ValueError("La copia no coincideix amb l'original")
+                raise ValueError("The copy does not match the original")
 
             # One provenance record per game/date avoids overwriting past batches.
             record_key = f"{persistent}manifests/rawg$text_sources_{game_id}${date}.jsonl"
@@ -110,20 +110,20 @@ def promote_texts(*, dry_run: bool = False) -> int:
                 ContentType="application/x-ndjson",
             )
             if read_bytes(client, bucket, record_key) != record_bytes:
-                raise ValueError("No s'ha pogut verificar el manifest persistent")
+                raise ValueError("Could not verify the Persistent manifest")
             client.delete_object(Bucket=bucket, Key=source_key)
             promoted += 1
         except Exception as exc:
             errors += 1
             print(f"[ERROR] {source_key}: {exc}", file=sys.stderr)
 
-    print(f"{'Simulacio' if dry_run else 'Promocio'}: {len(keys)} candidats, {promoted} moguts, {errors} errors.")
+    print(f"{'Dry run' if dry_run else 'Promotion'}: {len(keys)} candidates, {promoted} moved, {errors} errors.")
     return 1 if errors else 0
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dry-run", action="store_true", help="Mostra les destinacions sense modificar MinIO.")
+    parser.add_argument("--dry-run", action="store_true", help="Show destinations without modifying MinIO.")
     args = parser.parse_args()
     raise SystemExit(promote_texts(dry_run=args.dry_run))
 

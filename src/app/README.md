@@ -38,7 +38,7 @@ metric. The old `texts_clip` collection is preserved and never mixed with Jina.
 Jina queries contain up to 4,000 characters and are encoded in full. Descriptions
 are indexed in full with Jina, without chunking. Consequently, results no longer claim
 that a particular passage produced the score. Each game appears once. Latest
-snapshots are used by default; TASK 1 can also search historical snapshots.
+snapshots are always used in the interface; historical records remain in storage.
 Exhaustive grouping currently suits the small local corpus.
 
 MinIO must be available to show Trusted metadata. The app checks the exact
@@ -74,7 +74,7 @@ snapshot date identify the record used. Missing provenance remains
 explicitly unavailable. Keep this manifest outside the `images/` prefix so it
 is not treated as image input by the image quality pipeline.
 
-The current validation corpus contains **50 real RAWG screenshots and 100
+The earlier validation corpus contains **50 real RAWG screenshots and 100
 different game descriptions**. Historical text captures are preserved; the
 cross-modal validation selects exactly the latest 100 descriptions through a
 read-only Chroma filter.
@@ -147,7 +147,8 @@ Stored descriptions exceeding the limit are truncated to an exact source
 prefix fitting 512 tokens including special tokens, as requested. Shorter
 descriptions are encoded in full. Trusted data remains unchanged.
 
-The current corpus has **100 descriptions: 99 fit in full and one is truncated**.
+The earlier 100-description validation corpus had **99 descriptions fitting in
+full and one truncated**. These counts describe that run, not future catalogues.
 Each record includes game ID, date, full-source and encoded-prefix hashes,
 Trusted object hash/row, offsets, token count, truncation flag and configuration
 fingerprint. Unchanged records skip inference; changed captures reuse identical

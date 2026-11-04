@@ -16,6 +16,6 @@ Scripts/
 Lib/
 
 reports/
-# Les dades reals viuen a MinIO, no al repositori.
+# Runtime data is stored locally/MinIO; backup_data is the versioned exception.
 data/
 

@@ -27,7 +27,6 @@ services:
       /usr/bin/mc mb --ignore-existing local/1.landing-zone;
       /usr/bin/mc mb --ignore-existing local/2.formatted-zone;
       /usr/bin/mc mb --ignore-existing local/3.trusted-zone;
-      /usr/bin/mc mb --ignore-existing local/4.exploitation-zone;
       "
 
 volumes:

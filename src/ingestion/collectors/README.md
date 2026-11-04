@@ -1,7 +1,6 @@
-# Collectors
+# Collector compatibility namespace
 
-Cada font externa ha de tenir el seu propi collector en aquesta carpeta.
-
-Un collector ha de descarregar les dades sense transformar-ne el contingut i
-pujar-les a `1.landing-zone/temporal/<source>/<dataset>/`.
-
+Active source collectors live in `src/data_collection/`, not this directory.
+Use [the collection guide](../../data_collection/README.md) for RAWG and OpenGameArt.
+This namespace remains for compatibility and contains no active collector CLI.
+Landing transfers and promotion are documented in [Ingestion](../README.md).

@@ -14,7 +14,8 @@ python -m pip install -e ".[dev,app]"
 Copy-Item .env.example .env
 ```
 
-Configure `RAWG_API_KEY`, `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` in `.env`.
+Configure `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` in `.env`. Set
+`RAWG_API_KEY` for live collection; a missing key can trigger the verified backup.
 Choose your own MinIO password. Keep `.env` private. The optional `MINIO_ENDPOINT`
 defaults to `http://localhost:9000`. For TASK 3, configure `LLM_PROVIDER`,
 `LLM_MODEL` and the corresponding key; the example uses Gemini. No generative
@@ -89,6 +90,13 @@ The 24 sequential steps are:
 Screenshot associations are established through the original manifest SHA-256,
 Persistent bytes and reproduced Formatted/Trusted JPEG hashes. IDs are never
 guessed from filenames. Existing valid associations are retained across runs.
+
+Formatted image keys retain the complete source filename before `.jpg`, avoiding
+collisions between different input extensions. Existing legacy derived images are
+not automatically deleted; see [the migration notes](../formatting/README.md).
+Text quality version 5 produces English reports and attaches exact-hash sample
+assessments from [the review registry](../../docs/quality/README.md). Changing the
+registry invalidates Trusted report checkpoints without changing source data.
 
 The shared Chroma directory is `data/exploitation/chroma`. Collections are
 `texts_jina_clip_v2`, `images_jina_clip_v2` (1024 dimensions) and `texts_clap`,

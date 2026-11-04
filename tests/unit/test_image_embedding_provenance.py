@@ -11,6 +11,15 @@ from src.exploitation.images import build_embeddings as pipeline
 KEY = "images/rawg$rawg_images$shot_01_hash$01-11-2026.jpg"
 
 
+@pytest.mark.parametrize("extension", ["", ".jpg", ".png", ".webp", ".tiff"])
+def test_canonical_and_legacy_image_keys_preserve_date_and_identity(extension):
+    key = KEY.removesuffix(".jpg") + extension + ".jpg"
+    result = pipeline.parse_key(key)
+    assert result["collection_date"] == "2026-11-01"
+    assert result["image_id"] == "shot_01_hash"
+    assert result["source"] == "rawg"
+
+
 class Client:
     def __init__(self, record=None):
         self.record = record

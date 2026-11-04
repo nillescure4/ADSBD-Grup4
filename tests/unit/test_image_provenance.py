@@ -23,7 +23,7 @@ def inputs(tmp_path, s3):
     storage = {"buckets": {"landing": "landing", "formatted": "formatted", "trusted": "trusted"},
                "landing": {"persistent_prefix": "persistent"}}
     original = "persistent/images/rawg$rawg_images$shot_01_hash$04-11-2026.png"
-    target = "images/rawg$rawg_images$shot_01_hash$04-11-2026.jpg"
+    target = "images/rawg$rawg_images$shot_01_hash$04-11-2026.png.jpg"
     s3.put("landing", original, raw)
     jpeg = provenance.convert_to_jpeg(raw)
     s3.put("formatted", target, jpeg)

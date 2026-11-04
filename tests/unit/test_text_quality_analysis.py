@@ -85,7 +85,7 @@ def test_global_report_distinguishes_captures_games_and_recurring_issues():
     assert report["recurring_flags"]["missing_description"] == {"row_count": 2, "dates_count": 2}
     assert report["completeness"]["clip"]["missing_pct"] == 100
     assert any("clip" in note and "100%" in note for note in report["interpretation"])
-    assert "no son observacions independents" in report["interpretation"][0]
+    assert "not independent observations" in report["interpretation"][0]
     assert report["numeric_profile"]["rating"]["median"] == 3.5
 
 

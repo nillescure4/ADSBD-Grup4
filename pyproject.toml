@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "adsbd-grup4"
 version = "0.1.0"
-description = "Pipeline local de gestio de dades per zones amb MinIO"
+description = "Local multimodal data management by zones with MinIO"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

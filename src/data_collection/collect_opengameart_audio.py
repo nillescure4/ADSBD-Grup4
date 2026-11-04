@@ -1,31 +1,11 @@
 #!/usr/bin/env python3
-"""
-collect_opengameart_audio.py
+"""Collect original OpenGameArt Music + CC0 files and provenance.
 
-Recolector reproducible de música CC0 de OpenGameArt para una Landing Zone.
-
-Qué hace
---------
-1. Recorre el buscador avanzado de OpenGameArt filtrando:
-   - Art Type = Music
-   - License = CC0
-2. Visita cada submission.
-3. Verifica de nuevo que sea Music + CC0.
-4. Extrae metadata: título, autor, tags, descripción, licencia, URL, etc.
-5. Descarga ficheros musicales y, opcionalmente, archivos ZIP/7Z/RAR/TAR.*
-6. Calcula SHA-256 y escribe manifests JSONL.
-7. Es reanudable: no vuelve a descargar URLs ya registradas ni ficheros existentes.
-
-Notas
------
-- OpenGameArt no ofrece una API pública equivalente a RAWG para este caso:
-  este script hace crawling HTML de forma deliberadamente lenta.
-- Por defecto espera 2 s entre peticiones.
-- Comprueba robots.txt antes de rastrear.
-- La estructura HTML del sitio puede cambiar; el parser usa varios selectores
-  de respaldo y falla de forma conservadora.
-- Landing: se preservan los ficheros descargados tal cual. No se convierten,
-  normalizan ni segmentan aquí.
+Search pages and individual submissions are checked before downloads. The
+collector honours robots.txt, paces requests, caches source HTML, computes
+SHA-256 hashes and resumes existing downloads. Optional archives and music
+source formats do not count toward the playable-audio target. No conversion,
+normalisation or segmentation is performed in this source-collection stage.
 """
 
 from __future__ import annotations
@@ -54,7 +34,7 @@ from urllib3.util.retry import Retry
 BASE_URL = "https://opengameart.org"
 SEARCH_URL = f"{BASE_URL}/art-search-advanced"
 
-# IDs observados en el buscador avanzado de OpenGameArt.
+# IDs used by OpenGameArt's advanced search form.
 OGA_ART_TYPE_MUSIC = "12"
 OGA_LICENSE_CC0 = "4"
 
@@ -63,8 +43,8 @@ AUDIO_EXTENSIONS = {
     ".aiff", ".aif", ".au", ".wma",
 }
 
-# Música tracker / MIDI: no siempre es audio PCM comprimido, pero sigue siendo
-# material musical útil que puede interesar conservar en Landing.
+# Tracker/MIDI sources are not directly playable PCM audio, but optional
+# collection can retain them as original music source material in Landing.
 MUSIC_SOURCE_EXTENSIONS = {
     ".mid", ".midi", ".mod", ".xm", ".it", ".s3m", ".nsf", ".spc",
     ".vgm", ".vgz",
@@ -112,8 +92,8 @@ def clean_filename(name: str, max_len: int = 180) -> str:
 
 def canonicalize_url(url: str) -> str:
     """
-    Elimina fragmentos y normaliza el host; conserva la query porque algunos
-    enlaces de descarga pueden depender de ella.
+    Remove fragments and normalise the host; preserve query parameters because
+    download links may depend on them.
     """
     p = urlparse(url)
     return urlunparse(
@@ -130,7 +110,7 @@ def canonicalize_url(url: str) -> str:
 
 def url_extension(url: str) -> str:
     path = urlparse(url).path.lower()
-    # Trata tar.gz como archive.
+    # Treat tar.gz as an archive.
     if path.endswith(".tar.gz"):
         return ".tar.gz"
     if path.endswith(".tar.bz2"):
@@ -238,9 +218,8 @@ def check_robots(user_agent: str, target_url: str) -> tuple[bool, str]:
         rp.read()
         return rp.can_fetch(user_agent, target_url), robots_url
     except Exception as exc:
-        # Conservador: si robots.txt no se puede consultar, avisamos, pero no
-        # fingimos que tenemos una prohibición explícita.
-        return True, f"{robots_url} (no se pudo leer: {exc})"
+        # Report an unavailable robots.txt without claiming an explicit denial.
+        return True, f"{robots_url} (could not be read: {exc})"
 
 
 def search_params(
@@ -249,7 +228,7 @@ def search_params(
     query: str = "",
     cc0_filter: bool = True,
 ) -> list[tuple[str, str]]:
-    # OpenGameArt usa parámetros Drupal con [] en el formulario.
+    # OpenGameArt uses Drupal form parameters containing [].
     params = [
         ("field_art_type_tid[]", OGA_ART_TYPE_MUSIC),
         ("field_art_tags_tid_op", "or"),
@@ -270,16 +249,15 @@ def search_params(
 
 def content_links_from_search(html: str, page_url: str) -> list[str]:
     """
-    Extrae enlaces de submissions de una página de resultados.
+    Extract submission links from a search-results page.
 
-    OpenGameArt/Drupal ha cambiado clases CSS varias veces, así que evitamos
-    depender de una única estructura. Aceptamos aliases /content/... y
-    URLs canónicas /node/<id>.
+    OpenGameArt/Drupal CSS classes vary across versions. Accept both
+    /content/... aliases and canonical /node/<id> URLs.
     """
     soup = BeautifulSoup(html, "html.parser")
     candidates: list[str] = []
 
-    # Primero, zonas típicas de resultados de Drupal Views.
+    # First inspect the usual Drupal Views result containers.
     selectors = [
         ".view-content .views-row a[href]",
         ".view-art-search-advanced a[href]",
@@ -293,7 +271,7 @@ def content_links_from_search(html: str, page_url: str) -> list[str]:
             if href:
                 candidates.append(urljoin(page_url, href))
 
-    # Fallback total: revisa todos los enlaces de la página.
+    # Last fallback: inspect all page links.
     for a in soup.find_all("a", href=True):
         candidates.append(urljoin(page_url, a["href"]))
 
@@ -320,7 +298,7 @@ def content_links_from_search(html: str, page_url: str) -> list[str]:
 
 
 def describe_search_page(html: str) -> dict:
-    """Información de diagnóstico si OpenGameArt devuelve una página inesperada."""
+    """Collect diagnostics when OpenGameArt returns an unexpected page."""
     soup = BeautifulSoup(html, "html.parser")
     title = soup.title.get_text(" ", strip=True) if soup.title else None
     text = " ".join(soup.stripped_strings)
@@ -336,11 +314,11 @@ def describe_search_page(html: str) -> dict:
 
 def has_next_search_page(html: str) -> bool:
     soup = BeautifulSoup(html, "html.parser")
-    # Drupal suele usar estas clases.
+    # Common Drupal classes.
     if soup.select_one("li.pager-next a[href], .pager-next a[href]"):
         return True
 
-    # Fallback textual.
+    # Text-based fallback.
     for a in soup.find_all("a", href=True):
         text = " ".join(a.stripped_strings).strip().lower()
         if text in {"next", "next ›", "next »", "›", "»"}:
@@ -364,18 +342,18 @@ def link_texts(soup: BeautifulSoup, selectors: list[str]) -> list[str]:
         vals = [" ".join(e.stripped_strings).strip() for e in els]
         vals = [v for v in vals if v]
         if vals:
-            # Dedupe preservando orden
+            # Deduplicate while preserving order.
             return list(dict.fromkeys(vals))
     return []
 
 
 def extract_node_id(soup: BeautifulSoup, page_url: str) -> Optional[str]:
-    # Drupal moderno puede exponer data-history-node-id.
+    # Recent Drupal versions may expose data-history-node-id.
     el = soup.select_one("[data-history-node-id]")
     if el and el.get("data-history-node-id"):
         return str(el["data-history-node-id"])
 
-    # IDs/clases como node-12345.
+    # IDs/classes such as node-12345.
     for tag in soup.find_all(True):
         values = []
         if tag.get("id"):
@@ -386,7 +364,7 @@ def extract_node_id(soup: BeautifulSoup, page_url: str) -> Optional[str]:
             if m:
                 return m.group(1)
 
-    # Metadatos / shortlink.
+    # Metadata and shortlinks.
     for link in soup.find_all("link", href=True):
         href = link["href"]
         m = re.search(r"/node/(\d+)", href)
@@ -438,8 +416,8 @@ def extract_file_links(
                 label = " ".join(a.stripped_strings).strip()
                 candidates.append((href, label))
 
-    # Fallback: busca enlaces que por extensión parecen audio / fuente musical /
-    # archivo descargable. Esto evita depender totalmente del HTML de Drupal.
+    # Fall back to extensions identifying audio, music source files or archives
+    # rather than depending entirely on Drupal's current markup.
     if not found_structured:
         for a in soup.find_all("a", href=True):
             href = urljoin(page_url, a["href"])
@@ -539,7 +517,7 @@ def parse_submission(html: str, page_url: str, include_archives: bool) -> Submis
         ],
     )
 
-    # Fallbacks basados en texto, por si cambian los nombres de campo.
+    # Text-based fallbacks for changed source field labels.
     page_text = "\n".join(soup.stripped_strings)
     if not art_types and re.search(r"Art Type:\s*Music", page_text, flags=re.I):
         art_types = ["Music"]
@@ -577,13 +555,13 @@ def choose_local_filename(file_info: dict, ordinal: int) -> str:
     label = clean_filename(file_info.get("link_label") or "")
     url_name = clean_filename(Path(urlparse(file_info["file_url"]).path).name)
 
-    # Prefiere el nombre real de la URL si tiene extensión válida.
+    # Prefer the actual URL filename when it has a valid extension.
     candidate = url_name if Path(url_name).suffix else label
     if not candidate or candidate == "file":
         ext = file_info.get("extension") or ""
         candidate = f"file_{ordinal:03d}{ext}"
 
-    # Ante colisiones se añade un hash de la URL.
+    # Add a URL hash when filenames collide.
     return candidate
 
 
@@ -637,20 +615,20 @@ def submission_is_complete_for_current_run(
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        description="Recolecta música CC0 de OpenGameArt con metadata y manifest JSONL."
+        description="Collect CC0 music from OpenGameArt with metadata and JSONL manifests."
     )
     p.add_argument(
         "--output",
         default="data/landing/opengameart_audio",
-        help="Directorio raíz de salida.",
+        help="Output root directory.",
     )
     p.add_argument(
         "--max-audio-files",
         type=int,
         default=2000,
         help=(
-            "Objetivo TOTAL de ficheros de audio directos descargados en este output. "
-            "El recolector se detiene al alcanzar el objetivo. Usa 0 para sin límite."
+            "TOTAL target of directly playable audio files downloaded to this output. "
+            "Collection stops when the target is reached. Use 0 for no limit."
         ),
     )
     p.add_argument(
@@ -658,64 +636,64 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=0,
         help=(
-            "Límite opcional de submissions CC0 procesadas en esta ejecución. "
-            "Usa 0 para sin límite. Normalmente controla el corpus con --max-audio-files."
+            "Optional limit on CC0 submissions processed in this run. "
+            "Use 0 for no limit. Normally control corpus size with --max-audio-files."
         ),
     )
     p.add_argument(
         "--query",
         default="",
-        help="Texto opcional para restringir el buscador (p.ej. 'battle', 'rpg').",
+        help="Optional search filter text (for example, 'battle' or 'rpg').",
     )
     p.add_argument(
         "--delay",
         type=float,
         default=2.0,
-        help="Segundos mínimos entre peticiones HTTP (default: 2.0).",
+        help="Minimum seconds between HTTP requests (default: 2.0).",
     )
     p.add_argument(
         "--timeout",
         type=int,
         default=60,
-        help="Timeout HTTP por petición en segundos.",
+        help="HTTP timeout per request in seconds.",
     )
     p.add_argument(
         "--items-per-page",
         type=int,
         default=144,
         choices=(24, 48, 72, 96, 120, 144),
-        help="Resultados por página del buscador.",
+        help="Search results per page.",
     )
     p.add_argument(
         "--include-archives",
         action=argparse.BooleanOptionalAction,
         default=False,
-        help="Descarga ZIP/7Z/RAR/TAR además de audio directo (default: no).",
+        help="Download ZIP/7Z/RAR/TAR archives as well as playable audio (default: no).",
     )
     p.add_argument(
         "--include-music-source",
         action=argparse.BooleanOptionalAction,
         default=False,
         help=(
-            "Descarga MIDI/tracker/VGM además de audio reproducible directo "
-            "(default: no). Estos ficheros nunca cuentan para --max-audio-files."
+            "Download MIDI/tracker/VGM source files as well as playable audio "
+            "(default: no). These files never count toward --max-audio-files."
         ),
     )
     p.add_argument(
         "--download",
         action=argparse.BooleanOptionalAction,
         default=True,
-        help="Descarga los ficheros; con --no-download solo cataloga metadata.",
+        help="Download files; --no-download collects metadata only.",
     )
     p.add_argument(
         "--user-agent",
         default=DEFAULT_USER_AGENT,
-        help="User-Agent del crawler.",
+        help="Crawler User-Agent.",
     )
     p.add_argument(
         "--ignore-robots",
         action="store_true",
-        help="Ignora robots.txt. No recomendado; úsalo solo si has verificado permiso.",
+        help="Ignore robots.txt only when permission has been independently verified.",
     )
     return p.parse_args()
 
@@ -782,21 +760,21 @@ def main() -> int:
         print(f"[ROBOTS] {robots_info}")
         if not allowed:
             raise SystemExit(
-                "robots.txt no permite rastrear esta URL con este User-Agent. "
-                "El script se detiene de forma conservadora."
+                "robots.txt does not allow this URL with this User-Agent. "
+                "The collector stops conservatively."
             )
 
     print("=== OpenGameArt CC0 Music Collector ===")
     print(f"Output: {output}")
     print(
         f"Target direct-audio files: "
-        f"{'sin límite' if args.max_audio_files == 0 else args.max_audio_files}"
+        f"{'unlimited' if args.max_audio_files == 0 else args.max_audio_files}"
     )
     print(f"Already downloaded direct-audio files: {initial_audio_files}")
     if args.max_audio_files:
         print(f"Remaining to target: {max(0, args.max_audio_files - initial_audio_files)}")
-    print(f"Max submissions this run: {'sin límite' if args.max_items == 0 else args.max_items}")
-    print(f"Query: {args.query or '(ninguna)'}")
+    print(f"Max submissions this run: {'unlimited' if args.max_items == 0 else args.max_items}")
+    print(f"Query: {args.query or '(none)'}")
     print(f"Delay: {args.delay}s")
     print(f"Include archives: {args.include_archives}")
     print(f"Include MIDI/tracker/VGM sources: {args.include_music_source}")
@@ -822,7 +800,7 @@ def main() -> int:
     stop_target_reached = False
 
     while True:
-        # Primer intento: filtro Music + CC0 en el propio buscador.
+        # First attempt: request Music + CC0 through the search form.
         params = search_params(
             search_page, args.items_per_page, args.query, cc0_filter=True
         )
@@ -840,7 +818,7 @@ def main() -> int:
                 },
             )
             stats["errors"] += 1
-            print(f"[ERROR] página de búsqueda {search_page}: {exc}", file=sys.stderr)
+            print(f"[ERROR] search page {search_page}: {exc}", file=sys.stderr)
             break
 
         search_url = r.url
@@ -851,16 +829,15 @@ def main() -> int:
         links = content_links_from_search(r.text, search_url)
         diag = describe_search_page(r.text)
         print(
-            f"\n[SEARCH {search_page}] {len(links)} candidatos | "
+            f"\n[SEARCH {search_page}] {len(links)} candidates | "
             f"{diag.get('displaying') or diag.get('title')}"
         )
 
-        # OpenGameArt a veces no aplica bien filtros avanzados a clientes HTTP.
-        # Si el filtro CC0 devuelve cero, reintentamos SOLO Music y verificamos
-        # CC0 en cada página individual antes de descargar nada.
+        # If the advanced CC0 filter returns nothing, try Music-only search.
+        # Still verify CC0 on every individual page before downloading.
         used_cc0_search_filter = True
         if not links:
-            print("  [FALLBACK] filtro CC0 sin candidatos; probando búsqueda Music-only")
+            print("  [FALLBACK] CC0 filter returned no candidates; trying Music-only search")
             fallback_params = search_params(
                 search_page, args.items_per_page, args.query, cc0_filter=False
             )
@@ -874,7 +851,7 @@ def main() -> int:
                 diag = describe_search_page(r.text)
                 used_cc0_search_filter = False
                 print(
-                    f"  [FALLBACK RESULT] {len(links)} candidatos | "
+                    f"  [FALLBACK RESULT] {len(links)} candidates | "
                     f"{diag.get('displaying') or diag.get('title')}"
                 )
             except Exception as exc:
@@ -888,15 +865,15 @@ def main() -> int:
                         "timestamp_utc": utc_now(),
                     },
                 )
-                print(f"[ERROR] fallback de búsqueda: {exc}", file=sys.stderr)
+                print(f"[ERROR] search fallback: {exc}", file=sys.stderr)
                 break
 
         if not links:
             print(
-                "\n[STOP] OpenGameArt respondió, pero no se pudieron extraer "
-                "submissions. Revisa los HTML guardados en raw/pages/search/."
+                "\n[STOP] OpenGameArt responded, but no submissions could be extracted. "
+                "Inspect the HTML saved in raw/pages/search/."
             )
-            print("Diagnóstico:", json.dumps(diag, ensure_ascii=False))
+            print("Diagnostics:", json.dumps(diag, ensure_ascii=False))
             break
 
         for submission_url in links:
@@ -934,7 +911,7 @@ def main() -> int:
                 cached_submission.parent.mkdir(parents=True, exist_ok=True)
                 cached_submission.write_text(page.text, encoding="utf-8")
 
-                # Doble verificación: no confiamos solo en el filtro de búsqueda.
+                # Verify the individual submission rather than trusting only search filters.
                 if not is_verified_cc0_music(sub):
                     print(
                         f"    [FILTERED] art_types={sub.art_types} licenses={sub.licenses}"
@@ -993,7 +970,7 @@ def main() -> int:
                     file_url = file_info["file_url"]
                     base_name = choose_local_filename(file_info, ordinal)
 
-                    # Resuelve nombres repetidos dentro de una misma submission.
+                    # Resolve duplicate names within the same submission.
                     candidate = base_name
                     if candidate.lower() in used_names:
                         stem = Path(base_name).stem
@@ -1012,8 +989,8 @@ def main() -> int:
                         continue
 
                     if destination.exists():
-                        # Registra el fichero local existente para poder reanudar aunque
-                        # el manifest se hubiera perdido parcialmente.
+                        # Record an existing local file so collection can resume after
+                        # partial manifest loss.
                         size = destination.stat().st_size
                         digest = sha256_file(destination)
                         append_jsonl(
@@ -1113,7 +1090,7 @@ def main() -> int:
                                 "timestamp_utc": utc_now(),
                             },
                         )
-                        print(f"      [WARN] descarga fallida: {exc}", file=sys.stderr)
+                        print(f"      [WARN] download failed: {exc}", file=sys.stderr)
 
             except Exception as exc:
                 stats["errors"] += 1
@@ -1126,12 +1103,12 @@ def main() -> int:
                         "timestamp_utc": utc_now(),
                     },
                 )
-                print(f"    [WARN] submission fallida: {exc}", file=sys.stderr)
+                print(f"    [WARN] submission failed: {exc}", file=sys.stderr)
 
         if stop_target_reached:
             print(
-                f"\n[TARGET] alcanzados {total_audio_files} "
-                f"ficheros de audio directos."
+                f"\n[TARGET] reached {total_audio_files} "
+                f"directly playable audio files."
             )
             break
 

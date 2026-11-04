@@ -1,2 +1,2 @@
-"""Transformacions de Landing persistent a Formatted Zone."""
+"""Transform Persistent Landing into the Formatted Zone."""
 

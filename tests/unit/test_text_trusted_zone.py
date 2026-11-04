@@ -63,7 +63,7 @@ def test_fallback_missing_short_and_original_columns_preserved():
     assert issue["source_object_key"] == captures[1][1]["source_object_key"]
     assert not {"source", "ingested_at_utc", "source_object_key", "source_sha256"} & set(output.column_names)
     markdown = trusted.quality_markdown(report)
-    assert "Fila Trusted 2 (entrada 2); ID 2; data 2026-10-20" in markdown
+    assert "Trusted row 2 (input 2); ID 2; date 2026-10-20" in markdown
 
 
 def test_only_exact_duplicates_removed_and_conflicts_flagged():
@@ -175,6 +175,21 @@ def test_corrupted_input_is_rejected_and_outputs_can_be_repaired(store):
     store.objects["3.trusted-zone", "texts/rawg/quality/collection_date=2026-10-20.md"] = b"damaged"
     writes = len(store.writes)
     assert trusted.trust_texts() == 0 and len(store.writes) == writes + 4
+
+
+def test_review_registry_changes_refresh_reports_without_changing_business_data(store, monkeypatch):
+    add_partition(store)
+    monkeypatch.setattr(trusted, "registry_digest", lambda: "review-a")
+    assert trusted.trust_texts() == 0
+    key = ("3.trusted-zone", "texts/rawg/collection_date=2026-10-20/game_details.parquet")
+    original = store.objects[key]
+    writes = len(store.writes)
+    assert trusted.trust_texts() == 0 and len(store.writes) == writes
+    monkeypatch.setattr(trusted, "registry_digest", lambda: "review-b")
+    assert trusted.trust_texts() == 0 and len(store.writes) > writes
+    assert store.objects[key] == original
+    report = json.loads(store.objects["3.trusted-zone", "texts/rawg/quality/collection_date=2026-10-20.json"])
+    assert report["provenance"]["review_registry_sha256"] == "review-b"
 
 
 def test_partition_errors_do_not_block_other_dates(store):

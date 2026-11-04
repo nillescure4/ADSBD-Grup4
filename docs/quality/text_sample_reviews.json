@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "scope": "Eight exact source/cleaned content pairs from the 50-game backup; assisted review, not human certification or external fact-checking.",
+  "reviews": [
+    {
+      "game_id": 3498,
+      "game_name": "Grand Theft Auto V",
+      "source_sha256": "a24c1bee721302895858f367177cd4dd97f8dad57cf623f4d543bc3abbd6b610",
+      "clean_sha256": "ee87cd70b4749e633fbb339ff997d7df26a6b9b632c5116614d2d405719ff748",
+      "selected_field": "description_raw",
+      "reviewer": "Codex-assisted full-text comparison",
+      "reviewed_on": "2026-11-05",
+      "notes": "English and Spanish sections remain in the same order. Only trailing whitespace changes; vehicle, character and online-mode statements and both language sections retain their full token sequence.",
+      "source_characters": 2093,
+      "clean_characters": 2090
+    },
+    {
+      "game_id": 4200,
+      "game_name": "Portal 2",
+      "source_sha256": "75cb2004647cae4b7a8660a8caf3863a0d19698170033de24029a9f48d304604",
+      "clean_sha256": "9b53447194c4c9a7c9db81cdde824d5924d31fc9e3b7a4b05954cff1377fa2e0",
+      "selected_field": "description_raw",
+      "reviewer": "Codex-assisted full-text comparison",
+      "reviewed_on": "2026-11-05",
+      "notes": "All five paragraphs remain. Plot, portal mechanics, gel mechanics, co-op mode and level-editor information are preserved; only trailing whitespace is removed.",
+      "source_characters": 1950,
+      "clean_characters": 1949
+    },
+    {
+      "game_id": 4291,
+      "game_name": "Counter-Strike: Global Offensive",
+      "source_sha256": "e09f4318990c55eac5365a97201677a9e76d5f3a5f325bf93433796157c49c92",
+      "clean_sha256": "6a875ddb5f32f1864c4c64deeddf7d029f5e062888c72ca39bf0774b632630f2",
+      "selected_field": "description_raw",
+      "reviewer": "Codex-assisted full-text comparison",
+      "reviewed_on": "2026-11-05",
+      "notes": "Team objectives, equipment and cosmetic monetisation statements are unchanged. CRLF line breaks become LF; all original sentences and punctuation remain. The source uses single line breaks rather than blank paragraph separators.",
+      "source_characters": 1237,
+      "clean_characters": 1234
+    },
+    {
+      "game_id": 10035,
+      "game_name": "Hitman",
+      "source_sha256": "ea3633a04ab043cc660ac0593166acb35a8a609b3b32129fd33ba15cf9bbdcf1",
+      "clean_sha256": "b49682f65baf5a7c3f55629b571e3a8e67f3851b00e5af70fd7ecb6d3135787c",
+      "selected_field": "description_raw",
+      "reviewer": "Codex-assisted full-text comparison",
+      "reviewed_on": "2026-11-05",
+      "notes": "Both paragraphs retain the Providence plot and player-choice mechanics. Extra line-ending/whitespace characters are normalised without rewriting the source grammar.",
+      "source_characters": 1086,
+      "clean_characters": 1084
+    },
+    {
+      "game_id": 10754,
+      "game_name": "BioShock Remastered",
+      "source_sha256": "4ab65c5dee6956fd79aba91bdf50206c15bc290c77dc89c8591e289f9703e223",
+      "clean_sha256": "05bec6163c3234c837c80d90e532db9c44d64ea613e2891869c2b06abe6f83a5",
+      "selected_field": "description_raw",
+      "reviewer": "Codex-assisted full-text comparison",
+      "reviewed_on": "2026-11-05",
+      "notes": "Both paragraphs retain the Rapture setting, plasmid/economy mechanics and remaster statement. One trailing space is removed; questionable source wording is preserved rather than speculatively corrected.",
+      "source_characters": 1144,
+      "clean_characters": 1143
+    },
+    {
+      "game_id": 11936,
+      "game_name": "Half-Life 2: Deathmatch",
+      "source_sha256": "853c0a0e7ab5213fb882429abe432bc34312e90943d6d300a84fc17fe03fd045",
+      "clean_sha256": "72d452ffa7c0c3a37eb93f605380e9afda6b9b00be62106f3eef997afa4254d9",
+      "selected_field": "description_raw",
+      "reviewer": "Codex-assisted full-text comparison",
+      "reviewed_on": "2026-11-05",
+      "notes": "The multiplayer context and game-mode rules retain their full wording and line boundary. The source claim about the game is not fact-checked by this review.",
+      "source_characters": 875,
+      "clean_characters": 874
+    },
+    {
+      "game_id": 11973,
+      "game_name": "Middle-earth: Shadow of Mordor",
+      "source_sha256": "6b2629e2bbf4af01264e065f997c51df5c28b717d74ddf81ab878f7bcadadf2e",
+      "clean_sha256": "2e4b006187eed6ea059a2e8685b60b056668c6aaca73647257bcfa4aa0c9ab9d",
+      "selected_field": "description_raw",
+      "reviewer": "Codex-assisted full-text comparison",
+      "reviewed_on": "2026-11-05",
+      "notes": "Plot and Nemesis-system statements are preserved, including source spelling inconsistencies. Repeated spacing is collapsed; line boundaries remain.",
+      "source_characters": 958,
+      "clean_characters": 956
+    },
+    {
+      "game_id": 12020,
+      "game_name": "Left 4 Dead 2",
+      "source_sha256": "ff4d1914d300e075e58c1a6e46589e5a6f7edc66e4d2b0cea7ca28dcee91600f",
+      "clean_sha256": "3a50f292bba7e17e2f209b2d3d1f76e9f8e93adc6e00437224fea2d3c9893c61",
+      "selected_field": "description_raw",
+      "reviewer": "Codex-assisted full-text comparison",
+      "reviewed_on": "2026-11-05",
+      "notes": "Campaign, AI Director, community-mod and competitive-mode statements remain in the same order. Line endings are normalised; no gameplay statement is removed.",
+      "source_characters": 953,
+      "clean_characters": 951
+    }
+  ]
+}
