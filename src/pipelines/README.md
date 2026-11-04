@@ -1,116 +1,171 @@
-# Global pipeline: source collection to Trusted
+# End-to-end orchestrator
 
-Install the project dependencies and configure `.env` with `RAWG_API_KEY`,
-`MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD` and optionally `MINIO_ENDPOINT`:
+The orchestrator addresses project constraints 15 and 16: sequential execution
+of the independent zone scripts, local storage setup and reproducible operation
+from a fresh checkout. It prepares the data used by all three interactive tasks.
 
-```powershell
-python -m pip install -e ".[dev]"
-python -m src.pipelines.run_pipeline run --start-minio
-```
+## First run
 
-FFmpeg and FFprobe must be on PATH, or supplied with
-`--ffmpeg-dir C:/path/to/ffmpeg/bin`. A local installation under
-`data/tools/ffmpeg/bin` is discovered automatically. The tools are not bundled
-or downloaded by the orchestrator. Docker Desktop must be running when using
-`--start-minio`. Otherwise, start MinIO independently before running.
-
-The existing `src/pipelines/run_pipeline.py` is the entrypoint; direct execution
-with `python src/pipelines/run_pipeline.py` works too. Omitting the command defaults to
-`run`. `status` checks the three backbone buckets without collecting data.
-
-## Scope and selection
-
-The default run selects **5 new RAWG games**, up to **2 screenshots per game**,
-and targets **5 total downloaded audio files** in its audio output directory.
-These are bounded development defaults, not a complete source catalogue:
+Use Python 3.12, Docker Desktop (or Docker Engine with Compose), and FFmpeg plus
+FFprobe. Create and activate a virtual environment, then install:
 
 ```powershell
-python -m src.pipelines.run_pipeline run --max-games 100 --screenshots-per-game 4 --max-audio-files 200 --audio-max-items 500
+python -m pip install -e ".[dev,app]"
+Copy-Item .env.example .env
 ```
 
-`--rawg-plan` accepts the stratified JSON plan supported by the image collector.
-Its game targets and optional screenshot counts take precedence over the
-single-query limits. `--audio-query` can restrict the OpenGameArt search.
+Configure `RAWG_API_KEY`, `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` in `.env`.
+Choose your own MinIO password. Keep `.env` private. The optional `MINIO_ENDPOINT`
+defaults to `http://localhost:9000`. For TASK 3, configure `LLM_PROVIDER`,
+`LLM_MODEL` and the corresponding key; the example uses Gemini. No generative
+API request is made by the batch preparation process.
 
-Text and images use the RAWG API. Text collection consumes the game manifest
-produced by image collection, including its earlier entries, so both use the
-same selected game catalogue. RAWG collection adds new games across runs.
-The audio collector uses OpenGameArt's existing polite HTML crawler, checking
-robots.txt and verifying Music + CC0; there is no equivalent public audio API.
-Audio tracks are independent of RAWG games and must not be presented as their
-soundtracks. Archives and tracker/MIDI source files are excluded.
+```powershell
+python -m src.pipelines.run_pipeline run --start-minio --serve
+```
 
-## Execution order
+This starts MinIO, creates missing Landing/Formatted/Trusted buckets, collects
+all three modalities, processes every zone, builds four embedding collections,
+verifies them and starts Streamlit at http://127.0.0.1:8501. The application stays
+in the foreground; use Ctrl+C to stop it. Without `--serve`, preparation finishes
+and exits. MinIO data and the Chroma database remain available for future runs.
 
-1. Collect RAWG screenshots and their game manifest.
+Model weights/tokenizers are downloaded from their pinned Hugging Face revisions
+on first use. Allow several GB of disk space and additional time for CPU inference.
+Use `HF_HUB_OFFLINE=1` only after all required model files are cached. See the
+[model configuration](../exploitation/README.md) for the exact revisions and licences.
+
+FFmpeg/FFprobe must be on PATH or supplied through `--ffmpeg-dir`. An existing
+installation under `data/tools/ffmpeg/bin` is discovered automatically. The
+orchestrator does not download executables. CPU workers default to four unless
+`OMP_NUM_THREADS`/`MKL_NUM_THREADS` are already configured.
+
+## Selection and execution
+
+Defaults: **8 new RAWG games**, up to **2 screenshots per game**, and **5 total
+downloaded playable music files** in the audio collection directory. These are
+bounded sample targets, not a complete crawl or a guarantee that every asset
+passes Trusted quality checks. TASK 3 needs eight distinct games with verified
+descriptions and associated screenshots, and at least two distinct audio assets.
+The final report explicitly indicates whether the data meets those requirements.
+
+```powershell
+python -m src.pipelines.run_pipeline --max-games 100 --screenshots-per-game 2 --max-audio-files 16 --audio-max-items 100
+```
+
+Text and images come from the RAWG API. Descriptions use the same game manifest
+as screenshots, including previous collection entries. The OpenGameArt collector
+uses the existing robots-aware HTML crawler, selects Music + CC0, and excludes
+archives and tracker/MIDI source files. Music is independent of RAWG games and
+must not be attributed to them as their original soundtrack.
+
+The 23 sequential steps are:
+
+1. Collect RAWG screenshots and the game manifest.
 2. Collect RAWG descriptions and upload them to Temporal Landing.
-3. Collect OpenGameArt music and its source manifests.
-4. Upload images, promote images and descriptions to Persistent Landing.
-5. Upload all collected playable audio and promote it to Persistent Landing.
-6. Run the three Formatted pipelines.
-7. Build Trusted images and text.
-8. Profile all Formatted audio, then publish Trusted audio using that exact report.
-9. Generate image and audio quality analyses. Text analysis is generated by its
-   Trusted process.
-10. Verify that all three modalities have data in the Trusted bucket.
+3. Collect OpenGameArt music and provenance manifests.
+4. Upload images to Temporal Landing.
+5. Promote images to Persistent Landing.
+6. Promote descriptions to Persistent Landing.
+7. Upload playable audio to Temporal Landing.
+8. Promote audio to Persistent Landing.
+9. Format images as JPEG.
+10. Format text as Parquet.
+11. Format audio as FLAC.
+12. Build Trusted images.
+13. Build Trusted descriptions.
+14. Profile audio quality.
+15. Build Trusted audio using that exact quality report.
+16. Generate the image quality analysis.
+17. Generate the audio quality analysis (text analysis is produced in step 13).
+18. Publish verified screenshot/game associations from collector manifests.
+19. Index Jina text descriptions.
+20. Index Jina images.
+21. Index all Trusted audio with CLAP.
+22. Index latest Trusted descriptions with CLAP.
+23. Verify source coverage, provenance, vectors and retrieval.
 
-All zone processes run sequentially in the current Python environment, with
-the repository root as their working directory. Credentials are inherited
-through environment variables, never placed in command arguments. Forwarded
-logs redact configured RAWG and MinIO secrets. The orchestrator creates missing
-Landing, Formatted and Trusted buckets programmatically. It does not generate
-embeddings, start Streamlit or modify the Exploitation database.
+Screenshot associations are established through the original manifest SHA-256,
+Persistent bytes and reproduced Formatted/Trusted JPEG hashes. IDs are never
+guessed from filenames. Existing valid associations are retained across runs.
 
-A failed process or empty/failed source collection stops the run with exit code
-1; later stages do not run. Existing stage outputs are retained for recovery.
-This is fail-fast orchestration, not a transaction spanning every zone.
-Final modality counts are a presence check, not a claim that every input was
-accepted: quality processes can reject or deduplicate assets. Consult reports
-for the actual decisions and quality metrics.
+The shared Chroma directory is `data/exploitation/chroma`. Collections are
+`texts_jina_clip_v2`, `images_jina_clip_v2` (1024 dimensions) and `texts_clap`,
+`audio_clap_center10_v1` (512 dimensions). All use L2 normalization and cosine
+distance. CLAP descriptions exceeding 512 tokens use one truncated source prefix;
+Trusted descriptions remain complete. Existing legacy CLIP collections are preserved.
 
-## Planning, recovery and reports
+Verification checks every vector and its current Trusted source, exact coverage
+of usable inputs, and eight retrieval probes: four same-collection searches and
+text/image plus CLAP text/audio searches in both directions. These probes check
+that the system operates; they do not measure relevance or generate recommendations.
+The guided TASK 3 remains interactive in Streamlit and calls the configured AI
+only when the user starts a search.
+
+## Planning and recovery
 
 ```powershell
 python -m src.pipelines.run_pipeline --dry-run
-python -m src.pipelines.run_pipeline run --skip-collection
+python -m src.pipelines.run_pipeline --through trusted
+python -m src.pipelines.run_pipeline --skip-collection
+python -m src.pipelines.run_pipeline --embeddings-only
+python -m src.pipelines.run_pipeline --embeddings-only --serve --port 8502
+python -m src.pipelines.run_pipeline status
 ```
 
-The dry run only prints commands: no credentials are loaded, APIs contacted,
-Docker commands executed, directories created or objects changed.
-Recovery skips all source requests, requiring existing local image/audio
-collections and text already in Temporal or Persistent Landing. It reuses the
-individual stages' incremental checks; unchanged source bytes are preserved.
-Run only one writer against a given set of buckets at a time. Daily image/text
-snapshots retain the existing one-capture-per-game/day assumptions.
+`--dry-run` prints commands without loading credentials, contacting sources,
+creating directories or changing storage. `--through trusted` retains the earlier
+backbone-only execution. `--skip-collection` reuses existing local image/audio
+collections (including `manifests/images.jsonl`) and text already in Landing.
+`--embeddings-only` needs only existing Trusted data and resumes the four indexers
+plus verification. `status` checks the three object-store buckets.
 
-Each execution writes a uniquely named `reports/pipeline/run_<UTC>.json` with
-step exit codes, durations, final counts and any top-level failure. Detailed
-image/audio CSVs and plots are written under that report directory. Use
-`--report-dir` to change it. CSV recovery for unchanged Trusted images supports
-new or deleted local report directories.
+A stage failure stops later stages and returns a nonzero exit code. Recovery
+reuses the independent scripts' checkpoints; this is not a transaction across
+zones. Unchanged source bytes/vectors are retained. Same-day conflicting source
+captures and incompatible model configurations fail rather than silently overwrite
+historical content. Run one writer per database/bucket set and restart Streamlit
+after updating indexes used by an existing session.
 
-`--rawg-output`, `--text-output` and `--audio-output` override collection roots;
-the corresponding paths are passed to downstream consumers. `--image-dataset`
-selects the configured RAWG image dataset, without editing shared configuration.
-`--storage-config` passes an alternative storage YAML to all children via
-`ADSBD_STORAGE_CONFIG`, allowing isolated runs with independent buckets.
+`--rawg-output`, `--text-output`, `--audio-output`, `--image-dataset`,
+`--rawg-plan` and `--audio-query` control source selection/paths.
+`--storage-config` supplies an alternative storage YAML through
+`ADSBD_STORAGE_CONFIG` to every child process. `--db-path` selects an independent
+Chroma database and is also passed to Streamlit through `ADSBD_CHROMA_PATH`.
+Use both options together for complete isolation.
 
-## Verification
+Each run writes `reports/pipeline/run_<UTC>.json` with stage names, exit codes,
+durations, final zone and failure details. Detailed quality CSVs/plots are under
+that directory; `exploitation.json` contains the verified counts, retrieval probes
+and `task3_data_ready`. `--report-dir` overrides the location. Credentials are
+passed through the environment and configured secrets are redacted from child logs.
 
-```powershell
-python -m pytest tests/unit/test_run_pipeline.py tests/unit/test_pipeline_paths.py tests/unit/test_collector_exit_codes.py -q
-```
-
-The opt-in integration test contacts live sources, downloads a small sample,
-runs the full pipeline against randomly named test buckets, checks all Trusted
-modalities and repeats zone processing to verify recovery. It deletes its
-test buckets in a `finally` block. Run it with MinIO and media tools available:
+## Tests and continuous integration
 
 ```powershell
+python -m pytest -q
 $env:ADSBD_RUN_LIVE_PIPELINE = "1"
 python -m pytest tests/integration/test_global_pipeline.py -q -s
 Remove-Item Env:ADSBD_RUN_LIVE_PIPELINE
 ```
 
-Live sources may fail or change independently of the code. An external-source
-failure must not be reported as a successful full integration test.
+The opt-in live test downloads two games/screenshots and two audio assets, creates
+randomly named test buckets and an independent Chroma database, exercises all 23
+steps, then repeats without source collection. It verifies unchanged source bytes,
+metadata and vectors. Test buckets are deleted in `finally`; pytest temporary
+files contain the local sample/index. Production buckets and indexes are not used.
+The small sample verifies preparation/retrieval, not TASK 3's eight-game threshold.
+
+When the earlier 50-image/100-description and 16-audio downloads exist locally,
+`ADSBD_RUN_CAPTURED_PIPELINE=1` enables the companion test in the same file. It
+reuses eight original game/image captures and two audio downloads, verifies their
+manifest hashes, uploads them to isolated storage and tests all zones, indexes,
+retrieval and incremental recovery. It also checks the TASK 3 data threshold.
+This is a recovery test, not evidence of a new successful source API request.
+
+GitHub Actions runs the automated suite on pushes and pull requests. The manual
+`Live end-to-end pipeline` workflow runs the real test on an Ubuntu runner with
+Docker and FFmpeg; configure the repository secret `RAWG_API_KEY` before running
+it. It does not need Gemini or production MinIO credentials. Source/network
+failures are reported as failures. CI execution itself must be observed on GitHub;
+a local passing test is not evidence that a hosted job has run.

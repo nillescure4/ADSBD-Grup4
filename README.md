@@ -4,17 +4,19 @@ Pipeline local de gestió de dades basat en una arquitectura per zones. MinIO
 actua com a emmagatzematge d'objectes compatible amb S3 i el codi Python del
 repositori s'encarrega d'ingerir, transformar, netejar i preparar les dades.
 
-## Run the complete pipeline through Trusted
+## Run the complete pipeline
 
 ```powershell
-python -m pip install -e ".[dev]"
-python -m src.pipelines.run_pipeline run --start-minio
+python -m pip install -e ".[dev,app]"
+python -m src.pipelines.run_pipeline run --start-minio --serve
 ```
 
 Configure RAWG and MinIO credentials in `.env`, run Docker Desktop, and install
 FFmpeg/FFprobe. The command collects text and images from RAWG and music from
 OpenGameArt, then runs all three modalities through Landing, Formatted and
-Trusted, including quality reports. It does not generate embeddings.
+Trusted, including quality reports, then generates Jina/CLAP embeddings, verifies
+the four collections and starts Streamlit. Omit `--serve` for batch preparation
+or use `--through trusted` to stop before embeddings.
 Use `--dry-run` to preview the plan without making changes. See the
 [global pipeline instructions](src/pipelines/README.md) for limits, recovery,
 media tools and isolated integration tests.

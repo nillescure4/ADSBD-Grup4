@@ -1,0 +1,55 @@
+name: Live end-to-end pipeline
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      RAWG_API_KEY: ${{ secrets.RAWG_API_KEY }}
+      ADSBD_RUN_LIVE_PIPELINE: "1"
+      MINIO_ROOT_USER: pipeline-test
+      MINIO_ROOT_PASSWORD: isolated-ci-test-password
+      MPLBACKEND: Agg
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Check source credentials
+        run: test -n "$RAWG_API_KEY"
+      - name: Install media tools and CPU dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e ".[dev,app]"
+      - name: Start isolated CI MinIO
+        run: |
+          printf 'MINIO_ROOT_USER=%s\nMINIO_ROOT_PASSWORD=%s\n' "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" > .env
+          docker compose up -d minio
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://localhost:9000/minio/health/ready; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Test collection through verified embeddings and incremental recovery
+        run: python -m pytest tests/integration/test_global_pipeline.py -q -s --basetemp=reports/live-test
+      - name: Upload test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-pipeline-reports
+          path: reports/live-test/**/reports/
+          if-no-files-found: ignore
+      - name: Stop CI storage
+        if: always()
+        run: docker compose down -v
