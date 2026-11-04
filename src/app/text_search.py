@@ -1,7 +1,7 @@
 """Read-only text retrieval independent of Streamlit.
 
-Queries and indexed descriptions share the exact OpenCLIP configuration.
-Ranking uses the best cosine similarity over query/document chunk pairs;
+Queries and full descriptions share the exact pinned Jina CLIP v2 configuration.
+Ranking uses cosine similarity over complete query/document vectors;
 each game is returned once, optionally considering only its latest capture.
 """
 
@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from src.exploitation.text.build_embeddings import (
-    COLLECTION, PROJECT_ROOT, configuration, split_text,
+    COLLECTION, PROJECT_ROOT, configuration,
 )
 
 
@@ -58,13 +58,13 @@ def search(collection: Any, encoder: Any, query: str, *, top_k: int = 5,
     latest = {}
     for row in metadata:
         latest[row["game_id"]] = max(latest.get(row["game_id"], ""), row["collection_date"])
-    chunks = split_text(query, encoder.count_tokens, encoder.budget)
-    # Query chunks separately to bound model memory for long inputs.
-    embeddings = [encoder.encode([chunk.text])[0] for chunk in chunks]
-    # Retrieve every fragment so history filtering cannot hide a relevant game.
+    embeddings = [encoder.encode_query(query)]
+    # Retrieve every snapshot so history filtering cannot hide a relevant game.
     # This exhaustive reranking suits the current small local corpus.
     result = collection.query(query_embeddings=embeddings, n_results=len(metadata),
                               include=["documents", "metadatas", "distances"])
+    if len(result["metadatas"][0]) != len(metadata):
+        raise ValueError("The search index is out of date. Restart Streamlit after updating embeddings.")
     games = {}
     for documents, records, distances in zip(result["documents"], result["metadatas"], result["distances"]):
         for document, row, distance in zip(documents, records, distances):

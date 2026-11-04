@@ -14,6 +14,9 @@ class Encoder:
     def encode(self, texts):
         return [[1.0, 0.0] for _ in texts]
 
+    def encode_query(self, text):
+        return [1.0, 0.0]
+
 
 class Collection:
     metadata = {"config_sha256": configuration(Encoder(), False)[1]}
@@ -80,3 +83,15 @@ def test_missing_database_is_not_created(tmp_path):
     with pytest.raises(ValueError):
         service.connect(target)
     assert not target.exists()
+
+
+def test_stale_search_index_is_reported_before_incomplete_results_are_used():
+    collection = Collection()
+    original_query = collection.query
+    def stale_query(**kwargs):
+        response = original_query(**kwargs)
+        response["metadatas"][0] = response["metadatas"][0][:-1]
+        return response
+    collection.query = stale_query
+    with pytest.raises(ValueError, match="Restart Streamlit"):
+        service.search(collection, Encoder(), "adventure")
