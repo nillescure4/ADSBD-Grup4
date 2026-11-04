@@ -65,9 +65,7 @@ def render():
     with st.form("text_search"):
         query = st.text_area("What experience are you looking for?", placeholder="A puzzle game with portals and a mysterious laboratory",
                              max_chars=4000, height=120)
-        left, right = st.columns(2)
-        top_k = left.slider("Maximum number of games", 1, max(2, info["games"]), min(3, info["games"]))
-        latest = right.checkbox("Use only the latest snapshot per game", value=True)
+        top_k = st.slider("Maximum number of games", 1, max(2, info["games"]), min(3, info["games"]))
         submitted = st.form_submit_button("Find games", type="primary")
     if submitted:
         if not query.strip():
@@ -77,7 +75,7 @@ def render():
                 with st.spinner("Comparing your description with the catalogue… Loading the model may take a moment on first use."):
                     encoder, lock = model()
                     with lock:
-                        results = search(collection(), encoder, query, top_k=top_k, latest_only=latest)
+                        results = search(collection(), encoder, query, top_k=top_k, latest_only=True)
                 st.session_state["text_results"] = {"query": query, "results": results}
             except Exception as exc:
                 st.session_state.pop("text_results", None)
@@ -97,7 +95,7 @@ def render():
         st.subheader("Start with an idea")
         st.write("Try concepts such as **medieval adventure**, **cooperative puzzles** or **competitive team shooter**.")
     with st.expander("How are results ranked?"):
-        st.write("Queries and complete descriptions use the same pinned Jina CLIP v2 model. The full description and game details belong to the matching Trusted snapshot. When history is included, the best match across all snapshots is used.")
+        st.write("Queries and complete descriptions use the same pinned Jina CLIP v2 model. Only the most recent indexed snapshot of each game is searched. The full description and game details belong to that Trusted snapshot.")
         st.caption("Similarity is a relative score, not a probability or a guarantee of relevance. The current catalogue is small, and CLIP may have limitations with some languages and long descriptions.")
 
 
