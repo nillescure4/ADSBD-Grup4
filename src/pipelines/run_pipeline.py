@@ -42,9 +42,9 @@ def positive(value: str) -> int:
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", nargs="?", choices=["run", "status"], default="run")
-    parser.add_argument("--max-games", type=positive, default=100, help="New RAWG games to select (default: 100)")
+    parser.add_argument("--max-games", type=positive, default=50, help="New RAWG games to select (default: 50)")
     parser.add_argument("--screenshots-per-game", type=positive, default=1)
-    parser.add_argument("--max-audio-files", type=positive, default=5, help="Total downloaded audio target (default: 5)")
+    parser.add_argument("--max-audio-files", type=positive, default=16, help="Total downloaded audio target (default: 16)")
     parser.add_argument("--audio-max-items", type=positive, default=30, help="Maximum CC0 submissions to inspect per run")
     parser.add_argument("--audio-query", default="")
     parser.add_argument("--rawg-plan", type=Path, help="Stratified RAWG plan; overrides the single-query game target")
@@ -63,12 +63,14 @@ def parse_args(argv=None):
     parser.add_argument("--db-path", type=Path, default=PROJECT_ROOT / "data/exploitation/chroma")
     parser.add_argument("--serve", action="store_true", help="Start Streamlit after a successful complete run")
     parser.add_argument("--port", type=positive, default=8501)
+    parser.add_argument("--backup-dir", type=Path, default=PROJECT_ROOT / "backup_data")
+    parser.add_argument("--no-backup", action="store_true", help="Fail if source collection fails, without offline fallback")
     args = parser.parse_args(argv)
     if args.port > 65535:
         parser.error("--port must be between 1 and 65535")
     if args.through == "trusted" and (args.embeddings_only or args.serve):
         parser.error("--embeddings-only and --serve require --through exploitation")
-    for name in ("rawg_output", "text_output", "audio_output", "report_dir", "storage_config", "ffmpeg_dir", "rawg_plan", "db_path"):
+    for name in ("rawg_output", "text_output", "audio_output", "report_dir", "storage_config", "ffmpeg_dir", "rawg_plan", "db_path", "backup_dir"):
         path = getattr(args, name)
         if path is not None:
             setattr(args, name, path.resolve())
@@ -86,13 +88,16 @@ def build_plan(args) -> list[Step]:
             image_args += ["--plan", str(args.rawg_plan)]
         plan.extend([
             Step("Collect RAWG screenshots", "src.data_collection.collect_rawg_images", tuple(image_args), images, "image"),
-            Step("Collect and upload RAWG descriptions", "src.ingestion.text_to_temporal_landing",
-                 ("--games-manifest", str(images / "manifests/games.jsonl"), "--output", str(args.text_output), "--upload-minio")),
+            Step("Collect RAWG descriptions", "src.ingestion.text_to_temporal_landing",
+                 ("--games-manifest", str(images / "manifests/games.jsonl"), "--output", str(args.text_output))),
             Step("Collect OpenGameArt music", "src.data_collection.collect_opengameart_audio",
                  ("--output", str(audio), "--max-audio-files", str(args.max_audio_files),
                   "--max-items", str(args.audio_max_items), "--query", args.audio_query,
                   "--no-include-archives", "--no-include-music-source"), audio, "audio"),
         ])
+    if not args.skip_collection:
+        plan.append(Step("Upload verified RAWG descriptions", "src.ingestion.text_captures_to_temporal",
+                         ("--input-dir", str(args.text_output), "--games-manifest", str(images / "manifests/games.jsonl"))))
     plan.extend([
         Step("Upload images to Temporal", "src.ingestion.images.images_to_landing",
              ("--dataset", args.image_dataset, "--input-dir", str(images))),
@@ -172,19 +177,43 @@ def execute(command: list[str], env: dict[str, str]) -> int:
         return child.wait()
 
 
-def run_steps(plan: list[Step], env: dict[str, str], *, executor=execute) -> tuple[int, list[dict]]:
+def run_steps(plan: list[Step], env: dict[str, str], *, executor=execute, recovery=None) -> tuple[int, list[dict]]:
     records = []
     for index, step in enumerate(plan, 1):
+        if recovery is not None:
+            step = recovery.resolve(step)
         print(f"[{index}/{len(plan)}] {step.name}", flush=True)
         started, error = time.monotonic(), None
+        source_code, source_error, data_source = None, None, None
+        verification_restarts = 0
         try:
-            code = executor([sys.executable, "-m", step.module, *step.arguments], env)
-            if code == 0 and step.collection_root is not None:
+            skipped = recovery is not None and recovery.skip(step)
+            if skipped:
+                code, data_source = 0, "backup_data"
+                print("[BACKUP] Using the verified offline descriptions; no API request")
+            else:
+                code = executor([sys.executable, "-m", step.module, *step.arguments], env)
+                if code == 75 and step.module == "src.pipelines.verify_exploitation":
+                    print("[RETRY] Reopening Chroma in a fresh verification process", flush=True)
+                    verification_restarts = 1
+                    code = executor([sys.executable, "-m", step.module, *step.arguments], env)
+            if code == 0 and step.collection_root is not None and not skipped:
                 check_collection(step.collection_root, step.modality)
         except (OSError, ValueError) as exc:
             code, error = 1, redact(str(exc), env)
+        if code and recovery is not None:
+            source_code, source_error = code, error
+            try:
+                if recovery.recover(step):
+                    code, error, data_source = 0, None, "backup_data"
+                    print(f"[BACKUP] {step.name}: source unavailable; selected verified offline data", flush=True)
+            except (OSError, ValueError, KeyError) as exc:
+                code, error = 1, redact(str(exc), env)
         records.append({"name": step.name, "module": step.module, "exit_code": code,
-                        "seconds": round(time.monotonic() - started, 3), "error": error})
+                        "seconds": round(time.monotonic() - started, 3), "error": error,
+                        "data_source": data_source or ("live_source" if step.collection_root is not None or step.module == "src.ingestion.text_to_temporal_landing" else None),
+                        "source_exit_code": source_code, "source_error": source_error,
+                        "verification_restarts": verification_restarts})
         if code:
             print(f"[ERROR] {step.name} failed (exit code {code}); later stages were not run.", file=sys.stderr)
             if error:
@@ -194,7 +223,8 @@ def run_steps(plan: list[Step], env: dict[str, str], *, executor=execute) -> tup
 
 
 def preflight(args, env: dict[str, str]) -> None:
-    if not args.skip_collection and not args.embeddings_only and not env.get("RAWG_API_KEY"):
+    if (not args.skip_collection and not args.embeddings_only and not env.get("RAWG_API_KEY")
+            and (args.no_backup or not (args.backup_dir / "manifest.json").is_file())):
         raise ValueError("RAWG_API_KEY is missing. Configure it in .env.")
     for module in ("bs4", "PIL", "pyarrow", "cv2", "imagehash", "pandas", "matplotlib"):
         if importlib.util.find_spec(module) is None:
@@ -274,6 +304,8 @@ def main(argv=None) -> int:
             print(subprocess.list2cmdline([sys.executable, "-m", step.module, *step.arguments]))
         if args.serve:
             print(subprocess.list2cmdline(serve_command(args)))
+        if not args.no_backup:
+            print(f"Source failures may use the verified backup at {args.backup_dir}")
         print(f"Plan only: no network requests or writes. Final zone: {args.through}.")
         return 0
     load_dotenv(PROJECT_ROOT / ".env")
@@ -288,6 +320,8 @@ def main(argv=None) -> int:
     if tools.is_dir():
         env["PATH"] = str(tools) + os.pathsep + env.get("PATH", "")
     records, counts, error, code = [], {}, None, 1
+    from src.pipelines.backup_sources import BackupSources
+    recovery = BackupSources(args)
     try:
         if args.command == "status":
             return check_status()
@@ -295,7 +329,7 @@ def main(argv=None) -> int:
         if args.start_minio and execute(["docker", "compose", "up", "-d"], env):
             raise RuntimeError("Docker Compose could not start MinIO")
         prepare_storage(wait=args.start_minio)
-        code, records = run_steps(plan, env)
+        code, records = run_steps(plan, env, executor=execute, recovery=recovery)
         if code == 0:
             counts = verify_trusted()
             print(f"[OK] All three modalities reached Trusted: {counts}")
@@ -305,6 +339,7 @@ def main(argv=None) -> int:
         error, code = redact(str(exc), env), 1
         print(f"[ERROR] {error}", file=sys.stderr)
     finally:
+        recovery.cleanup()
         if args.command == "run":
             args.report_dir.mkdir(parents=True, exist_ok=True)
             timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
@@ -312,6 +347,7 @@ def main(argv=None) -> int:
             report.write_text(json.dumps({"completed_at_utc": timestamp, "exit_code": code,
                                           "error": error, "steps": records, "trusted": counts,
                                           "total_seconds": round(time.monotonic() - started, 3),
+                                          "backup_fallbacks": recovery.events,
                                           "through": args.through, "database": str(args.db_path)}, indent=2), encoding="utf-8")
             print(f"Run report: {report}")
     if code == 0 and args.serve:

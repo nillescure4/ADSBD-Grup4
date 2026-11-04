@@ -12,7 +12,7 @@ def test_plan_shares_rawg_manifest_and_indexes_all_modalities(tmp_path):
     args = pipeline.parse_args(["--rawg-output", str(tmp_path / "images"), "--audio-output", str(tmp_path / "music")])
     plan = pipeline.build_plan(args)
     modules = [step.module for step in plan]
-    assert len(plan) == 23
+    assert len(plan) == 24
     assert modules.index("src.trusted.audio.analyze_audio_quality") < modules.index("src.trusted.audio.trusted_audio")
     assert modules[-5:] == ["src.exploitation.text.build_embeddings", "src.exploitation.images.build_embeddings",
                             "src.exploitation.audio.embedding_audio", "src.exploitation.text.build_clap_embeddings",
@@ -30,7 +30,7 @@ def test_skip_collection_has_no_source_requests():
 
 def test_trusted_only_and_embeddings_only_have_independent_plans(tmp_path):
     trusted = pipeline.build_plan(pipeline.parse_args(["--through", "trusted"]))
-    assert len(trusted) == 18 and not any("exploitation" in s.module for s in trusted)
+    assert len(trusted) == 19 and not any("exploitation" in s.module for s in trusted)
     plan = pipeline.build_plan(pipeline.parse_args(["--embeddings-only", "--db-path", str(tmp_path)]))
     assert len(plan) == 5
     assert all("exploitation" in s.module for s in plan)
@@ -49,7 +49,7 @@ def test_application_starts_only_after_success_and_uses_selected_database(tmp_pa
     monkeypatch.setattr(pipeline, "preflight", lambda *args: None)
     monkeypatch.setattr(pipeline, "prepare_storage", lambda **kwargs: None)
     monkeypatch.setattr(pipeline, "verify_trusted", lambda: {"text_partitions": 1, "images": 8, "audio": 2})
-    monkeypatch.setattr(pipeline, "run_steps", lambda *args: (outcome, []))
+    monkeypatch.setattr(pipeline, "run_steps", lambda *args, **kwargs: (outcome, []))
     calls = []
     monkeypatch.setattr(pipeline, "execute", lambda command, env: calls.append((command, env)) or 0)
     result = pipeline.main(["--embeddings-only", "--serve", "--db-path", str(tmp_path / "chroma"),
@@ -83,6 +83,17 @@ def test_failure_blocks_all_downstream_stages(code):
     assert outcome == 1 and len(rows) == len(seen) == 1
     assert seen[0][:2] == [sys.executable, "-m"]
     assert rows[0]["exit_code"] == code
+
+
+@pytest.mark.parametrize("codes, expected_calls, expected_code", [([75, 0], 2, 0), ([75, 75], 2, 1), ([1], 1, 1)])
+def test_only_transient_verification_failure_reopens_one_process(codes, expected_calls, expected_code):
+    calls = []
+    def executor(command, env):
+        calls.append(command)
+        return codes[len(calls) - 1]
+    code, rows = pipeline.run_steps([pipeline.Step("verify", "src.pipelines.verify_exploitation")], {}, executor=executor)
+    assert code == expected_code and len(calls) == expected_calls
+    assert rows[0]["verification_restarts"] == expected_calls - 1
 
 
 def test_zero_exit_does_not_hide_collector_errors(tmp_path):
@@ -126,7 +137,7 @@ def test_missing_modality_cannot_be_reported_as_success(monkeypatch):
 
 def test_preflight_fails_before_collection_without_key():
     with pytest.raises(ValueError, match="RAWG_API_KEY"):
-        pipeline.preflight(pipeline.parse_args([]), {})
+        pipeline.preflight(pipeline.parse_args(["--no-backup"]), {})
 
 
 @pytest.mark.parametrize("flag", ["--max-games", "--max-audio-files", "--audio-max-items", "--screenshots-per-game"])

@@ -21,6 +21,12 @@ Use `--dry-run` to preview the plan without making changes. See the
 [global pipeline instructions](src/pipelines/README.md) for limits, recovery,
 media tools and isolated integration tests.
 
+The default sample is 50 RAWG games, up to one image per game, and 16 audio
+files. Source failures can use the verified [offline backup](backup_data/README.md)
+containing 50 descriptions, 50 images and 16 audio files. Use `--no-backup`
+to require live source availability. Reports distinguish API failures from
+successful offline recovery.
+
 ## Interactive application · ADSBD · Group 4
 
 ```powershell

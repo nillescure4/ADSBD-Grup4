@@ -42,7 +42,7 @@ orchestrator does not download executables. CPU workers default to four unless
 
 ## Selection and execution
 
-Defaults: **100 new RAWG games**, up to **1 screenshot per game**, and **5 total
+Defaults: **50 new RAWG games**, up to **1 screenshot per game**, and **16 total
 downloaded playable music files** in the audio collection directory. These are
 bounded sample targets, not a complete crawl or a guarantee that every asset
 passes Trusted quality checks. TASK 3 needs eight distinct games with verified
@@ -50,7 +50,7 @@ descriptions and associated screenshots, and at least two distinct audio assets.
 The final report explicitly indicates whether the data meets those requirements.
 
 ```powershell
-python -m src.pipelines.run_pipeline --max-games 100 --screenshots-per-game 2 --max-audio-files 16 --audio-max-items 100
+python -m src.pipelines.run_pipeline --max-games 50 --screenshots-per-game 1 --max-audio-files 16 --audio-max-items 100
 ```
 
 Text and images come from the RAWG API. Descriptions use the same game manifest
@@ -59,31 +59,32 @@ uses the existing robots-aware HTML crawler, selects Music + CC0, and excludes
 archives and tracker/MIDI source files. Music is independent of RAWG games and
 must not be attributed to them as their original soundtrack.
 
-The 23 sequential steps are:
+The 24 sequential steps are:
 
 1. Collect RAWG screenshots and the game manifest.
-2. Collect RAWG descriptions and upload them to Temporal Landing.
+2. Collect RAWG descriptions locally.
 3. Collect OpenGameArt music and provenance manifests.
-4. Upload images to Temporal Landing.
-5. Promote images to Persistent Landing.
-6. Promote descriptions to Persistent Landing.
-7. Upload playable audio to Temporal Landing.
-8. Promote audio to Persistent Landing.
-9. Format images as JPEG.
-10. Format text as Parquet.
-11. Format audio as FLAC.
-12. Build Trusted images.
-13. Build Trusted descriptions.
-14. Profile audio quality.
-15. Build Trusted audio using that exact quality report.
-16. Generate the image quality analysis.
-17. Generate the audio quality analysis (text analysis is produced in step 13).
-18. Publish verified screenshot/game associations from collector manifests.
-19. Index Jina text descriptions.
-20. Index Jina images.
-21. Index all Trusted audio with CLAP.
-22. Index latest Trusted descriptions with CLAP.
-23. Verify source coverage, provenance, vectors and retrieval.
+4. Upload the selected, hash-verified descriptions to Temporal Landing.
+5. Upload images to Temporal Landing.
+6. Promote images to Persistent Landing.
+7. Promote descriptions to Persistent Landing.
+8. Upload playable audio to Temporal Landing.
+9. Promote audio to Persistent Landing.
+10. Format images as JPEG.
+11. Format text as Parquet.
+12. Format audio as FLAC.
+13. Build Trusted images.
+14. Build Trusted descriptions.
+15. Profile audio quality.
+16. Build Trusted audio using that exact quality report.
+17. Generate the image quality analysis.
+18. Generate the audio quality analysis (text analysis is produced in step 14).
+19. Publish verified screenshot/game associations from collector manifests.
+20. Index Jina text descriptions.
+21. Index Jina images.
+22. Index all Trusted audio with CLAP.
+23. Index latest Trusted descriptions with CLAP.
+24. Verify source coverage, provenance, vectors and retrieval.
 
 Screenshot associations are established through the original manifest SHA-256,
 Persistent bytes and reproduced Formatted/Trusted JPEG hashes. IDs are never
@@ -120,7 +121,7 @@ collections (including `manifests/images.jsonl`) and text already in Landing.
 `--embeddings-only` needs only existing Trusted data and resumes the four indexers
 plus verification. `status` checks the three object-store buckets.
 
-A stage failure stops later stages and returns a nonzero exit code. Recovery
+A zone failure stops later stages and returns a nonzero exit code. Recovery
 reuses the independent scripts' checkpoints; this is not a transaction across
 zones. Unchanged source bytes/vectors are retained. Same-day conflicting source
 captures and incompatible model configurations fail rather than silently overwrite
@@ -141,6 +142,30 @@ that directory; `exploitation.json` contains the verified counts, retrieval prob
 and `task3_data_ready`. `--report-dir` overrides the location. Credentials are
 passed through the environment and configured secrets are redacted from child logs.
 
+## Offline source fallback
+
+The versioned [backup_data snapshot](../../backup_data/README.md) contains 50
+original RAWG descriptions, 50 associated RAWG gameplay screenshots and 16 OpenGameArt CC0
+audio files. On a source collector failure (including a missing RAWG key), the
+orchestrator validates every release file's SHA-256 and selects a matching subset
+from this backup. RAWG text and images switch together; audio switches independently.
+Partial live downloads remain separate and text is not uploaded until selection
+has succeeded. Original text capture dates are retained. Temporary backup staging
+is removed after the run; the release snapshot is never modified.
+
+Every fallback is visible in the console and `backup_fallbacks` in the run report.
+Per-stage `source_exit_code` retains the failed source result and `data_source`
+identifies the offline replacement. This is not reported as a successful live
+API request. `--no-backup` disables fallback; `--backup-dir` overrides the snapshot
+location. Invalid backups, storage errors and zone-processing errors still fail.
+The fixed backup cannot satisfy more than 50 games, multiple images per game,
+stratified RAWG plans or more than 16 audio files, and rejects those requests.
+
+If a source fails while obtaining the default sample, the pipeline can therefore
+continue through all zones and index creation without an API. Once-only model
+downloads and installed dependencies are separate prerequisites; after the pinned
+models are cached, `HF_HUB_OFFLINE=1` allows model loading without network access.
+
 ## Tests and continuous integration
 
 ```powershell
@@ -151,7 +176,7 @@ Remove-Item Env:ADSBD_RUN_LIVE_PIPELINE
 ```
 
 The opt-in live test downloads two games/screenshots and two audio assets, creates
-randomly named test buckets and an independent Chroma database, exercises all 23
+randomly named test buckets and an independent Chroma database, exercises all 24
 steps, then repeats without source collection. It verifies unchanged source bytes,
 metadata and vectors. Test buckets are deleted in `finally`; pytest temporary
 files contain the local sample/index. Production buckets and indexes are not used.
@@ -164,9 +189,25 @@ manifest hashes, uploads them to isolated storage and tests all zones, indexes,
 retrieval and incremental recovery. It also checks the TASK 3 data threshold.
 This is a recovery test, not evidence of a new successful source API request.
 
+`ADSBD_RUN_BACKUP_PIPELINE=1` enables `tests/integration/test_backup_pipeline.py`.
+It simulates both source collectors failing, then processes the real 50/50/16
+backup through fresh isolated buckets and a new vector database. Its report is
+`reports/pipeline/backup_validation_50_50_16.json`. Model weights may already be
+cached; no data objects or existing embeddings are reused. Test buckets are deleted.
+
 GitHub Actions runs the automated suite on pushes and pull requests. The manual
 `Live end-to-end pipeline` workflow runs the real test on an Ubuntu runner with
 Docker and FFmpeg; configure the repository secret `RAWG_API_KEY` before running
 it. It does not need Gemini or production MinIO credentials. Source/network
 failures are reported as failures. CI execution itself must be observed on GitHub;
 a local passing test is not evidence that a hosted job has run.
+
+Readers retry only Chroma's known transient HNSW reload error up to twice, with
+short delays; permanent errors and all source/vector validations still fail.
+This addresses the cache-eviction race reported in
+[chroma-core/chroma#7946](https://github.com/chroma-core/chroma/issues/7946).
+The same bounded read behavior is used by the final verifier and application.
+If this specific reload error persists, the verifier returns temporary-failure
+code 75 and the orchestrator retries it once in a fresh process, without rerunning
+ingestion or inference. A second failure still stops the run. Other verification
+errors are not retried, and `verification_restarts` records the reader restart.

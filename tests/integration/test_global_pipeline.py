@@ -39,7 +39,7 @@ def exercise_pipeline(tmp_path, prepare=None):
                "--max-games", "2", "--screenshots-per-game", "1", "--max-audio-files", "2",
                "--audio-max-items", "15", "--rawg-output", str(tmp_path / "images"),
                "--text-output", str(tmp_path / "text"), "--audio-output", str(tmp_path / "music"),
-               "--report-dir", str(reports), "--db-path", str(tmp_path / "chroma")]
+               "--report-dir", str(reports), "--db-path", str(tmp_path / "chroma"), "--no-backup"]
     env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     try:
         if prepare:
@@ -51,7 +51,7 @@ def exercise_pipeline(tmp_path, prepare=None):
         assert first.returncode == 0
         report = json.loads(sorted(reports.glob("run_*.json"))[-1].read_text())
         assert all(report["trusted"].values())
-        assert len(report["steps"]) == (20 if prepare else 23)
+        assert len(report["steps"]) == (20 if prepare else 24)
         verification = json.loads((reports / "exploitation.json").read_text())
         assert len(verification["collections"]) == 4
         assert all(verification["collections"].values())
