@@ -23,13 +23,17 @@ def page(module):
     return AppTest.from_string(f"from src.app.views.{module} import render\nrender()")
 
 
-def test_home_and_navigation(status):
+def test_home_and_navigation(status, monkeypatch):
+    from src.app.views import home
+    monkeypatch.setattr(home, "image_status", lambda: (50, None))
+    monkeypatch.setattr(home, "audio_status", lambda: (16, None))
     app = AppTest.from_file(Path(__file__).resolve().parents[2] / "streamlit_app.py", default_timeout=15).run()
     assert not app.exception
     assert len(app.metric) == 3
     assert app.metric[0].value == "5"
     assert app.title[0].value == "One game. Many ways to discover it."
-    assert app.metric[0].label == "Games with indexed text"
+    assert [metric.label for metric in app.metric] == ["Descriptions", "Images", "Audio tracks"]
+    assert [metric.value for metric in app.metric] == ["5", "50", "16"]
 
 
 def test_missing_audio_catalogue_displays_setup_information(monkeypatch):

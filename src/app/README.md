@@ -1,4 +1,4 @@
-# Game Atlas · Streamlit application
+# ADSBD · Group 4 · Streamlit application
 
 Run from the repository root:
 
@@ -7,7 +7,7 @@ python -m pip install -e ".[dev,app]"
 python -m streamlit run streamlit_app.py
 ```
 
-Open [Game Atlas](http://localhost:8501). All interfaces and documentation are
+Open [ADSBD · Group 4](http://localhost:8501). All interfaces and documentation are
 in English. Source descriptions retain their original language.
 
 ## Pages

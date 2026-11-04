@@ -4,7 +4,7 @@ Pipeline local de gestió de dades basat en una arquitectura per zones. MinIO
 actua com a emmagatzematge d'objectes compatible amb S3 i el codi Python del
 repositori s'encarrega d'ingerir, transformar, netejar i preparar les dades.
 
-## Interactive application · Game Atlas
+## Interactive application · ADSBD · Group 4
 
 ```powershell
 python -m pip install -e ".[app]"
