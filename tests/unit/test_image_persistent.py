@@ -77,6 +77,29 @@ def test_move_object_copies_then_deletes_the_source(s3):
     assert s3.data(BUCKET, "persistent/a.jpg") == b"pixels"
 
 
+def test_multipart_etag_change_is_verified_by_content_before_deleting_source(s3, monkeypatch):
+    s3.put(BUCKET, "temporal/large.jpg", b"original image bytes")
+    head = s3.head_object
+    def multipart_head(Bucket, Key):
+        value = head(Bucket=Bucket, Key=Key)
+        if Key == "temporal/large.jpg":
+            value["ETag"] = '"multipart-2"'
+        return value
+    monkeypatch.setattr(s3, "head_object", multipart_head)
+    persistent.move_object(s3, BUCKET, "temporal/large.jpg", "persistent/large.jpg")
+    assert s3.keys(BUCKET) == ["persistent/large.jpg"]
+    assert s3.data(BUCKET, "persistent/large.jpg") == b"original image bytes"
+
+
+def test_multipart_destination_with_different_bytes_is_never_overwritten(s3):
+    s3.put(BUCKET, "temporal/large.jpg", b"source")
+    s3.put(BUCKET, "persistent/large.jpg", b"edited")
+    with pytest.raises(ValueError, match="different content"):
+        persistent.move_object(s3, BUCKET, "temporal/large.jpg", "persistent/large.jpg")
+    assert s3.data(BUCKET, "temporal/large.jpg") == b"source"
+    assert s3.data(BUCKET, "persistent/large.jpg") == b"edited"
+
+
 def test_move_object_resumes_after_an_interrupted_run(s3):
     """The copy already exists but the source was never deleted."""
     s3.put(BUCKET, "temporal/a.jpg", b"pixels")
