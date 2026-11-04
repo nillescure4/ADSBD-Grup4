@@ -126,8 +126,8 @@ def test_text_query_uses_rawg_description_exactly(fake_parquet):
 def test_clap_text_encoder_normalizes_and_truncates_deterministically():
     import torch
 
-    tokenizer = Mock(return_value={"input_ids": torch.ones((1, 77), dtype=torch.int64),
-                                   "attention_mask": torch.ones((1, 77), dtype=torch.int64)})
+    tokenizer = Mock(return_value={"input_ids": torch.ones((1, 512), dtype=torch.int64),
+                                   "attention_mask": torch.ones((1, 512), dtype=torch.int64)})
     model = SimpleNamespace(get_text_features=Mock(return_value=torch.tensor([[3.0, 4.0]])))
     encoder = mod.ClapTextEncoder.__new__(mod.ClapTextEncoder)
     encoder.torch = torch
@@ -135,7 +135,7 @@ def test_clap_text_encoder_normalizes_and_truncates_deterministically():
     encoder.model = model
     encoder.processor = SimpleNamespace(tokenizer=tokenizer)
     assert encoder.embed_text("A fantasy adventure") == pytest.approx([0.6, 0.8])
-    assert tokenizer.call_args.kwargs["max_length"] == 77
+    assert tokenizer.call_args.kwargs["max_length"] == 512
     assert tokenizer.call_args.kwargs["truncation"] is True
     model.get_text_features.assert_called_once()
 

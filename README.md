@@ -4,6 +4,22 @@ Pipeline local de gestió de dades basat en una arquitectura per zones. MinIO
 actua com a emmagatzematge d'objectes compatible amb S3 i el codi Python del
 repositori s'encarrega d'ingerir, transformar, netejar i preparar les dades.
 
+## Interactive application · ADSBD · Group 4
+
+```powershell
+python -m pip install -e ".[app]"
+python -m streamlit run streamlit_app.py
+```
+
+Open http://localhost:8501. The application includes a project overview and a
+page for each TASK: similarity search, multimodal search and generation.
+TASK 1 supports text, image and audio similarity. TASK 2 supports text/image
+retrieval and text/audio search in both directions, with mixed results and
+category tabs. TASK 3 provides an AI-guided game finder.
+Jina and CLAP collections are separate in `data/exploitation/chroma`.
+The interface is in English.
+See the [application instructions](src/app/README.md).
+
 ## Arquitectura de dades
 
 El flux general del projecte és:
