@@ -18,9 +18,49 @@ python -m src.formatting.text_to_formatted_zone --dry-run
 python -m src.formatting.text_to_formatted_zone
 ```
 
-El script llegeix els JSON i registres de procedència de
+El script llegeix les captures i registres de procedència de
 `1.landing-zone/persistent/texts/rawg/`. No modifica ni elimina els originals.
 Els noms dels buckets i els prefixos es llegeixen de `config/storage.yml`.
+
+### Formats d'entrada admesos (restricció 4)
+
+El convertidor accepta `json`, `jsonl`, `ndjson`, `csv`, `tsv`, `txt`, `md`
+i `html` (extensions sense distinció entre majúscules i minúscules).
+Tots convergeixen al mateix esquema Parquet, sense afegir columnes tècniques.
+Els adaptadors són a `text_input_formats.py`; el procés d'escriptura, verificació
+i seguiment incremental és comú. La recollida RAWG continua produint JSON.
+
+Cada fitxer representa **un sol joc i dia**, amb el nom
+`rawg$game_details_<id>$<dd-mm-yyyy>.<extensió>`, dins del mateix prefix persistent.
+Cal el manifest `manifests/rawg$text_sources_<id>$<dd-mm-yyyy>.jsonl`, amb la
+ruta exacta i el SHA-256 dels bytes originals, igual que per a JSON. Aquests
+formats alternatius han d'arribar a persistent amb aquest contracte; no es
+dedueix procedència a partir del contingut. Dos fitxers del mateix joc i dia
+fan fallar la partició abans d'escriure, encara que tinguin extensions diferents.
+
+| Entrada | Contracte |
+|---|---|
+| JSON | Un objecte amb `id` enter coincident amb el nom del fitxer. |
+| JSONL / NDJSON | Exactament un objecte JSON en una línia; s'admeten línies buides. |
+| CSV / TSV | Capçalera amb noms RAWG i una fila; delimitador coma / tabulador. |
+| TXT / Markdown | Contingut íntegre a `description_raw`; ID del nom del fitxer. |
+| HTML | Contingut íntegre a `description`; ID del nom del fitxer. |
+
+Tots els formats textuals utilitzen UTF-8, amb BOM opcional. Es conserven els
+accents i salts de línia originals. CSV/TSV admeten text multilínia entre cometes;
+les columnes textuals es conserven com a text. Els enters, `rating` i `tba`
+utilitzen literals JSON (`42`, `4.5`, `false`); les llistes, objectes i camps
+desconeguts utilitzen JSON dins de la cel·la. `\N` representa nul; una cel·la
+buida també és nul en camps no textuals, però és cadena buida en camps textuals.
+Per representar literalment `\N` en una descripció, utilitzeu JSON.
+No s'infereixen tipus per heurístiques. Els noms de camps duplicats, els formats
+invàlids i els ID inconsistents es rebutgen abans d'escriure la partició.
+
+Els camps absents es desen com a nuls, sense inventar nom, valoració o altres
+metadades. HTML i Markdown no es netegen en aquesta zona: la neteja genèrica
+correspon a Trusted. Els fitxers amb extensions no admeses queden fora de la
+descoberta i no es processen. Afegir altres fonts diferents de RAWG requerirà
+definir-ne el contracte d'identitat i procedència.
 
 La sortida és una taula Parquet per dia UTC de recollida:
 
