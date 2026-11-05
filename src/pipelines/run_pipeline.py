@@ -109,11 +109,11 @@ def build_plan(args) -> list[Step]:
         Step("Format text", "src.formatting.text_to_formatted_zone"),
         Step("Format audio", "src.formatting.audio.formatting_audio", ("--report", str(reports / "audio/formatting.csv"))),
         Step("Build Trusted images", "src.trusted.images.build_trusted_images", ("--csv_output", str(image_csv), "--prune")),
-        Step("Build Trusted text", "src.trusted.text_to_trusted_zone"),
+        Step("Build Trusted text", "src.trusted.text_to_trusted_zone", ("--publish-minio",)),
         Step("Profile audio quality", "src.trusted.audio.analyze_audio_quality", ("--report", str(audio_csv))),
         Step("Build Trusted audio", "src.trusted.audio.trusted_audio", ("--quality-report", str(audio_csv), "--report", str(reports / "audio/processing.csv"))),
-        Step("Report image quality", "src.trusted.images.quality_report", ("--csv_input", str(image_csv), "--output_dir", str(reports / "images/analysis"))),
-        Step("Report audio quality", "src.trusted.audio.audio_quality_report", ("--report", str(audio_csv), "--output-dir", str(reports / "audio/analysis"))),
+        Step("Report image quality", "src.trusted.images.quality_report", ("--csv_input", str(image_csv), "--output_dir", str(reports / "images/analysis"), "--publish-minio")),
+        Step("Report audio quality", "src.trusted.audio.audio_quality_report", ("--report", str(audio_csv), "--output-dir", str(reports / "audio/analysis"), "--publish-minio", "--processing-report", str(reports / "audio/processing.csv"))),
     ])
     plan.append(Step("Publish verified screenshot/game provenance", "src.trusted.images.publish_provenance",
                      ("--input-dir", str(images), "--dataset", args.image_dataset)))

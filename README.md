@@ -80,6 +80,14 @@ from existing Trusted data. To open an already prepared application separately:
 python -m streamlit run streamlit_app.py
 ```
 
+**Data reports**, alongside Home, presents the current description, image and audio
+quality analyses with tables, charts and downloadable reports. The updated pipeline
+publishes verified report artifacts to Trusted; viewing them does not load models
+or process data. Missing or outdated reports are identified explicitly.
+Each modality has a selector for the latest or a historical report, even when only
+one revision exists. New ingestion updates the current analysis while preserving
+distinct prior revisions. Home groups catalogue counts under **Data types**.
+
 Use [the orchestrator guide](src/pipelines/README.md) for path overrides,
 isolated runs, source plans, reports, failure handling and CLI options.
 

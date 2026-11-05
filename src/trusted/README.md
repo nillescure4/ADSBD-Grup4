@@ -108,3 +108,20 @@ processing. Existing reviewed records are preserved in `docs/quality/`.
 
 No Trusted process generates embeddings. Rebuild/revalidate the corresponding
 indexes after changed Trusted bytes; see [Exploitation](../exploitation/README.md).
+
+## Reports in the application
+
+The image/audio analysis CLIs accept `--publish-minio`. The orchestrator supplies
+this flag and the audio `--processing-report` automatically. Artifacts are stored
+under `quality/reports/<image|audio>/revisions/<digest>/` in Trusted; a manifest
+published last identifies the complete revision and current input/output inventory.
+The publisher checks the image profile against the quality checkpoint, and audio
+profile/outcomes against current source keys, ETags and hashes. Failed publication
+does not replace the previous manifest. Historical revisions remain readable with
+their original statistics even after the inventory changes; the viewer explicitly
+labels them instead of presenting them as the current data. Text also archives its
+verified global overview when `--publish-minio` is enabled by the orchestrator.
+
+Streamlit's **Data reports** page reads these artifacts and the existing verified
+text overview directly from MinIO. It does not require local report folders or
+embedding models, and never reruns cleaning just to display an analysis.

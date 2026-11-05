@@ -12,6 +12,7 @@ def render():
                 'and music can help us discover gaming experiences. From collecting '
                 'data to semantic search and generative assistance.</p>', unsafe_allow_html=True)
     st.divider()
+    st.header("Data types")
     info, error = dataset_status()
     images, image_error = image_status()
     audio, audio_error = audio_status()
@@ -20,6 +21,7 @@ def render():
     b.metric("Images", images if not image_error else "—")
     c.metric("Audio tracks", audio if not audio_error else "—")
     st.caption("Descriptions count only the latest snapshot per game.")
+    st.markdown("Open **Data reports** in the sidebar to explore the quality reports, charts and report history for descriptions, images and audio.")
     for catalogue_error in (error, image_error, audio_error):
         if catalogue_error:
             st.info(catalogue_error)

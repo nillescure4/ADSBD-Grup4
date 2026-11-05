@@ -189,9 +189,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", type=Path, default=Path("reports/audio_trusted_quality_full.csv"))
     parser.add_argument("--output-dir", type=Path, default=Path("reports/audio_trusted_quality_analysis"))
+    parser.add_argument("--publish-minio", action="store_true", help="Publish verified report artifacts for the application")
+    parser.add_argument("--processing-report", type=Path, help="Trusted processing outcomes to include with the report")
     args = parser.parse_args()
     try:
         result = make_quality_report(args.report, args.output_dir)
+        if args.publish_minio:
+            from src.common.config import load_storage_config
+            from src.common.minio_client import create_minio_client
+            from src.common.quality_reports import publish_bundle
+            publish_bundle(create_minio_client(), load_storage_config(), "audio", args.report, args.output_dir, args.processing_report)
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
     print(f"Analysis created in {args.output_dir}: total={result['total']}, "

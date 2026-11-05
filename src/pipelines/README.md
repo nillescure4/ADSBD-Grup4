@@ -87,6 +87,13 @@ The 24 sequential steps are:
 23. Index latest Trusted descriptions with CLAP.
 24. Verify source coverage, provenance, vectors and retrieval.
 
+Steps 17 and 18 also publish verified analysis artifacts to Trusted for the
+Streamlit **Data reports** page, alongside Home. Text publishes and archives its
+verified global overview in step 14. Distinct report revisions are retained for all
+three modalities. The viewer includes revision selectors, tables, charts and
+downloads; historical data is labelled and corrupt artifacts are rejected. Local report files remain
+useful diagnostics but are not required by the running application.
+
 Screenshot associations are established through the original manifest SHA-256,
 Persistent bytes and reproduced Formatted/Trusted JPEG hashes. IDs are never
 guessed from filenames. Existing valid associations are retained across runs.

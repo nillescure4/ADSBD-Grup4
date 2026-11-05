@@ -22,6 +22,9 @@ def test_plan_shares_rawg_manifest_and_indexes_all_modalities(tmp_path):
     assert "--all" in next(s.arguments for s in plan if s.module.endswith("audio_persistent"))
     assert "--prune" in next(s.arguments for s in plan if s.module.endswith("build_trusted_images"))
     assert "--prune" in next(s.arguments for s in plan if s.module == "src.exploitation.images.build_embeddings")
+    for module in ("src.trusted.images.quality_report", "src.trusted.audio.audio_quality_report"):
+        assert "--publish-minio" in next(s.arguments for s in plan if s.module == module)
+    assert "--publish-minio" in next(s.arguments for s in plan if s.module == "src.trusted.text_to_trusted_zone")
 
 
 def test_skip_collection_has_no_source_requests():

@@ -234,11 +234,16 @@ def trust_texts(*, dry_run: bool = False, min_description_chars: int = 50) -> in
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="Analyse without writing to MinIO.")
+    parser.add_argument("--publish-minio", action="store_true", help="Archive the verified global quality report for the application")
     parser.add_argument("--min-description-chars", type=int, default=50, help="Advisory threshold for short-text warnings; rows are not removed.")
     args = parser.parse_args()
     if args.min_description_chars < 1:
         parser.error("--min-description-chars must be positive")
-    raise SystemExit(trust_texts(dry_run=args.dry_run, min_description_chars=args.min_description_chars))
+    code = trust_texts(dry_run=args.dry_run, min_description_chars=args.min_description_chars)
+    if code == 0 and args.publish_minio and not args.dry_run:
+        from src.common.quality_reports import publish_text_revision
+        publish_text_revision(create_minio_client(), load_storage_config())
+    raise SystemExit(code)
 
 
 if __name__ == "__main__":

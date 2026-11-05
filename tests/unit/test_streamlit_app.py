@@ -34,6 +34,8 @@ def test_home_and_navigation(status, monkeypatch):
     assert app.title[0].value == "One game. Many ways to discover it."
     assert [metric.label for metric in app.metric] == ["Descriptions", "Images", "Audio tracks"]
     assert [metric.value for metric in app.metric] == ["5", "50", "16"]
+    assert any(item.value == "Data types" for item in app.header)
+    assert any("Data reports" in item.value and "report history" in item.value for item in app.markdown)
 
 
 def test_missing_audio_catalogue_displays_setup_information(monkeypatch):
