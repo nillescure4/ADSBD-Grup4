@@ -21,14 +21,16 @@ jobs:
       ADSBD_TEST_MODEL_OFFLINE: "0"
       MINIO_ROOT_USER: pipeline-test
       MINIO_ROOT_PASSWORD: isolated-ci-test-password
-      HF_HOME: ${{ runner.temp }}/huggingface
-      HF_MODULES_CACHE: ${{ runner.temp }}/hf-modules
       MPLBACKEND: Agg
       OMP_NUM_THREADS: "2"
       MKL_NUM_THREADS: "2"
       PYTHONUNBUFFERED: "1"
     steps:
       - uses: actions/checkout@v4
+      - name: Configure isolated model caches
+        run: |
+          echo "HF_HOME=$RUNNER_TEMP/huggingface" >> "$GITHUB_ENV"
+          echo "HF_MODULES_CACHE=$RUNNER_TEMP/hf-modules" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
