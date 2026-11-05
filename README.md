@@ -52,9 +52,11 @@ Run commands from the repository root:
 python -m src.pipelines.run_pipeline --start-minio --serve
 ```
 
-This prepares Landing, Formatted, Trusted and Exploitation, verifies the four
-embedding collections, and then opens the application at http://127.0.0.1:8501.
-Streamlit starts after preparation, not as a preparation-progress dashboard.
+Streamlit starts immediately at http://127.0.0.1:8501 and displays live zones,
+elapsed time and backup use while Landing, Formatted, Trusted
+and Exploitation are prepared. After the four embedding collections and retrieval
+are verified, the same page automatically opens the application. A failed run
+keeps the progress page visible with the error. Use `--port` if 8501 is occupied.
 MinIO's optional visual console is at http://localhost:9001; scripts perform all
 storage operations programmatically.
 

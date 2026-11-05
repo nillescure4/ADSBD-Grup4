@@ -25,11 +25,24 @@ API request is made by the batch preparation process.
 python -m src.pipelines.run_pipeline run --start-minio --serve
 ```
 
-This starts MinIO, creates missing Landing/Formatted/Trusted buckets, collects
-all three modalities, processes every zone, builds four embedding collections,
-verifies them and starts Streamlit at http://127.0.0.1:8501. The application stays
-in the foreground; use Ctrl+C to stop it. Without `--serve`, preparation finishes
-and exits. MinIO data and the Chroma database remain available for future runs.
+This starts Streamlit at http://127.0.0.1:8501 before checking requirements or
+preparing storage. Its progress page refreshes automatically while MinIO starts,
+missing buckets are created, sources are collected, zones are processed and four
+embedding collections are built. It groups progress into Sources, Landing,
+Formatted, Trusted, Exploitation and Verification, with elapsed time and backup
+recovery. Each zone lists the preceding zone as its data source; Sources identifies
+the external providers or backup. The percentage counts these six stages, not time. Technical logs remain
+in the terminal and report files rather than appearing in the interface.
+After final data and retrieval verification, the same page automatically becomes
+the existing application, without restarting the server. Failures keep the error
+page visible and do not expose unfinished tasks. Each run has a separate atomic
+status file under the report directory; a heartbeat distinguishes long inference
+from a stopped orchestrator. An occupied port is rejected before data processing;
+choose `--port 8502` or stop the existing server.
+
+The application stays in the foreground; use Ctrl+C to stop it. Without `--serve`,
+preparation finishes and exits. MinIO data and the Chroma database remain
+available for future runs.
 
 Model weights/tokenizers are downloaded from their pinned Hugging Face revisions
 on first use. Allow several GB of disk space and additional time for CPU inference.

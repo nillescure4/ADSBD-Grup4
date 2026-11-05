@@ -39,16 +39,18 @@ def render():
             st.write(text)
             st.markdown(status)
     st.header("From sources to discovery")
-    st.markdown("**Sources → Landing → Formatted → Trusted → Embeddings → Tasks**")
+    st.markdown("**Sources → Landing zone → Formatted zone → Trusted zone → Exploitation zone → Tasks**")
     with st.expander("What happens at each stage?"):
         st.markdown("""
-- **Landing:** preserves original snapshots and their provenance.
-- **Formatted:** converts representations into common formats.
-- **Trusted:** cleans data and analyses quality without tailoring it to a specific model.
-- **Embeddings:** represents content as vectors for semantic search.
+- **Sources:** collects game descriptions and screenshots from RAWG and CC0 music from OpenGameArt, preserving identifiers and provenance. If source collection fails, a verified local backup can be used.
+- **Landing zone:** preserves original snapshots and their provenance.
+- **Formatted zone:** converts representations into common formats.
+- **Trusted zone:** cleans data and analyses quality without tailoring it to a specific model.
+- **Exploitation zone:** creates embeddings and indexes for semantic search.
 - **Tasks:** supports exploration, cross-modal retrieval and context-aware generation.
 """)
     with st.container(border=True):
         st.subheader("Our sources")
         st.write("**RAWG:** video game descriptions and screenshots.\n\n**OpenGameArt:** CC0 music for exploring soundscapes.")
+        st.write("**Verified local backup:** if source collection fails, the orchestrator can recover saved data from `backup_data` after checking its integrity. RAWG descriptions and screenshots are recovered together to preserve their game associations; audio is recovered independently. Backup data follows the same zone processing, quality checks and embedding generation as newly collected data.")
         st.caption("Audio tracks are independent; they are not soundtracks attributed to the RAWG games.")

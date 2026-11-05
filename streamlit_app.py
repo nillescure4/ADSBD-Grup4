@@ -2,10 +2,13 @@
 
 import streamlit as st
 
-from src.app.views import generation, home, multimodal, reports, similarity
-
-
 st.set_page_config(page_title="ADSBD · Group 4", page_icon="🎮", layout="wide")
+from src.app.views.preparation import preparation_complete
+
+if not preparation_complete():
+    st.stop()
+
+from src.app.views import generation, home, multimodal, reports, similarity
 st.markdown("""
 <style>
     .block-container {max-width: 1180px; padding-top: 2.6rem; padding-bottom: 4rem;}

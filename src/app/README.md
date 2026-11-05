@@ -10,6 +10,15 @@ python -m streamlit run streamlit_app.py
 Open [ADSBD · Group 4](http://localhost:8501). All interfaces and documentation are
 in English. Source descriptions retain their original language.
 
+To prepare data and open the application in one command, use
+`python -m src.pipelines.run_pipeline --start-minio --serve`. Streamlit starts
+first with a live preparation page and switches automatically to these pages only
+after successful verification. Preparation errors remain visible instead of
+opening unfinished tasks. The orchestrator passes a run-specific status path in
+`ADSBD_PIPELINE_STATUS`; standalone Streamlit does not require this variable and
+opens the existing application directly. Use `--port 8502` on the orchestrator if
+another server already occupies port 8501.
+
 ## Pages
 
 - **Home:** project context, architecture and real catalogue counts.

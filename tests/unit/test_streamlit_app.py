@@ -25,6 +25,7 @@ def page(module):
 
 def test_home_and_navigation(status, monkeypatch):
     from src.app.views import home
+    monkeypatch.setattr(home, "dataset_status", ui.dataset_status)
     monkeypatch.setattr(home, "image_status", lambda: (50, None))
     monkeypatch.setattr(home, "audio_status", lambda: (16, None))
     app = AppTest.from_file(Path(__file__).resolve().parents[2] / "streamlit_app.py", default_timeout=15).run()
@@ -36,6 +37,8 @@ def test_home_and_navigation(status, monkeypatch):
     assert [metric.value for metric in app.metric] == ["5", "50", "16"]
     assert any(item.value == "Data types" for item in app.header)
     assert any("Data reports" in item.value and "report history" in item.value for item in app.markdown)
+    assert any("Landing zone → Formatted zone → Trusted zone → Exploitation zone" in item.value for item in app.markdown)
+    assert any("Verified local backup" in item.value and "checking its integrity" in item.value for item in app.markdown)
 
 
 def test_missing_audio_catalogue_displays_setup_information(monkeypatch):
