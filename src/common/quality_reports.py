@@ -115,7 +115,7 @@ def list_revisions(client, storage, modality):
         if manifest.get("version") == 1 and manifest.get("modality") == modality and manifest.get("revision") == revision:
             revisions.append({"revision": revision, "generated_at_utc": manifest["generated_at_utc"],
                               "is_latest": revision == latest})
-    return sorted(revisions, key=lambda row: row["generated_at_utc"], reverse=True)
+    return sorted(revisions, key=lambda row: (row["is_latest"], row["generated_at_utc"], row["revision"]), reverse=True)
 
 
 def load_bundle(client, storage, modality, revision=None):

@@ -100,8 +100,13 @@ def test_text_report_history_preserves_previous_revision_and_reuses_identical_co
     assert json.loads(s3.data("trusted", "quality/reports/text/manifest.json"))["revision"] == second["revision"]
 
 
-def test_historical_media_can_be_read_after_new_ingestion(s3, tmp_path):
+def test_historical_media_can_be_read_after_new_ingestion(s3, tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    from types import SimpleNamespace
+    from src.common import quality_reports as reports
     from src.common.quality_reports import list_revisions
+    fixed_time = datetime(2026, 11, 5, tzinfo=timezone.utc)
+    monkeypatch.setattr(reports, "datetime", SimpleNamespace(now=lambda tz: fixed_time))
     profile, out = audio_inputs(s3, tmp_path)
     first = publish_bundle(s3, STORAGE, "audio", profile, out)
     s3.put("formatted", "audio/new.flac", b"new")
@@ -113,6 +118,7 @@ def test_historical_media_can_be_read_after_new_ingestion(s3, tmp_path):
     profile.write_text(profile.read_text() + f"audio/new.flac,{etag}\n")
     second = publish_bundle(s3, STORAGE, "audio", profile, out)
     revisions = list_revisions(s3, STORAGE, "audio")
+    assert revisions[0]["generated_at_utc"] == revisions[1]["generated_at_utc"]
     assert len(revisions) == 2 and revisions[0]["revision"] == second["revision"]
     assert load_bundle(s3, STORAGE, "audio", second["revision"])["current_matches"]
     assert load_bundle(s3, STORAGE, "audio", first["revision"])["files"]["profile.csv"] != profile.read_bytes()
