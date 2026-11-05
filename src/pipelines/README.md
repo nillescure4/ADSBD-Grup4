@@ -14,7 +14,8 @@ python -m pip install -e ".[dev,app]"
 Copy-Item .env.example .env
 ```
 
-Configure `RAWG_API_KEY`, `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` in `.env`.
+Configure `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` in `.env`. Set
+`RAWG_API_KEY` for live collection; a missing key can trigger the verified backup.
 Choose your own MinIO password. Keep `.env` private. The optional `MINIO_ENDPOINT`
 defaults to `http://localhost:9000`. For TASK 3, configure `LLM_PROVIDER`,
 `LLM_MODEL` and the corresponding key; the example uses Gemini. No generative
@@ -24,11 +25,24 @@ API request is made by the batch preparation process.
 python -m src.pipelines.run_pipeline run --start-minio --serve
 ```
 
-This starts MinIO, creates missing Landing/Formatted/Trusted buckets, collects
-all three modalities, processes every zone, builds four embedding collections,
-verifies them and starts Streamlit at http://127.0.0.1:8501. The application stays
-in the foreground; use Ctrl+C to stop it. Without `--serve`, preparation finishes
-and exits. MinIO data and the Chroma database remain available for future runs.
+This starts Streamlit at http://127.0.0.1:8501 before checking requirements or
+preparing storage. Its progress page refreshes automatically while MinIO starts,
+missing buckets are created, sources are collected, zones are processed and four
+embedding collections are built. It groups progress into Sources, Landing,
+Formatted, Trusted, Exploitation and Verification, with elapsed time and backup
+recovery. Each zone lists the preceding zone as its data source; Sources identifies
+the external providers or backup. The percentage counts these six stages, not time. Technical logs remain
+in the terminal and report files rather than appearing in the interface.
+After final data and retrieval verification, the same page automatically becomes
+the existing application, without restarting the server. Failures keep the error
+page visible and do not expose unfinished tasks. Each run has a separate atomic
+status file under the report directory; a heartbeat distinguishes long inference
+from a stopped orchestrator. An occupied port is rejected before data processing;
+choose `--port 8502` or stop the existing server.
+
+The application stays in the foreground; use Ctrl+C to stop it. Without `--serve`,
+preparation finishes and exits. MinIO data and the Chroma database remain
+available for future runs.
 
 Model weights/tokenizers are downloaded from their pinned Hugging Face revisions
 on first use. Allow several GB of disk space and additional time for CPU inference.
@@ -86,9 +100,30 @@ The 24 sequential steps are:
 23. Index latest Trusted descriptions with CLAP.
 24. Verify source coverage, provenance, vectors and retrieval.
 
+Steps 17 and 18 also publish verified analysis artifacts to Trusted for the
+Streamlit **Data reports** page, alongside Home. Text publishes and archives its
+verified global overview in step 14. Distinct report revisions are retained for all
+three modalities. The viewer includes revision selectors, tables, charts and
+downloads; historical data is labelled and corrupt artifacts are rejected. Local report files remain
+useful diagnostics but are not required by the running application.
+
 Screenshot associations are established through the original manifest SHA-256,
 Persistent bytes and reproduced Formatted/Trusted JPEG hashes. IDs are never
 guessed from filenames. Existing valid associations are retained across runs.
+
+Formatted image keys retain the complete source filename before `.jpg`, avoiding
+collisions between different input extensions. Existing legacy derived images are
+not automatically deleted from Formatted; see [the migration notes](../formatting/README.md).
+Active Trusted images and their Jina vectors are synchronized with current
+acceptance decisions using `--prune`. Originals remain in Landing/Formatted;
+failed accepted replacements defer retirement and stop downstream stages.
+Text quality version 5 produces English reports and attaches exact-hash sample
+assessments from [the review registry](../../docs/quality/README.md). Changing the
+registry invalidates Trusted report checkpoints without changing source data.
+Image/audio reports also attach exact-hash sample assessments from
+[the media review](../../docs/quality/media_assessment.md). Audio format policy v2
+prevents decoded lossy overshoots from clipping and upgrades tracked v1 outputs;
+verified Trusted derivatives and affected embeddings refresh incrementally.
 
 The shared Chroma directory is `data/exploitation/chroma`. Collections are
 `texts_jina_clip_v2`, `images_jina_clip_v2` (1024 dimensions) and `texts_clap`,
@@ -194,8 +229,16 @@ It simulates both source collectors failing, then processes the real 50/50/16
 backup through fresh isolated buckets and a new vector database. Its report is
 `reports/pipeline/backup_validation_50_50_16.json`. Model weights may already be
 cached; no data objects or existing embeddings are reused. Test buckets are deleted.
+The same test module also checks real MinIO/Chroma image retirement and safe
+refresh of tracked legacy audio, including incremental no-op reruns. The quality
+assessment is separate from these operational tests; see the media review above.
 
-GitHub Actions runs the automated suite on pushes and pull requests. The manual
+GitHub Actions runs the automated suite and the **Backup end-to-end pipeline**
+on pushes and pull requests. The backup job permits pinned model downloads,
+starts fresh MinIO, exercises the real 50/50/16 snapshot through all zones and
+indexes, checks retrieval and application counts, and uploads the run evidence.
+It needs no source/provider secrets. See [CI instructions](../../.github/README.md).
+The manual
 `Live end-to-end pipeline` workflow runs the real test on an Ubuntu runner with
 Docker and FFmpeg; configure the repository secret `RAWG_API_KEY` before running
 it. It does not need Gemini or production MinIO credentials. Source/network

@@ -42,7 +42,9 @@ jobs:
           done
           exit 1
       - name: Test collection through verified embeddings and incremental recovery
-        run: python -m pytest tests/integration/test_global_pipeline.py -q -s --basetemp=reports/live-test
+        run: |
+          mkdir -p reports
+          python -m pytest tests/integration/test_global_pipeline.py -q -s --basetemp=reports/live-test
       - name: Upload test diagnostics
         if: always()
         uses: actions/upload-artifact@v4

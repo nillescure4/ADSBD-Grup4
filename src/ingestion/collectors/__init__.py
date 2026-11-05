@@ -1,2 +1,2 @@
-"""Collectors especifics de cada font de dades."""
+"""Collectors for individual external data sources."""
 

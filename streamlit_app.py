@@ -2,10 +2,13 @@
 
 import streamlit as st
 
-from src.app.views import generation, home, multimodal, similarity
-
-
 st.set_page_config(page_title="ADSBD · Group 4", page_icon="🎮", layout="wide")
+from src.app.views.preparation import preparation_complete
+
+if not preparation_complete():
+    st.stop()
+
+from src.app.views import generation, home, multimodal, reports, similarity
 st.markdown("""
 <style>
     .block-container {max-width: 1180px; padding-top: 2.6rem; padding-bottom: 4rem;}
@@ -20,7 +23,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 pages = {
-    "": [st.Page(home.render, title="Home", icon="🏠", default=True)],
+    "": [st.Page(home.render, title="Home", icon="🏠", default=True),
+         st.Page(reports.render, title="Data reports", icon="📊", url_path="reports")],
     "The three tasks": [
         st.Page(similarity.render, title="TASK 1 · Similarity", icon="🔎", url_path="similarity"),
         st.Page(multimodal.render, title="TASK 2 · Multimodal", icon="🧩", url_path="multimodal"),

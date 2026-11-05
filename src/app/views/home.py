@@ -12,6 +12,7 @@ def render():
                 'and music can help us discover gaming experiences. From collecting '
                 'data to semantic search and generative assistance.</p>', unsafe_allow_html=True)
     st.divider()
+    st.header("Data types")
     info, error = dataset_status()
     images, image_error = image_status()
     audio, audio_error = audio_status()
@@ -20,6 +21,7 @@ def render():
     b.metric("Images", images if not image_error else "—")
     c.metric("Audio tracks", audio if not audio_error else "—")
     st.caption("Descriptions count only the latest snapshot per game.")
+    st.markdown("Open **Data reports** in the sidebar to explore the quality reports, charts and report history for descriptions, images and audio.")
     for catalogue_error in (error, image_error, audio_error):
         if catalogue_error:
             st.info(catalogue_error)
@@ -37,16 +39,18 @@ def render():
             st.write(text)
             st.markdown(status)
     st.header("From sources to discovery")
-    st.markdown("**Sources → Landing → Formatted → Trusted → Embeddings → Tasks**")
+    st.markdown("**Sources → Landing zone → Formatted zone → Trusted zone → Exploitation zone → Tasks**")
     with st.expander("What happens at each stage?"):
         st.markdown("""
-- **Landing:** preserves original snapshots and their provenance.
-- **Formatted:** converts representations into common formats.
-- **Trusted:** cleans data and analyses quality without tailoring it to a specific model.
-- **Embeddings:** represents content as vectors for semantic search.
+- **Sources:** collects game descriptions and screenshots from RAWG and CC0 music from OpenGameArt, preserving identifiers and provenance. If source collection fails, a verified local backup can be used.
+- **Landing zone:** preserves original snapshots and their provenance.
+- **Formatted zone:** converts representations into common formats.
+- **Trusted zone:** cleans data and analyses quality without tailoring it to a specific model.
+- **Exploitation zone:** creates embeddings and indexes for semantic search.
 - **Tasks:** supports exploration, cross-modal retrieval and context-aware generation.
 """)
     with st.container(border=True):
         st.subheader("Our sources")
         st.write("**RAWG:** video game descriptions and screenshots.\n\n**OpenGameArt:** CC0 music for exploring soundscapes.")
+        st.write("**Verified local backup:** if source collection fails, the orchestrator can recover saved data from `backup_data` after checking its integrity. RAWG descriptions and screenshots are recovered together to preserve their game associations; audio is recovered independently. Backup data follows the same zone processing, quality checks and embedding generation as newly collected data.")
         st.caption("Audio tracks are independent; they are not soundtracks attributed to the RAWG games.")

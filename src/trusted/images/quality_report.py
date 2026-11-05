@@ -9,6 +9,7 @@ import matplotlib
 matplotlib.use("Agg")  # headless (HPC / no display)
 import matplotlib.pyplot as plt
 import pandas as pd
+from src.trusted.media_review_registry import review_markdown
 
 METRICS = ["width", "height", "aspect_ratio", "sharpness", "brightness",
            "contrast", "entropy", "letterbox_ratio", "file_size"]
@@ -58,6 +59,7 @@ def write_summary(q: pd.DataFrame, out: Path) -> None:
         "- Thresholds are heuristics, not validated limits. Check `review_samples.csv` before trusting any of them.",
         "- The tables by group show whether rejection affects some kinds of images more; they do not explain why.", "",
     ]
+    lines += review_markdown("image", q["sha256"].dropna())
     (out / "summary.md").write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -111,5 +113,11 @@ if __name__ == "__main__":
                         help="Quality CSV produced by build_trusted_images.py")
     parser.add_argument("--output_dir", default="reports/images/plots",
                         help="Folder for the figures and tables.")
+    parser.add_argument("--publish-minio", action="store_true", help="Publish verified report artifacts for the application")
     args = parser.parse_args()
     main(args.csv_input, args.output_dir)
+    if args.publish_minio:
+        from src.common.config import load_storage_config
+        from src.common.minio_client import create_minio_client
+        from src.common.quality_reports import publish_bundle
+        publish_bundle(create_minio_client(), load_storage_config(), "image", args.csv_input, args.output_dir)

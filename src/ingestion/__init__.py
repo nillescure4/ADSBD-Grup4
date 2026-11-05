@@ -1,2 +1,2 @@
-"""Ingesta de dades cap a la Landing Zone."""
+"""Ingest source data into the Landing Zone."""
 

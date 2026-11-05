@@ -1,330 +1,171 @@
-# ADSBD - Grup 4
+# ADSBD · Group 4
 
-Pipeline local de gestió de dades basat en una arquitectura per zones. MinIO
-actua com a emmagatzematge d'objectes compatible amb S3 i el codi Python del
-repositori s'encarrega d'ingerir, transformar, netejar i preparar les dades.
+Discover video games through descriptions, gameplay screenshots and independent
+music assets. The project addresses three tasks: same-modality similarity,
+cross-modal discovery, and an AI-guided game recommendation. Descriptions explain
+game content, screenshots expose visual style, and music offers an additional
+atmosphere preference. The intended value is helping users narrow down games
+without knowing their titles in advance. OpenGameArt music is not attributed to
+the RAWG games as their original soundtrack.
 
-## Run the complete pipeline
+## Requirements and setup
 
-```powershell
-python -m pip install -e ".[dev,app]"
-python -m src.pipelines.run_pipeline run --start-minio --serve
-```
+Clone the repository and check out the branch or commit being assessed. This is
+a private repository, so the assessor needs GitHub access. Commands below assume
+the repository root. See [continuous integration](.github/README.md) for the
+automatic checks and how to inspect the result for a specific commit.
 
-Configure RAWG and MinIO credentials in `.env`, run Docker Desktop, and install
-FFmpeg/FFprobe. The command collects text and images from RAWG and music from
-OpenGameArt, then runs all three modalities through Landing, Formatted and
-Trusted, including quality reports, then generates Jina/CLAP embeddings, verifies
-the four collections and starts Streamlit. Omit `--serve` for batch preparation
-or use `--through trusted` to stop before embeddings.
-Use `--dry-run` to preview the plan without making changes. See the
-[global pipeline instructions](src/pipelines/README.md) for limits, recovery,
-media tools and isolated integration tests.
+Use Python 3.12 (the package requires Python >=3.11), Docker with Compose, and
+FFmpeg/FFprobe. Start Docker Desktop on Windows before using `--start-minio`.
+The first embedding run needs internet access and several GB for pinned model
+weights; subsequent runs can reuse them.
 
-The default sample is 50 RAWG games, up to one image per game, and 16 audio
-files. Source failures can use the verified [offline backup](backup_data/README.md)
-containing 50 descriptions, 50 images and 16 audio files. Use `--no-backup`
-to require live source availability. Reports distinguish API failures from
-successful offline recovery.
-
-## Interactive application · ADSBD · Group 4
-
-```powershell
-python -m pip install -e ".[app]"
-python -m streamlit run streamlit_app.py
-```
-
-Open http://localhost:8501. The application includes a project overview and a
-page for each TASK: similarity search, multimodal search and generation.
-TASK 1 supports text, image and audio similarity. TASK 2 supports text/image
-retrieval and text/audio search in both directions, with mixed results and
-category tabs. TASK 3 provides an AI-guided game finder.
-Jina and CLAP collections are separate in `data/exploitation/chroma`.
-The interface is in English.
-See the [application instructions](src/app/README.md).
-
-## Arquitectura de dades
-
-El flux general del projecte és:
-
-```text
-Fonts externes
-      |
-      v
-1.landing-zone/temporal
-      |
-      v
-1.landing-zone/persistent
-      |
-      v
-2.formatted-zone
-      |
-      v
-3.trusted-zone
-      |
-      v
-4.exploitation-zone
-```
-
-### 1. Landing Zone
-
-Conté les dades tal com arriben de les fonts externes.
-
-- `temporal/`: punt d'entrada dels fitxers originals. Els objectes poden ser
-  eliminats quan s'han validat i promocionat correctament.
-- `persistent/`: còpia permanent de les dades originals, organitzada i amb una
-  convenció de noms estable.
-
-Exemple:
-
-```text
-temporal/<source>/<dataset>/<original_filename>
-persistent/<source>/<dataset>/<year>/<month>/<source>$<dataset>$<date>.<ext>
-```
-
-### 2. Formatted Zone
-
-Conté les dades amb una estructura i un format homogenis. Manté, sempre que
-sigui possible, la jerarquia de `landing/persistent` per conservar la
-traçabilitat.
-
-### 3. Trusted Zone
-
-Conté dades netes i validades. Aquí s'apliquen correccions genèriques, regles de
-qualitat conegudes, deduplicació i normalització de valors inconsistents.
-
-### 4. Exploitation Zone
-
-Conté els productes de dades preparats per a un ús concret, com ara datasets
-analítics, KPIs, embeddings o dades d'entrenament.
-
-## Estructura del repositori
-
-```text
-ADSBD-Grup4/
-├── docker-compose.yml        # MinIO i inicialització dels buckets
-├── .env.example              # Variables d'entorn d'exemple
-├── pyproject.toml            # Dependències i configuració de Python
-├── config/
-│   ├── storage.yml           # Noms dels buckets i prefixos
-│   └── datasets.yml          # Catàleg de fonts i datasets
-├── src/
-│   ├── common/               # Configuració, logs i client de MinIO
-│   ├── ingestion/
-│   │   ├── collectors/       # Un collector per cada font externa
-│   │   └── temporal_to_persistent.py
-│   ├── formatting/           # Landing persistent -> Formatted
-│   ├── trusted/              # Formatted -> Trusted
-│   ├── exploitation/         # Trusted -> Exploitation
-│   └── pipelines/            # Execució i orquestració del pipeline
-├── tests/
-│   ├── unit/                 # Proves sense serveis externs
-│   ├── integration/          # Proves que utilitzen MinIO
-│   └── fixtures/             # Mostres petites per a les proves
-├── notebooks/                # Exploració; no lògica definitiva
-└── docs/
-    ├── architecture.md
-    └── data_dictionary.md
-```
-
-Les dades reals no s'han de guardar al repositori. Han de viure a MinIO. Git
-només ha de contenir codi, configuració sense secrets, documentació i mostres de
-prova petites.
-
-## Requisits
-
-- Docker Desktop amb Docker Compose.
-- Python 3.11 o superior.
-- Git.
-
-## Configuració inicial
-
-### 1. Crear el fitxer d'entorn
-
-En PowerShell:
-
-```powershell
-Copy-Item .env.example .env
-```
-
-En Linux o macOS:
-
-```bash
-cp .env.example .env
-```
-
-Editeu `.env` i canvieu, com a mínim, les credencials d'exemple:
-
-```dotenv
-MINIO_ROOT_USER=minioadmin
-MINIO_ROOT_PASSWORD=una-contrasenya-segura
-MINIO_ENDPOINT=http://localhost:9000
-```
-
-El fitxer `.env` està ignorat per Git i no s'ha de publicar.
-
-### 2. Arrencar MinIO
-
-```bash
-docker compose up -d
-```
-
-El servei `minio-init` crea idempotentment aquests buckets:
-
-```text
-1.landing-zone
-2.formatted-zone
-3.trusted-zone
-4.exploitation-zone
-```
-
-Els prefixos `temporal/` i `persistent/` apareixen quan s'hi desen objectes;
-no es creen fitxers buits per representar carpetes.
-
-Podeu consultar l'estat dels contenidors amb:
-
-```bash
-docker compose ps -a
-```
-
-Que `minio-init` aparegui com `Exited (0)` és correcte: és una tasca
-d'inicialització que acaba després de crear l'estructura.
-
-### 3. Obrir la consola de MinIO
-
-Obriu [http://localhost:9001](http://localhost:9001) i inicieu sessió amb les
-credencials definides a `.env`.
-
-L'API compatible amb S3 està disponible a `http://localhost:9000`.
-
-### 4. Preparar Python
-
-En PowerShell:
+Windows PowerShell:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[dev,app]"
+Copy-Item .env.example .env
 ```
 
-En Linux o macOS:
+Linux/macOS:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[dev,app]"
+cp .env.example .env
 ```
 
-### 5. Comprovar la connexió
+Set `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` in `.env`. `MINIO_ENDPOINT`
+defaults to `http://localhost:9000`. Set `RAWG_API_KEY` for live RAWG collection;
+source collection can fall back to the versioned backup if the key or service
+is unavailable. For TASK 3, configure the provider/model/key described in
+[the application guide](src/app/README.md). Keep credentials out of Git.
 
-Amb MinIO en funcionament i l'entorn virtual activat:
+FFmpeg and FFprobe must be on PATH, supplied with `--ffmpeg-dir`, or already
+installed under `data/tools/ffmpeg/bin`. They are not bundled or auto-downloaded.
 
-```bash
+## Run the complete project
+
+Run commands from the repository root:
+
+```powershell
+python -m src.pipelines.run_pipeline --start-minio --serve
+```
+
+Streamlit starts immediately at http://127.0.0.1:8501 and displays live zones,
+elapsed time and backup use while Landing, Formatted, Trusted
+and Exploitation are prepared. After the four embedding collections and retrieval
+are verified, the same page automatically opens the application. A failed run
+keeps the progress page visible with the error. Use `--port` if 8501 is occupied.
+MinIO's optional visual console is at http://localhost:9001; scripts perform all
+storage operations programmatically.
+
+Defaults are **50 new RAWG games**, **up to one image per game**, and a target of
+**16 total downloaded playable audio files**. These are source targets, not a
+promise that every file passes quality rules. Text collection covers the image
+collector's accumulated game manifest. Music collection uses a robots-aware
+OpenGameArt HTML crawler, not a public audio API.
+
+```powershell
+python -m src.pipelines.run_pipeline --dry-run
+python -m src.pipelines.run_pipeline --through trusted
+python -m src.pipelines.run_pipeline --skip-collection
+python -m src.pipelines.run_pipeline --embeddings-only
 python -m src.pipelines.run_pipeline status
 ```
 
-La comanda mostra `OK` per a cadascun dels quatre buckets configurats.
+Omit `--serve` for batch preparation. `--skip-collection` requires existing local
+image/audio collections and text already in Landing. `--embeddings-only` starts
+from existing Trusted data. To open an already prepared application separately:
 
-## Configuració dels datasets
-
-`config/datasets.yml` conté tres entrades provisionals. S'han de substituir
-pels datasets reals del projecte:
-
-```yaml
-datasets:
-  nom_dataset:
-    source: nom_de_la_font
-    modality: text
-    raw_format: json
+```powershell
+python -m streamlit run streamlit_app.py
 ```
 
-- `source`: sistema, API, web o proveïdor del qual provenen les dades.
-- `dataset`: conjunt lògic de dades obtingut d'aquella font.
-- `modality`: tipus de contingut, per exemple text, imatge, àudio o vídeo.
-- `raw_format`: format original en què arriba la informació.
+**Data reports**, alongside Home, presents the current description, image and audio
+quality analyses with tables, charts and downloadable reports. The updated pipeline
+publishes verified report artifacts to Trusted; viewing them does not load models
+or process data. Missing or outdated reports are identified explicitly.
+Each modality has a selector for the latest or a historical report, even when only
+one revision exists. New ingestion updates the current analysis while preserving
+distinct prior revisions. Home groups catalogue counts under **Data types**.
 
-No dupliqueu els noms dels buckets als scripts. Llegiu-los sempre de
-`config/storage.yml`.
+Use [the orchestrator guide](src/pipelines/README.md) for path overrides,
+isolated runs, source plans, reports, failure handling and CLI options.
 
-## Desenvolupar un collector
+## Architecture
 
-Cada font externa ha de tenir un mòdul propi dins de
-`src/ingestion/collectors/`. La seva responsabilitat és:
-
-1. Obtenir les dades de la font.
-2. Conservar el contingut original sense transformar-lo.
-3. Construir una clau amb el patró
-   `temporal/<source>/<dataset>/<original_filename>`.
-4. Pujar l'objecte a `1.landing-zone` mitjançant el client compartit de
-   `src/common/minio_client.py`.
-
-Les claus d'API de les fonts externes també s'han de guardar a `.env`, mai al
-codi ni a `datasets.yml`.
-
-## Promocionar un fitxer a Landing persistent
-
-Quan un objecte temporal ja s'ha validat, es pot moure a persistent:
-
-```bash
-python -m src.ingestion.temporal_to_persistent 'temporal/source/dataset/original.json' 'persistent/source/dataset/2026/10/source$dataset$13-10-2026.json'
+```text
+RAWG API / OpenGameArt crawler / verified offline backup
+  -> MinIO: 1.landing-zone (temporal -> persistent)
+  -> MinIO: 2.formatted-zone (Parquet / JPEG / FLAC)
+  -> MinIO: 3.trusted-zone (generic quality processing and reports)
+  -> ChromaDB: data/exploitation/chroma (Jina and CLAP collections)
+  -> Streamlit: similarity, multimodal retrieval and AI game finder
 ```
 
-La comanda comprova que l'objecte existeixi, el copia a la destinació i elimina
-l'objecte temporal. No l'executeu fins que les validacions del dataset hagin
-acabat correctament.
+Exploitation uses embedded ChromaDB, not an object-store bucket. Older local
+installations may still contain an unused `4.exploitation-zone` bucket; the
+current configuration neither creates nor consumes it. Existing data is not
+deleted by this configuration change.
 
-## Responsabilitat de cada mòdul
+| Area | Implementation and instructions |
+|---|---|
+| Sources | [Collection scripts](src/data_collection/README.md) |
+| Landing | [Ingestion and safe promotion](src/ingestion/README.md) |
+| Formatted | [Canonical input/output formats](src/formatting/README.md) |
+| Trusted | [Cleaning, quality analysis and sample reviews](src/trusted/README.md) |
+| Exploitation | [Pinned models and incremental indexing](src/exploitation/README.md) |
+| Tasks | [Application and provider setup](src/app/README.md) |
+| Operations | [Orchestration and CI](src/pipelines/README.md) |
+| Data definitions | [Data dictionary](docs/data_dictionary.md) |
 
-| Mòdul | Llegeix de | Escriu a |
-|---|---|---|
-| `ingestion/collectors` | Fonts externes | `1.landing-zone/temporal` |
-| `temporal_to_persistent.py` | Landing temporal | Landing persistent |
-| `formatting/` | `1.landing-zone/persistent` | `2.formatted-zone` |
-| `trusted/` | `2.formatted-zone` | `3.trusted-zone` |
-| `exploitation/` | `3.trusted-zone` | `4.exploitation-zone` |
+## Backup, provenance and limitations
 
-Cada procés ha de poder repetir-se sense crear duplicats ni corrompre dades.
-També ha de registrar quins objectes ha llegit i quins ha escrit.
+[backup_data](backup_data/README.md) contains 50 original descriptions and 50
+original gameplay screenshots for the same games, plus 16 independent CC0 audio
+files. It is the deliberate versioned-data exception: runtime downloads, reports,
+model caches and Chroma databases remain ignored under `data/` and `reports/`.
+Snapshot hashes are preserved across Windows/Linux checkouts.
 
-## Executar les proves
+By default, a source failure selects a hash-verified backup subset and records
+the failed source result and recovery. RAWG images and text switch together;
+audio can switch independently. `--no-backup` requires live sources. The fixed
+backup cannot fulfil larger samples, multiple screenshots per game or stratified
+RAWG plans. Original description capture dates remain unchanged.
 
-```bash
-pytest
+Run one writer per storage/database set. Daily RAWG text captures assume at most
+one capture per game/day; conflicting originals fail rather than overwrite
+history. Embedding model changes require compatible new collections. Jina and
+CLAP scores belong to separate vector spaces; mixed results alternate category
+ranks rather than comparing those raw scores. CLAP description inputs are capped
+at 512 tokens and audio vectors represent a centered excerpt of up to ten seconds.
+
+## Tests and delivery
+
+```powershell
+python -m pytest -q
 ```
 
-Les proves unitàries no haurien de necessitar MinIO. Les proves d'integració sí
-que poden assumir que `docker compose up -d` ja s'ha executat.
+The default suite uses isolated fixtures and skips opt-in service/model tests.
+GitHub Actions runs it on pushes and pull requests. A separate automatic
+**Backup end-to-end pipeline** job processes the real 50/50/16 backup through
+fresh storage, model indexing, retrieval verification and application checks.
+It requires no source API credentials. See [CI instructions](.github/README.md)
+and [integration tests](tests/integration/README.md)
+for live-source and full-backup runs. Their success must be checked from their
+actual reports; source failures are not evidence of a successful live API call.
+See [the quality assessment](docs/quality/README.md) for the documented sample,
+its content hashes and the limits of that review. The separate submission
+memo is maintained outside this repository.
 
-## Aturar l'entorn
-
-Per aturar els contenidors conservant les dades:
-
-```bash
-docker compose down
-```
-
-El volum `minio_data` conserva els objectes entre reinicis.
-
-Per eliminar també el volum i totes les dades locals caldria executar
-`docker compose down -v`. Aquesta operació és destructiva i no s'ha d'utilitzar
-si es vol conservar el contingut de MinIO.
-
-## Ordre recomanat d'implementació
-
-1. Substituir els exemples de `config/datasets.yml` pels datasets reals.
-2. Implementar un collector i carregar dades a Landing temporal.
-3. Validar i promocionar els objectes a Landing persistent.
-4. Implementar la conversió a Formatted Zone.
-5. Afegir regles de qualitat per construir la Trusted Zone.
-6. Crear els productes finals de l'Exploitation Zone.
-7. Afegir proves unitàries i d'integració a cada etapa.
-
-## Pipelines desenvolupats
-
-Per executar la pipeline d'imatges en Windows:
-
-```bash
-.\run_image_pipeline.ps1
-```
+The [media assessment](docs/quality/media_assessment.md) compares actual image and
+audio samples before/after production conversion and cleaning. Active Trusted
+images and retired image vectors synchronize automatically. Audio format policy
+v2 prevents decoded overshoots from clipping; measured gain changes are recorded,
+and intact tracked derivatives can be refreshed without changing originals.

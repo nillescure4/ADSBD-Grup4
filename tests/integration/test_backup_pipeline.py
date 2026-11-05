@@ -1,6 +1,7 @@
 """Opt-in full-size recovery test using real backup data and fresh storage."""
 
 import json
+import csv
 import os
 import time
 import uuid
@@ -29,7 +30,8 @@ def test_all_source_failures_use_backup_through_verified_embeddings(tmp_path, mo
     config = tmp_path / "storage.yml"
     config.write_text(yaml.safe_dump(storage), encoding="utf-8")
     monkeypatch.setenv("ADSBD_STORAGE_CONFIG", str(config))
-    monkeypatch.setenv("HF_HUB_OFFLINE", "1")
+    offline = os.getenv("ADSBD_TEST_MODEL_OFFLINE", "1")
+    monkeypatch.setenv("HF_HUB_OFFLINE", offline)
     execute = pipeline.execute
     failed = []
     def source_failure(command, env):
@@ -49,6 +51,11 @@ def test_all_source_failures_use_backup_through_verified_embeddings(tmp_path, mo
                               "--audio-output", str(tmp_path / "audio"), "--db-path", str(tmp_path / "chroma"),
                               "--report-dir", str(reports)])
         assert code == 0
+        with (reports / "audio/formatting.csv").open(encoding="utf-8", newline="") as stream:
+            conversions = list(csv.DictReader(stream))
+        attenuated = [row for row in conversions if "applied gain=" in row["message"]]
+        assert len(attenuated) == 2
+        assert all("prevent clipping" in row["message"] for row in attenuated)
         report = json.loads(next(reports.glob("run_*.json")).read_text())
         assert len(report["steps"]) == 24
         assert {row["source"] for row in report["backup_fallbacks"]} == {"rawg", "opengameart"}
@@ -61,8 +68,14 @@ def test_all_source_failures_use_backup_through_verified_embeddings(tmp_path, mo
         landing = storage["buckets"]["landing"]
         assert sum(key.endswith(".json") for key in list_object_keys(client, landing, "persistent/texts/rawg/")) == 50
         assert len(list_object_keys(client, landing, "persistent/images/")) == 50
+        monkeypatch.setenv("ADSBD_CHROMA_PATH", str(tmp_path / "chroma"))
+        from streamlit.testing.v1 import AppTest
+        app = AppTest.from_file(pipeline.PROJECT_ROOT / "streamlit_app.py", default_timeout=45).run()
+        assert not app.exception
+        assert [metric.value for metric in app.metric] == ["50", "50", "16"]
         evidence = {"input_counts": {"descriptions": 50, "images": 50, "audio": 16},
-                    "source_failures": "simulated", "model_cache": "existing pinned weights; no data or vector reuse",
+                    "source_failures": "simulated", "model_downloads_allowed": offline != "1",
+                    "model_cache": "pinned weights; no data or vector reuse", "application_counts_verified": True,
                     "elapsed_seconds": round(time.monotonic() - started, 3),
                     "run": report, "verification": verification}
         output = pipeline.PROJECT_ROOT / "reports/pipeline/backup_validation_50_50_16.json"
@@ -75,4 +88,101 @@ def test_all_source_failures_use_backup_through_verified_embeddings(tmp_path, mo
             if bucket in existing:
                 for key in list_object_keys(client, bucket):
                     client.delete_object(Bucket=bucket, Key=key)
+                client.delete_bucket(Bucket=bucket)
+
+
+def test_real_minio_retirement_removes_duplicate_and_its_vector(tmp_path, monkeypatch):
+    """Exercise changing quality decisions against actual storage and Chroma."""
+    import io
+    import numpy as np
+    import chromadb
+    from PIL import Image
+    from src.trusted.images import build_trusted_images as trusted
+    from src.exploitation.images import build_embeddings as images
+    client = create_minio_client()
+    token = "adsbd-retirement-test-" + uuid.uuid4().hex[:16]
+    buckets = [token + "-formatted", token + "-trusted"]
+    config = {"buckets": dict(zip(("formatted", "trusted"), buckets))}
+    monkeypatch.setattr(trusted, "load_storage_config", lambda: config)
+    monkeypatch.setattr(trusted, "create_minio_client", lambda: client)
+    encoded = io.BytesIO()
+    Image.fromarray(np.random.default_rng(7).integers(0, 256, (480, 640, 3), dtype=np.uint8)).save(encoded, format="JPEG")
+    body = encoded.getvalue()
+    try:
+        for bucket in buckets:
+            client.create_bucket(Bucket=bucket)
+        client.put_object(Bucket=buckets[0], Key="images/b.jpg", Body=body)
+        assert trusted.build_trusted_images(dry_run=False, csv_output=tmp_path / "quality.csv") == 0
+        client.put_object(Bucket=buckets[0], Key="images/a.jpg", Body=body)
+        assert trusted.build_trusted_images(dry_run=False, csv_output=tmp_path / "quality.csv") == 0
+        assert list_object_keys(client, buckets[1], "images/") == ["images/a.jpg"]
+        assert client.get_object(Bucket=buckets[0], Key="images/b.jpg")["Body"].read() == body
+        asset = images.Asset(buckets[1], "images/a.jpg", client.head_object(Bucket=buckets[1], Key="images/a.jpg")["ETag"].strip('"'), {})
+        db = chromadb.PersistentClient(path=str(tmp_path / "retirement_chroma"))
+        collection = db.create_collection("retirement_test", embedding_function=None)
+        live_id = images.record_id(asset, "test")
+        collection.upsert(ids=[live_id, "retired"], embeddings=[[1., 0.], [0., 1.]],
+                          metadatas=[{"asset_id": asset.id, "config_sha256": "test"},
+                                     {"asset_id": "images/b.jpg", "config_sha256": "test"}])
+        class Encoder:
+            dimension = 2
+        assert images.run(client, [asset], Encoder(), collection, "test", batch_size=1, prune=True) == 0
+        assert collection.get()["ids"] == [live_id]
+    finally:
+        existing = {row["Name"] for row in client.list_buckets()["Buckets"]}
+        for bucket in buckets:
+            if bucket in existing:
+                for key in list_object_keys(client, bucket):
+                    client.delete_object(Bucket=bucket, Key=key)
+                client.delete_bucket(Bucket=bucket)
+
+
+def test_real_minio_upgrades_legacy_clipped_audio_and_refreshes_trusted(tmp_path):
+    """Migrate a tracked v1 derivative while keeping its original immutable."""
+    import hashlib
+    import subprocess
+    from src.formatting.audio import formatting_audio as formatting
+    from src.trusted.audio import analyze_audio_quality as quality
+    from src.trusted.audio import trusted_audio as trusted
+    client = create_minio_client()
+    token = "adsbd-audio-upgrade-test-" + uuid.uuid4().hex[:16]
+    buckets = [token + "-" + zone for zone in ("landing", "formatted", "trusted")]
+    source = pipeline.PROJECT_ROOT / "backup_data/audio/raw/files/3922/cave%20themeb4.ogg"
+    body = source.read_bytes()
+    key = "persistent/audio/opengameart$music$05-11-2026$3922$cave%20themeb4.ogg"
+    destination = formatting.destination_key_for(key, "persistent")
+    legacy = tmp_path / "legacy.flac"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(source), "-map", "0:a:0",
+                    "-c:a", "flac", "-sample_fmt", "s16", str(legacy)], check=True)
+    old_body = legacy.read_bytes()
+    old_sha = hashlib.sha256(old_body).hexdigest()
+    try:
+        for bucket in buckets:
+            client.create_bucket(Bucket=bucket)
+        original_sha = hashlib.sha256(body).hexdigest()
+        client.put_object(Bucket=buckets[0], Key=key, Body=body, Metadata={"sha256": original_sha})
+        signature = formatting.source_signature(buckets[0], key, client.head_object(Bucket=buckets[0], Key=key))
+        client.put_object(Bucket=buckets[1], Key=destination, Body=old_body, Metadata={
+            "format_version": "audio-flac-v1", "source_signature": signature,
+            "source_sha256": original_sha, "source_key_sha256": hashlib.sha256(key.encode()).hexdigest()})
+        client.put_object(Bucket=buckets[2], Key=destination, Body=old_body,
+                          Metadata=trusted.metadata_for({"source_key": destination, "sha256": old_sha}, "copy"))
+        converted = formatting.process_one(client, buckets[0], buckets[1], key, "persistent", overwrite=False)
+        assert converted["status"] == "converted" and "applied gain=" in converted["message"]
+        row = quality.profile_object(client, buckets[1], destination, {})
+        assert float(row["peak_dbfs"]) < -0.09
+        published = trusted.process_one(client, buckets[1], buckets[2], row)
+        assert published["status"] == "copied"
+        new_body = client.get_object(Bucket=buckets[1], Key=destination)["Body"].read()
+        assert new_body != old_body
+        assert client.get_object(Bucket=buckets[2], Key=destination)["Body"].read() == new_body
+        assert client.get_object(Bucket=buckets[0], Key=key)["Body"].read() == body
+        assert formatting.process_one(client, buckets[0], buckets[1], key, "persistent", overwrite=False)["status"] == "skipped"
+        assert trusted.process_one(client, buckets[1], buckets[2], row)["status"] == "skipped"
+    finally:
+        existing = {row["Name"] for row in client.list_buckets()["Buckets"]}
+        for bucket in buckets:
+            if bucket in existing:
+                for name in list_object_keys(client, bucket):
+                    client.delete_object(Bucket=bucket, Key=name)
                 client.delete_bucket(Bucket=bucket)

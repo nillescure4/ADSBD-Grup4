@@ -9,7 +9,7 @@ from botocore.exceptions import ClientError
 
 from src.common.config import load_storage_config, load_yaml
 from src.common.minio_client import create_minio_client, list_object_keys
-from src.formatting.images.persistent_to_formatted import convert_to_jpeg
+from src.formatting.images.persistent_to_formatted import convert_to_jpeg, formatted_image_key
 
 
 def read_bytes(client, bucket, key):
@@ -63,7 +63,7 @@ def publish(client, storage, root, dataset):
         if len(parts) != 4 or parts[:2] != [source, dataset]:
             continue
         row = by_name.get(parts[2] + PurePosixPath(raw_key).suffix)
-        target = "images/" + PurePosixPath(raw_key).stem + ".jpg"
+        target = formatted_image_key(raw_key)
         if row is None or target not in current:
             continue
         raw = read_bytes(client, landing, raw_key)

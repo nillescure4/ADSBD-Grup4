@@ -16,7 +16,7 @@ STORAGE = {
     "landing": {"persistent_prefix": "persistent"},
 }
 SOURCE = "persistent/images/rawg$games$1$18-10-2026.png"
-TARGET = "images/rawg$games$1$18-10-2026.jpg"
+TARGET = "images/rawg$games$1$18-10-2026.png.jpg"
 
 
 def decode(data: bytes) -> Image.Image:
@@ -180,7 +180,7 @@ def test_a_read_error_is_reported_but_the_other_images_are_converted(env, image_
     env.put(LANDING, "persistent/images/b.png", image_bytes(seed=2))
     env.failures[("get_object", "persistent/images/a.png")] = ConnectionError("network down")
     assert fmt.format_images() == 1
-    assert env.keys(FORMATTED) == ["images/b.jpg"]
+    assert env.keys(FORMATTED) == ["images/b.png.jpg"]
 
 
 def test_a_write_error_makes_the_run_fail(env, image_bytes):
@@ -207,10 +207,6 @@ def test_rerun_after_success_converts_nothing_new(env, image_bytes):
     assert env.calls["get_object"] == reads
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "Known limitation: the formatted key is built from the stem only, so the same name in two "
-    "formats (x.png and x.jpg) collides and the second one is skipped silently. Keep the original "
-    "extension in the key (x.png.jpg), as the audio pipeline does, to fix it."))
 def test_same_name_in_two_formats_must_not_collide(env, image_bytes):
     env.put(LANDING, "persistent/images/rawg$games$1$18-10-2026.png", image_bytes(seed=1))
     env.put(LANDING, "persistent/images/rawg$games$1$18-10-2026.jpg", image_bytes(seed=2, fmt="JPEG"))

@@ -1,2 +1,2 @@
-"""Orquestracio dels processos del pipeline."""
+"""Orchestration of the project pipeline processes."""
 

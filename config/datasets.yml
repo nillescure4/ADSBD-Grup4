@@ -10,7 +10,7 @@ datasets:
     source: rawg
     modality: image
     directory: rawg_full
-    raw_format: png
+    raw_format: mixed_image
 
   opengameart_audio:
     source: opengameart

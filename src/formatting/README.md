@@ -1,109 +1,77 @@
-# Formatting
+# Formatted Zone
 
-Els processos d'aquesta carpeta llegeixen de `1.landing-zone/persistent`,
-homogeneitzen el format i escriuen a `2.formatted-zone`.
+These independent scripts read Persistent Landing and write canonical objects
+to the configured Formatted bucket. They never modify original source bytes.
+Install dependencies from the repository root with `python -m pip install -e ".[dev]"`.
 
-## Textos RAWG
-
-Instal·leu les dependències des de l'arrel del projecte:
-
-```powershell
-python -m pip install -e ".[dev]"
-```
-
-Executeu primer una simulació o directament la conversió:
+## Text: RAWG records to Parquet
 
 ```powershell
 python -m src.formatting.text_to_formatted_zone --dry-run
 python -m src.formatting.text_to_formatted_zone
 ```
 
-El script llegeix les captures i registres de procedència de
-`1.landing-zone/persistent/texts/rawg/`. No modifica ni elimina els originals.
-Els noms dels buckets i els prefixos es llegeixen de `config/storage.yml`.
+`text_input_formats.py` accepts JSON, JSONL/NDJSON, CSV/TSV, TXT, Markdown and HTML.
+Each file represents one game/date and must follow the Persistent filename and
+manifest identity/hash contract. JSON contains one object; JSONL contains exactly
+one nonblank record. CSV/TSV contains one header and one row, uses JSON for typed
+or nested values and `\N` for null. Plain text/Markdown populates description_raw;
+HTML populates description. Inputs are UTF-8 with optional BOM. Duplicate fields,
+inconsistent IDs and malformed values fail validation before a partition is written.
 
-### Formats d'entrada admesos (restricció 4)
+The base schema has 54 RAWG fields with stable nullable types. Unknown fields are
+retained as JSON text. No provenance columns are added. HTML, whitespace, source
+languages and business values are retained for Trusted to assess. Output is
+`texts/rawg/collection_date=<UTC-date>/game_details.parquet`. Adjacent manifests
+record all source hashes, output hash and exact row_provenance. Unchanged runs
+skip writes; changed or missing processed originals do not silently replace history.
 
-El convertidor accepta `json`, `jsonl`, `ndjson`, `csv`, `tsv`, `txt`, `md`
-i `html` (extensions sense distinció entre majúscules i minúscules).
-Tots convergeixen al mateix esquema Parquet, sense afegir columnes tècniques.
-Els adaptadors són a `text_input_formats.py`; el procés d'escriptura, verificació
-i seguiment incremental és comú. La recollida RAWG continua produint JSON.
+## Images: supported media to JPEG
 
-Cada fitxer representa **un sol joc i dia**, amb el nom
-`rawg$game_details_<id>$<dd-mm-yyyy>.<extensió>`, dins del mateix prefix persistent.
-Cal el manifest `manifests/rawg$text_sources_<id>$<dd-mm-yyyy>.jsonl`, amb la
-ruta exacta i el SHA-256 dels bytes originals, igual que per a JSON. Aquests
-formats alternatius han d'arribar a persistent amb aquest contracte; no es
-dedueix procedència a partir del contingut. Dos fitxers del mateix joc i dia
-fan fallar la partició abans d'escriure, encara que tinguin extensions diferents.
-
-| Entrada | Contracte |
-|---|---|
-| JSON | Un objecte amb `id` enter coincident amb el nom del fitxer. |
-| JSONL / NDJSON | Exactament un objecte JSON en una línia; s'admeten línies buides. |
-| CSV / TSV | Capçalera amb noms RAWG i una fila; delimitador coma / tabulador. |
-| TXT / Markdown | Contingut íntegre a `description_raw`; ID del nom del fitxer. |
-| HTML | Contingut íntegre a `description`; ID del nom del fitxer. |
-
-Tots els formats textuals utilitzen UTF-8, amb BOM opcional. Es conserven els
-accents i salts de línia originals. CSV/TSV admeten text multilínia entre cometes;
-les columnes textuals es conserven com a text. Els enters, `rating` i `tba`
-utilitzen literals JSON (`42`, `4.5`, `false`); les llistes, objectes i camps
-desconeguts utilitzen JSON dins de la cel·la. `\N` representa nul; una cel·la
-buida també és nul en camps no textuals, però és cadena buida en camps textuals.
-Per representar literalment `\N` en una descripció, utilitzeu JSON.
-No s'infereixen tipus per heurístiques. Els noms de camps duplicats, els formats
-invàlids i els ID inconsistents es rebutgen abans d'escriure la partició.
-
-Els camps absents es desen com a nuls, sense inventar nom, valoració o altres
-metadades. HTML i Markdown no es netegen en aquesta zona: la neteja genèrica
-correspon a Trusted. Els fitxers amb extensions no admeses queden fora de la
-descoberta i no es processen. Afegir altres fonts diferents de RAWG requerirà
-definir-ne el contracte d'identitat i procedència.
-
-La sortida és una taula Parquet per dia UTC de recollida:
-
-```text
-2.formatted-zone/texts/rawg/
-├── collection_date=2026-10-20/
-│   └── game_details.parquet
-└── manifests/
-    └── collection_date=2026-10-20.json
+```powershell
+python -m src.formatting.images.persistent_to_formatted --dry-run
+python -m src.formatting.images.persistent_to_formatted
 ```
 
-Cada fila correspon a un joc i data. Es conserven els 54 camps coneguts de
-RAWG, amb tipus estables encara que una columna només contingui nuls.
-Els camps nous també es conserven, codificats com a text JSON. El Parquet
-actual té només les 54 columnes de RAWG. La font, data de recollida, ruta
-d'origen i hash es desen al manifest, no com a columnes de la taula.
+JPEG, PNG, WebP, BMP, TIFF and GIF are converted to RGB JPEG, with EXIF orientation
+applied, white transparency backgrounds and first-frame selection for multi-frame
+sources. The output key appends `.jpg` to the full input filename: `x.png` becomes
+`x.png.jpg` and `x.jpg` becomes `x.jpg.jpg`. This injective mapping prevents two
+different input extensions from silently sharing one destination. The provenance
+publisher uses the same key function and image metadata parsing supports both
+new and legacy names. Unsupported extensions are ignored; undecodable image bytes
+are copied to `quarantine/images/`. Infrastructure errors fail the stage.
 
-Les llistes i els objectes (`genres`, `platforms`, etc.) es representen com
-a text JSON reversible. La metadada Parquet `json_encoded_fields` identifica
-aquestes columnes. Es conserven les descripcions, HTML, salts de línia,
-accents, valors nuls i llistes buides; no es netegen ni es generen embeddings.
+Old stem-only outputs are not silently removed or renamed. When upgrading an
+existing store, new canonical keys may coexist with legacy derived objects.
+Rebuild/validate an isolated store before switching an existing deployment;
+Trusted now removes derived images that no longer pass its active quality rules,
+after verifying accepted replacements. Persistent originals are always retained.
 
-La ingestió incremental reconstrueix només les particions amb nous originals,
-incorporant tots els jocs d'aquella data sense duplicar-los. Les captures
-d'altres dies es mantenen en particions diferents. Els registres a
-`manifests/` guarden les claus i hashes dels originals, el nombre de files,
-la versió del convertidor i el hash del Parquet verificat. `row_provenance`
-relaciona explícitament cada `row_index` (començant en 0) amb l'ID del joc,
-la font, el timestamp de recollida, la ruta original i el hash. L'ordre
-coincideix exactament amb les files del Parquet. Una segona
-execució sense canvis no escriu cap objecte. Una sortida corrupta o una
-execució interrompuda es pot reconstruir amb els originals persistents.
+## Audio: playable formats to FLAC
 
-Es comproven l'ID, la data, la ruta, el hash i el tipus dels camps abans
-d'escriure cada partició. Els errors d'entrada impedeixen actualitzar aquella
-partició; els de pujada o verificació permeten reconstruir-la en repetir
-l'execució. El procés retorna el codi 1 i les altres dates es poden processar.
-Si un original ja processat canvia o desapareix dins d'una partició encara
-present, s'atura l'actualització d'aquella data per preservar l'històric.
-El procés s'ha d'executar de manera seqüencial, sense escriptors simultanis
-sobre les mateixes particions.
+```powershell
+python -m src.formatting.audio.formatting_audio --report reports/audio/formatting.csv
+```
 
-La versió 2 del convertidor regenera les particions antigues amb el nou
-esquema sense columnes de procedència. Executeu aquest procés abans de
-Trusted per actualitzar també els manifests amb `row_provenance`.
+The formatter probes playable inputs rather than assuming codec from extension.
+Supported sources include AAC, AIFF, AU, FLAC, M4A, MP3, OGA/OGG, Opus, WAV and WMA.
+FFmpeg converts them to FLAC, preserving sample rate and channel count. Output
+precision is 16 or 24 bits according to the source; integer PCM32 and float32
+conversion to 24 bits can lose precision and is documented in the report. Float32
+and lossy-codec decoded peaks above 0 dBFS receive measured attenuation with 0.1 dB
+headroom to avoid clipping. This is not loudness normalization: no gain is applied
+to in-range inputs. The measured peak and applied gain are recorded.
+Output retains the complete
+original filename before `.flac`, avoiding extension collisions. Source hashes,
+converter settings and verified output metadata support incremental reuse.
+The report records successful, skipped and failed inputs. Tracker/MIDI source
+files and archives are outside this playable-audio formatting contract.
 
+Policy `audio-flac-v2` replaces `audio-flac-v1` for tracked derivatives with the
+same verified original hash and source identity. Other existing destinations
+still require explicit review. Trusted can refresh an intact tracked derivative
+after its Formatted source changes; rerunning the indexers updates affected vectors.
+
+See [the data dictionary](../../docs/data_dictionary.md) and [Trusted](../trusted/README.md)
+for the next stage. Run one writer per bucket set.

@@ -20,6 +20,11 @@ IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".tif", ".tiff", "
 BAD_IMAGE_ERRORS = (UnidentifiedImageError, OSError, ValueError, Image.DecompressionBombError)
 
 
+def formatted_image_key(source_key: str) -> str:
+    """Preserve the full source filename so different extensions cannot collide."""
+    return f"{DST_PREFIX}{PurePosixPath(source_key).name}.jpg"
+
+
 def to_rgb(img: Image.Image) -> Image.Image:
     """Convert any Pillow mode to RGB."""
     if getattr(img, "n_frames", 1) > 1:   # animated GIF/WEBP, multipage TIFF
@@ -77,7 +82,7 @@ def format_images(*, dry_run: bool = False) -> int:
             if path.suffix.lower() not in IMAGE_EXTENSIONS:
                 continue
 
-            target_key = f"{DST_PREFIX}{path.stem}.jpg"
+            target_key = formatted_image_key(key)
             try:
                 if head_or_none(client, target_bucket, target_key) is not None:
                     skipped += 1

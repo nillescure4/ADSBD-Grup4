@@ -108,7 +108,7 @@ def sync_trusted(client, src_bucket: str, dst_bucket: str, formatted: dict[str, 
 
     stale = sorted(set(existing) - set(wanted))
     if stale:
-        if prune and not dry_run:
+        if prune and not dry_run and not errors:
             for dest in stale:
                 try:
                     client.delete_object(Bucket=dst_bucket, Key=dest)
@@ -116,15 +116,23 @@ def sync_trusted(client, src_bucket: str, dst_bucket: str, formatted: dict[str, 
                 except Exception as exc:
                     errors += 1
                     print(f"[ERROR] delete {dest}: {exc}", file=sys.stderr)
+        elif errors:
+            print("[WARN] Stale removal deferred because accepted copies failed verification.")
         else:
             print(f"[WARN] {len(stale)} images in Trusted are no longer accepted "
                   f"(use --prune to delete them)")
 
+    if prune and not dry_run and not errors:
+        actual = list_objects(client, dst_bucket, IMAGES_PREFIX)
+        expected = {dest: formatted[key] for dest, key in wanted.items()}
+        if actual != expected:
+            errors += 1
+            print("[ERROR] Active Trusted images do not match the verified accepted set.", file=sys.stderr)
     print(f"Trusted: {copied} copied, {skipped} up to date, {removed} pruned, {errors} errors.")
     return errors
 
 
-def build_trusted_images(*, dry_run: bool, prune: bool, csv_output: Path) -> int:
+def build_trusted_images(*, dry_run: bool, prune: bool = True, csv_output: Path) -> int:
     storage = load_storage_config()
     src_bucket, dst_bucket = storage["buckets"]["formatted"], storage["buckets"]["trusted"]
     client = create_minio_client()
@@ -133,7 +141,8 @@ def build_trusted_images(*, dry_run: bool, prune: bool, csv_output: Path) -> int
     formatted = list_objects(client, src_bucket, IMAGES_PREFIX)
     if not formatted:
         print("No images in Formatted.")
-        return 0
+        return 1 if sync_trusted(client, src_bucket, dst_bucket, {}, [],
+                                dry_run=dry_run, prune=prune) else 0
 
     signature = input_signature(formatted)
     checkpoint_key = f"{QUALITY_PREFIX}checkpoint.json"
@@ -206,8 +215,8 @@ def main() -> None:
                         help="Local path for the quality CSV (also uploaded to Trusted).")
     parser.add_argument("--dry-run", action="store_true",
                         help="Measure and report without writing to MinIO or disk.")
-    parser.add_argument("--prune", action="store_true",
-                        help="Delete Trusted images that are no longer accepted.")
+    parser.add_argument("--prune", action=argparse.BooleanOptionalAction, default=True,
+                        help="Synchronize active Trusted images with current quality decisions (default: enabled).")
     args = parser.parse_args()
     raise SystemExit(build_trusted_images(
         dry_run=args.dry_run, prune=args.prune, csv_output=Path(args.csv_output)))

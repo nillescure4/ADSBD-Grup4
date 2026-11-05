@@ -20,6 +20,11 @@ def test_plan_shares_rawg_manifest_and_indexes_all_modalities(tmp_path):
     assert str(tmp_path / "images/manifests/games.jsonl") in plan[1].arguments
     assert str(tmp_path / "music/raw/files") in next(s.arguments for s in plan if s.module.endswith("audio_landing"))
     assert "--all" in next(s.arguments for s in plan if s.module.endswith("audio_persistent"))
+    assert "--prune" in next(s.arguments for s in plan if s.module.endswith("build_trusted_images"))
+    assert "--prune" in next(s.arguments for s in plan if s.module == "src.exploitation.images.build_embeddings")
+    for module in ("src.trusted.images.quality_report", "src.trusted.audio.audio_quality_report"):
+        assert "--publish-minio" in next(s.arguments for s in plan if s.module == module)
+    assert "--publish-minio" in next(s.arguments for s in plan if s.module == "src.trusted.text_to_trusted_zone")
 
 
 def test_skip_collection_has_no_source_requests():
@@ -44,22 +49,35 @@ def test_trusted_only_rejects_incompatible_options(flag):
 
 
 @pytest.mark.parametrize("outcome", [0, 1])
-def test_application_starts_only_after_success_and_uses_selected_database(tmp_path, monkeypatch, outcome):
+def test_dashboard_starts_before_preflight_and_app_opens_only_after_success(tmp_path, monkeypatch, outcome):
+    from src.common.pipeline_progress import STATUS_ENV, read_progress
     monkeypatch.setattr(pipeline, "load_dotenv", lambda *args: None)
     monkeypatch.setattr(pipeline, "preflight", lambda *args: None)
     monkeypatch.setattr(pipeline, "prepare_storage", lambda **kwargs: None)
     monkeypatch.setattr(pipeline, "verify_trusted", lambda: {"text_partitions": 1, "images": 8, "audio": 2})
     monkeypatch.setattr(pipeline, "run_steps", lambda *args, **kwargs: (outcome, []))
     calls = []
-    monkeypatch.setattr(pipeline, "execute", lambda command, env: calls.append((command, env)) or 0)
+    class Dashboard:
+        def poll(self):
+            return None
+        def wait(self):
+            return 0
+    def start(command, env, port, report_dir):
+        state = read_progress(env[STATUS_ENV])
+        assert state["status"] == "running" and all(row["status"] == "pending" for row in state["steps"])
+        calls.append((command, env))
+        return Dashboard()
+    monkeypatch.setattr(pipeline, "start_dashboard", start)
+    monkeypatch.setattr(pipeline, "preflight", lambda *args: pytest.fail("Dashboard must start first") if not calls else None)
     result = pipeline.main(["--embeddings-only", "--serve", "--db-path", str(tmp_path / "chroma"),
                             "--report-dir", str(tmp_path / "reports")])
     assert result == outcome
-    assert len(calls) == (0 if outcome else 1)
+    assert len(calls) == 1
     if calls:
         command, env = calls[0]
         assert command[:4] == [sys.executable, "-m", "streamlit", "run"]
         assert env["ADSBD_CHROMA_PATH"] == str(tmp_path / "chroma")
+        assert read_progress(env[STATUS_ENV])["status"] == ("ready" if outcome == 0 else "failed")
     report = json.loads(next((tmp_path / "reports").glob("run_*.json")).read_text())
     assert report["exit_code"] == outcome
 

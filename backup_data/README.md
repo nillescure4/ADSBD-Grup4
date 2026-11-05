@@ -39,3 +39,8 @@ Keep source attribution and licence metadata with these files. RAWG images and
 descriptions retain their original rights; the audio licence evidence is in
 `audio/manifests/submissions.jsonl`. The backup is intended for this academic
 project and is not a statement that all source material has the same licence.
+
+Source content remains in its original language. See the
+[data dictionary](../docs/data_dictionary.md) for identifiers and formats and the
+[quality assessment](../docs/quality/README.md) for the eight documented text
+samples. These assessments do not certify every backup record or future capture.

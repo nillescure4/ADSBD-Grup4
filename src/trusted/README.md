@@ -1,134 +1,133 @@
-# Trusted
+# Trusted Zone
 
-Els processos d'aquesta carpeta corregeixen errors generics, validen les dades
-i escriuen el resultat a `3.trusted-zone`.
+Trusted applies generic data-quality processing rather than tailoring data to a
+specific embedding model. Each modality has independent processing and analysis
+scripts. Install base dependencies, start MinIO and prepare Formatted data first.
 
-## Textos RAWG
+## Text
 
 ```powershell
 python -m src.trusted.text_to_trusted_zone --dry-run
 python -m src.trusted.text_to_trusted_zone
 ```
 
-`text_to_trusted_zone.py` processa totes les dates de Formatted la primera
-vegada. Les execucions seguents nomes reprocessen particions noves, modificades,
-amb sortides absents/corruptes o amb regles de qualitat diferents. No s'eliminen
-ni es modifiquen els originals de Formatted. Un joc en dates diferents conserva
-totes les captures. Els buckets i prefixos es llegeixen de `config/storage.yml`.
+The process verifies Formatted Parquet and row provenance, removes exact full-row
+duplicates within a capture date, and creates description_clean. It prefers
+description_raw, falling back to HTML description when needed. HTML and script/style
+content, repeated spacing and control characters are cleaned conservatively.
+Source language, casing, accents, punctuation and paragraph boundaries are retained.
+No speculative spelling repair, numerical imputation or model-specific normalisation
+is applied. Other business fields and captures from other dates are retained.
 
-```text
-3.trusted-zone/texts/rawg/
-├── collection_date=2026-10-20/
-│   └── game_details.parquet
-├── quality/
-│   ├── collection_date=2026-10-20.json
-│   └── collection_date=2026-10-20.md
-└── manifests/
-    └── collection_date=2026-10-20.json
-```
+Trusted replaces description/description_raw with description_clean: 53 fields
+for the base schema, with additional unknown source fields retained. Diagnostics
+are report-only. Missing/short text, invalid identity/date/provenance/JSON and
+nonfinite numbers are flagged. Warnings do not silently remove source rows.
 
-Les regles reutilitzables viuen a `text_quality.py`, separades de l'acces a
-MinIO i de l'orquestracio. Els processos d'altres modalitats han de tenir els
-seus scripts propis.
+Each date writes verified Parquet, quality JSON/Markdown, and a checkpoint under
+`texts/rawg/`. The global overview aggregates only verified partitions. It includes
+completeness, numerical distributions, descriptive IQR extremes, recurring issues,
+before/after text indicators and selected distinct-game review samples. Numerical
+extremes are not automatically treated as errors. Counts describe captures rather
+than independent games. Errors prevent publication of a new partial global overview.
 
-### Neteja i columnes
+Quality version 5 regenerates older reports in English and includes a review-registry
+hash in checkpoints. [The documented qualitative assessment](../../docs/quality/README.md)
+contains eight exact source/cleaned comparisons from the 50-game backup. A matching
+source hash, game ID and clean-text hash are required before its assessment can be
+attached to a report. This is an assisted sample review, not human certification
+of the whole dataset. New or changed content remains pending. Source data is
+preserved in its original language. Changing the registry invalidates report reuse.
 
-Al Parquet de Trusted es conserven les columnes de negoci,
-substituint `description` i `description_raw` per una unica columna:
-
-| Columna | Contingut |
-|---|---|
-| `description_clean` | Text net, o nul si no hi ha descripcio utilitzable |
-
-Amb l'esquema actual, son 53 columnes: 52 camps RAWG i `description_clean`.
-Les quatre dades de procedencia es llegeixen de `row_provenance` al manifest
-Formatted i es conserven als informes Trusted, no al Parquet.
-Les descripcions originals es conserven a Formatted i
-Landing. El camp utilitzat per netejar, la longitud i els avisos es desen nomes
-als informes, no com a columnes del Parquet.
-
-Es prefereix `description_raw`. Si no produeix text utilitzable, es recorre a
-`description`. La neteja elimina etiquetes HTML, contingut script/style i
-caracters de control, descodifica entitats HTML i ajusta espais i salts de
-linia, conservant paragrafs, accents, puntuacio i majuscules. No es tradueix,
-no s'imputen camps, no es corregeix ortografia de manera especulativa, no
-s'eliminen stopwords i no es generen embeddings.
-
-Nomes s'eliminen files exactament iguals dins de la mateixa particio.
-Captures diferents del mateix joc es marquen si entren en conflicte; dos jocs
-amb el mateix text es conserven i es marquen. No es deduplica entre dates.
-
-### Qualitat i informes
-
-Abans de llegir la taula es comprova el hash del Parquet contra el registre
-de Formatted. Les files es validen quant a ID positiu, dates, nom, procedencia,
-referencies al manifest Formatted, valors numerics no finits i sintaxi/estructura
-dels camps JSON. Les incidencies per fila es marquen, no s'eliminen automaticament.
-Es comprova que el manifest cobreixi totes les files, respecti els indexs
-i coincideixi amb els IDs del Parquet; si no, no es processa aquella data.
-Un text buit queda nul a la columna neta. Un text curt nomes genera un avis.
-
-El llindar orientatiu es de 50 caracters i es pot canviar:
+## Images
 
 ```powershell
-python -m src.trusted.text_to_trusted_zone --min-description-chars 80
+python -m src.trusted.images.build_trusted_images --csv_output reports/images/quality.csv
+python -m src.trusted.images.quality_report --csv_input reports/images/quality.csv --output_dir reports/images/analysis
 ```
 
-Cada data te un informe JSON detallat amb nuls per columna, estadistiques de
-longitud, HTML/control, duplicats exactes, correccions, avisos per fila i
-procedencia del Parquet d'entrada. L'informe Markdown compara l'abans i el
-despres, explica els criteris i identifica les incidencies pendents. Els
-avisos s'identifiquen amb l'ID del joc, la data de captura, la ruta d'origen
-i la fila d'entrada/sortida, per localitzar-los encara que canviï l'ordre.
-El JSON inclou `row_analysis` per a cada fila, amb el camp de descripcio
-utilitzat, la longitud del text net i els avisos. Els indexs de fila del JSON
-comencen en 0; els numeros mostrats al Markdown comencen en 1.
-Els resultats nomes descriuen la mostra d'aquella data; no garanteixen la qualitat
-semantica ni es generalitzen al cataleg de RAWG.
+Metrics cover dimensions, brightness, contrast, sharpness, entropy, letterboxing
+and exact/perceptual duplicates. Corrupt, too-small, blank and duplicate images
+are rejected; other flags are advisory. Accepted bytes are copied without
+model-specific resizing. Rule thresholds are heuristics, not certified perceptual
+judgments. Analysis produces distributions, group-specific rejection rates,
+summary tables and review candidates. A checkpoint restores a missing local CSV
+on unchanged runs. Active Trusted images synchronize with the current accepted
+set by default (`--prune`); originals remain in Persistent and Formatted. Obsolete
+copies are removed only after accepted replacements verify successfully, and the
+final active listing must match the accepted set. `--no-prune` is a diagnostic
+opt-out that can retain rejected files and should not be used for delivery.
+The image indexer and orchestrator also prune retired image vectors.
 
-### Analisi aprofundida i resum global
+`publish_provenance` verifies the source image manifest against original Persistent
+bytes and canonical Formatted/Trusted JPEGs. It writes `provenance/images.jsonl`
+outside the image prefix, associating exact keys/ETags with RAWG IDs. The global
+orchestrator invokes it after quality processing; arbitrary filenames never
+supply guessed game IDs.
 
-La versio 4 amplia els informes sense afegir columnes al Parquet de 53 camps:
+## Audio
 
-- Perfil numeric abans/despres: nuls, valors no finits, minim, maxim,
-  mitjana, mediana, quartils, P95, valors diferents i histograma de cinc
-  intervals (un de sol si tots els valors son iguals).
-- Possibles extrems amb el criteri descriptiu d'1,5 vegades l'IQR, nomes
-  amb almenys quatre valors finits i excloent l'ID. No s'eliminen valors,
-  no s'imputen nuls i no es normalitzen les columnes.
-- Completesa: percentatges de nuls/textos buits, diferenciant zeros i
-  arrays JSON buits. Els camps absents a totes les captures s'interpreten
-  com a aspectes a revisar, no com a errors demostrats.
-- Mostra qualitativa determinista de fins a cinc textos per data, amb
-  fragments abans/despres de fins a 2000 caracters, longituds completes,
-  paragrafs, canvis nomes d'espais i senyals com reduccions grans o text
-  que queda buit. Els fragments truncats s'indiquen explicitament.
-  La mostra prioritza incidencies i canvis i no es presenta com a aleatoria
-  ni representativa. La revisio humana del significat queda pendent;
-  cap comprovacio automatica certifica que el text sigui informatiu o cert.
+```powershell
+python -m src.trusted.audio.analyze_audio_quality --report reports/audio/quality.csv
+python -m src.trusted.audio.trusted_audio --quality-report reports/audio/quality.csv --report reports/audio/processing.csv
+python -m src.trusted.audio.audio_quality_report --report reports/audio/quality.csv --output-dir reports/audio/analysis
+```
 
-`quality/overview.json` i `quality/overview.md` resumeixen totes les dates
-amb dades Formatted verificades de l'execucio: captures, jocs diferents,
-captures per joc, avisos recurrents, distribucions numeriques i percentatges
-globals d'absencia. Les estadistiques son sobre captures i no sobre jocs
-independents. La mostra global prioritza fins a vuit exemples dels informes
-per data, amb preferencia per jocs diferents.
+Full audio is decoded for amplitude, silence, DC offset and technical validity.
+Invalid and exact byte-duplicate files are excluded. Advisory flags such as
+near-full-scale are retained for review; they do not prove clipping or justify
+deletion. DC subtraction is applied only when whole-file peak/headroom checks
+support it, followed by independent output verification. Other accepted files are
+copied. Metadata preserves source revisions, hashes and processing decisions.
+The analysis report describes quality before cleaning; the processing CSV and
+output metadata record actual corrections and verification outcomes.
 
-La procedencia del resum es registra a `manifests/quality_overview.json`.
-Sense canvis no es reescriu ni el resum ni les particions. Si hi ha un error
-en alguna data, no es publica un nou resum parcial com si fos complet;
-l'anterior queda com a fotografia de la seva procedencia registrada.
-Un resum absent/corrupte es regenera sense tornar a netejar les particions
-que ja s'han verificat.
+Tracked Trusted derivatives can be refreshed after verified Formatted content
+changes. Before replacement the old derivative's stored hash is checked; damaged
+or untracked objects still stop automatic refresh. Originals remain immutable.
 
-Es verifica cada sortida abans de registrar-la com a processada. Una segona
-execucio sense canvis no escriu res; els errors de pujada es poden reparar
-reexecutant. Un error en una data no bloqueja les altres i retorna codi 1.
-Cal executar el proces de manera sequencial, sense escriptors simultanis
-sobre les mateixes particions.
+## Qualitative media evidence
 
-La versio 4 de qualitat regenera automaticament els informes antics i conserva
-les 53 columnes. Primer cal executar la versio 2 de Formatted per obtenir els
-Parquet sense columnes de procedencia i els manifests amb correspondencia
-explicita entre fila i origen.
+[The media assessment](../../docs/quality/media_assessment.md) records eight image
+comparisons and four audio comparisons, full-file measurements, model-assisted
+observations and their limitations. Reports attach the documented sample notes
+only when the current Formatted SHA-256 matches the reviewed content. Unknown
+content remains unreviewed; numerical thresholds do not certify semantic quality.
 
+Reproduce the measurements from the verified offline snapshot with FFmpeg on PATH:
+
+```powershell
+python -m src.trusted.media_sample_review
+```
+
+The entrypoint only orchestrates the reviews. Image comparisons and image-assisted
+assessment live in `src/trusted/images/sample_review.py`; audio comparisons,
+excerpts and audio-assisted assessment live in `src/trusted/audio/sample_review.py`.
+Reusable array comparison, sampling and AI transport helpers live in
+`src/trusted/review_support.py`. Each format owns its quality work independently.
+
+Outputs are local reconstructions under `reports/media_quality/`, not changes to
+MinIO. `--assess-with-gemini` additionally sends selected image pairs and bounded
+audio excerpts to the configured Gemini service. It is optional, uses the server
+credentials and may incur provider usage; no AI request is added to normal batch
+processing. Existing reviewed records are preserved in `docs/quality/`.
+
+No Trusted process generates embeddings. Rebuild/revalidate the corresponding
+indexes after changed Trusted bytes; see [Exploitation](../exploitation/README.md).
+
+## Reports in the application
+
+The image/audio analysis CLIs accept `--publish-minio`. The orchestrator supplies
+this flag and the audio `--processing-report` automatically. Artifacts are stored
+under `quality/reports/<image|audio>/revisions/<digest>/` in Trusted; a manifest
+published last identifies the complete revision and current input/output inventory.
+The publisher checks the image profile against the quality checkpoint, and audio
+profile/outcomes against current source keys, ETags and hashes. Failed publication
+does not replace the previous manifest. Historical revisions remain readable with
+their original statistics even after the inventory changes; the viewer explicitly
+labels them instead of presenting them as the current data. Text also archives its
+verified global overview when `--publish-minio` is enabled by the orchestrator.
+
+Streamlit's **Data reports** page reads these artifacts and the existing verified
+text overview directly from MinIO. It does not require local report folders or
+embedding models, and never reruns cleaning just to display an analysis.

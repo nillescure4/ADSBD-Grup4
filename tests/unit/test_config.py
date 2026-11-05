@@ -4,8 +4,8 @@ from src.common.config import load_storage_config
 def test_all_pipeline_zones_are_configured() -> None:
     buckets = load_storage_config()["buckets"]
 
-    assert set(buckets) == {"landing", "formatted", "trusted", "exploitation"}
-    assert len(set(buckets.values())) == 4
+    assert set(buckets) == {"landing", "formatted", "trusted"}
+    assert len(set(buckets.values())) == 3
 
 
 def test_storage_override_is_scoped_to_the_process(tmp_path, monkeypatch):

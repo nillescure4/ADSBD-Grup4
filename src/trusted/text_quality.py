@@ -1,4 +1,4 @@
-"""Regles generiques i perfil de qualitat dels textos RAWG en taules Parquet."""
+"""Generic quality rules and profiling for RAWG text in Parquet tables."""
 
 from __future__ import annotations
 
@@ -18,9 +18,10 @@ from src.trusted.text_quality_analysis import (
     completeness_profile, interpretations, numeric_columns, numeric_profile,
     review_sample, select_review_samples,
 )
+from src.trusted.text_review_registry import review_summary
 
 
-QUALITY_VERSION = 4
+QUALITY_VERSION = 5
 PROVENANCE_FIELDS = {"source", "ingested_at_utc", "source_object_key", "source_sha256"}
 REMOVED_DESCRIPTION_FIELDS = {"description", "description_raw"}
 HTML_TAG = re.compile(r"</?[A-Za-z][^>]*>")
@@ -103,20 +104,20 @@ def assess_and_clean(table: pa.Table, day: str, *, min_description_chars: int = 
     """Output only clean description; keep diagnostics in the separate report."""
     date.fromisoformat(day)
     if min_description_chars < 1:
-        raise ValueError("El llindar de longitud ha de ser positiu")
+        raise ValueError("The length threshold must be positive")
     required = {"id", "description", "description_raw"}
     if required - set(table.column_names):
-        raise ValueError(f"Falten columnes obligatories: {sorted(required - set(table.column_names))}")
+        raise ValueError(f"Missing required columns: {sorted(required - set(table.column_names))}")
     if ADDED_FIELDS & set(table.column_names):
-        raise ValueError("L'entrada ja conte columnes de Trusted")
+        raise ValueError("The input already contains Trusted columns")
     if len(row_provenance) != table.num_rows:
-        raise ValueError("La procedencia del manifest no cobreix totes les files")
+        raise ValueError("Manifest provenance does not cover every row")
     rows = []
     for index, (row, provenance) in enumerate(zip(table.to_pylist(), row_provenance)):
         if provenance.get("row_index") != index or PROVENANCE_FIELDS - provenance.keys():
-            raise ValueError("Index o camps de procedencia invalids al manifest")
+            raise ValueError("Invalid provenance fields or row index in the manifest")
         if provenance.get("id") != row["id"]:
-            raise ValueError("L'ID de la fila no coincideix amb el manifest")
+            raise ValueError("The row ID does not match the manifest")
         rows.append({**row, **{name: provenance[name] for name in PROVENANCE_FIELDS}})
     unique = []
     seen = set()
@@ -261,14 +262,14 @@ def assess_and_clean(table: pa.Table, day: str, *, min_description_chars: int = 
     samples = [review_sample({**original, "description_clean": cleaned_row["description_clean"]}, analysis)
                for (_, original), cleaned_row, analysis in zip(unique, output_rows, row_analysis)]
     report["qualitative_review"] = {
-        "status": "pending_human_review", "selection": "signals_then_changed_then_other_distinct_games_first",
+        **review_summary(select_review_samples(samples)), "selection": "signals_then_changed_then_other_distinct_games_first",
         "source": "full_text_compared_for_lengths_and_signals; excerpts_max_2000_characters",
         "rows_with_review_signals": sum(bool(sample["checks"]) for sample in samples),
         "samples": select_review_samples(samples),
     }
     report["interpretation"] = [
-        f"S'han analitzat {len(rows)} captures d'aquesta data i s'han conservat {len(output_rows)}. "
-        "La mostra no permet certificar la qualitat semantica ni generalitzar al cataleg complet.",
+        f"Analysed {len(rows)} captures for this date and retained {len(output_rows)}. "
+        "This sample cannot certify semantic quality or justify generalising to the full catalogue.",
         *interpretations(report["after"]["completeness"], len(output_rows)),
     ]
     return output, report

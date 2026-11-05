@@ -1,2 +1,2 @@
-"""Neteja generica de la Formatted Zone cap a la Trusted Zone."""
+"""Generic cleaning from the Formatted Zone to the Trusted Zone."""
 

@@ -21,6 +21,8 @@ from botocore.exceptions import BotoCoreError, ClientError
 from dotenv import load_dotenv
 from src.common.config import PROJECT_ROOT, load_storage_config, load_yaml
 from src.common.minio_client import create_minio_client, list_bucket_names, list_object_keys
+from src.common.pipeline_progress import STATUS_ENV, Heartbeat, create_progress, read_progress, step_progress, update_progress
+from src.pipelines.dashboard import start_dashboard, stop_dashboard
 
 
 @dataclass(frozen=True)
@@ -61,7 +63,7 @@ def parse_args(argv=None):
     parser.add_argument("--through", choices=["trusted", "exploitation"], default="exploitation")
     parser.add_argument("--embeddings-only", action="store_true", help="Resume from existing Trusted data")
     parser.add_argument("--db-path", type=Path, default=PROJECT_ROOT / "data/exploitation/chroma")
-    parser.add_argument("--serve", action="store_true", help="Start Streamlit after a successful complete run")
+    parser.add_argument("--serve", action="store_true", help="Start Streamlit immediately, show progress, then open the prepared application")
     parser.add_argument("--port", type=positive, default=8501)
     parser.add_argument("--backup-dir", type=Path, default=PROJECT_ROOT / "backup_data")
     parser.add_argument("--no-backup", action="store_true", help="Fail if source collection fails, without offline fallback")
@@ -108,12 +110,12 @@ def build_plan(args) -> list[Step]:
         Step("Format images", "src.formatting.images.persistent_to_formatted"),
         Step("Format text", "src.formatting.text_to_formatted_zone"),
         Step("Format audio", "src.formatting.audio.formatting_audio", ("--report", str(reports / "audio/formatting.csv"))),
-        Step("Build Trusted images", "src.trusted.images.build_trusted_images", ("--csv_output", str(image_csv))),
-        Step("Build Trusted text", "src.trusted.text_to_trusted_zone"),
+        Step("Build Trusted images", "src.trusted.images.build_trusted_images", ("--csv_output", str(image_csv), "--prune")),
+        Step("Build Trusted text", "src.trusted.text_to_trusted_zone", ("--publish-minio",)),
         Step("Profile audio quality", "src.trusted.audio.analyze_audio_quality", ("--report", str(audio_csv))),
         Step("Build Trusted audio", "src.trusted.audio.trusted_audio", ("--quality-report", str(audio_csv), "--report", str(reports / "audio/processing.csv"))),
-        Step("Report image quality", "src.trusted.images.quality_report", ("--csv_input", str(image_csv), "--output_dir", str(reports / "images/analysis"))),
-        Step("Report audio quality", "src.trusted.audio.audio_quality_report", ("--report", str(audio_csv), "--output-dir", str(reports / "audio/analysis"))),
+        Step("Report image quality", "src.trusted.images.quality_report", ("--csv_input", str(image_csv), "--output_dir", str(reports / "images/analysis"), "--publish-minio")),
+        Step("Report audio quality", "src.trusted.audio.audio_quality_report", ("--report", str(audio_csv), "--output-dir", str(reports / "audio/analysis"), "--publish-minio", "--processing-report", str(reports / "audio/processing.csv"))),
     ])
     plan.append(Step("Publish verified screenshot/game provenance", "src.trusted.images.publish_provenance",
                      ("--input-dir", str(images), "--dataset", args.image_dataset)))
@@ -123,7 +125,7 @@ def build_plan(args) -> list[Step]:
         database = ("--db-path", str(args.db_path))
         plan.extend([
             Step("Index Jina descriptions", "src.exploitation.text.build_embeddings", database),
-            Step("Index Jina images", "src.exploitation.images.build_embeddings", database),
+            Step("Index Jina images", "src.exploitation.images.build_embeddings", (*database, "--prune")),
             Step("Index CLAP audio", "src.exploitation.audio.embedding_audio",
                  ("--all", "--chroma-path", str(args.db_path), "--report", str(reports / "audio/embeddings.csv"))),
             Step("Index CLAP descriptions", "src.exploitation.text.build_clap_embeddings", database),
@@ -172,9 +174,20 @@ def execute(command: list[str], env: dict[str, str]) -> int:
     """Use the current Python, a fixed working directory and streamed, redacted logs."""
     with subprocess.Popen(command, cwd=PROJECT_ROOT, env=env, stdout=subprocess.PIPE,
                           stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace") as child:
-        for line in child.stdout:
-            print(redact(line.rstrip(), env), flush=True)
-        return child.wait()
+        try:
+            for line in child.stdout:
+                message = redact(line.rstrip(), env)
+                print(message, flush=True)
+                update_progress(env.get(STATUS_ENV), log=message)
+            return child.wait()
+        except BaseException:
+            child.terminate()
+            try:
+                child.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                child.kill()
+                child.wait(timeout=5)
+            raise
 
 
 def run_steps(plan: list[Step], env: dict[str, str], *, executor=execute, recovery=None) -> tuple[int, list[dict]]:
@@ -184,6 +197,7 @@ def run_steps(plan: list[Step], env: dict[str, str], *, executor=execute, recove
             step = recovery.resolve(step)
         print(f"[{index}/{len(plan)}] {step.name}", flush=True)
         started, error = time.monotonic(), None
+        step_progress(env.get(STATUS_ENV), index - 1, "running", started_at=time.time())
         source_code, source_error, data_source = None, None, None
         verification_restarts = 0
         try:
@@ -196,6 +210,7 @@ def run_steps(plan: list[Step], env: dict[str, str], *, executor=execute, recove
                 if code == 75 and step.module == "src.pipelines.verify_exploitation":
                     print("[RETRY] Reopening Chroma in a fresh verification process", flush=True)
                     verification_restarts = 1
+                    update_progress(env.get(STATUS_ENV), log="Reopening Chroma in a fresh verification process.")
                     code = executor([sys.executable, "-m", step.module, *step.arguments], env)
             if code == 0 and step.collection_root is not None and not skipped:
                 check_collection(step.collection_root, step.modality)
@@ -207,6 +222,7 @@ def run_steps(plan: list[Step], env: dict[str, str], *, executor=execute, recove
                 if recovery.recover(step):
                     code, error, data_source = 0, None, "backup_data"
                     print(f"[BACKUP] {step.name}: source unavailable; selected verified offline data", flush=True)
+                    update_progress(env.get(STATUS_ENV), log=f"{step.name}: source unavailable; selected verified offline data.")
             except (OSError, ValueError, KeyError) as exc:
                 code, error = 1, redact(str(exc), env)
         records.append({"name": step.name, "module": step.module, "exit_code": code,
@@ -214,6 +230,9 @@ def run_steps(plan: list[Step], env: dict[str, str], *, executor=execute, recove
                         "data_source": data_source or ("live_source" if step.collection_root is not None or step.module == "src.ingestion.text_to_temporal_landing" else None),
                         "source_exit_code": source_code, "source_error": source_error,
                         "verification_restarts": verification_restarts})
+        step_progress(env.get(STATUS_ENV), index - 1, "completed" if code == 0 else "failed",
+                      seconds=records[-1]["seconds"], data_source=records[-1]["data_source"],
+                      error=error, exit_code=code)
         if code:
             print(f"[ERROR] {step.name} failed (exit code {code}); later stages were not run.", file=sys.stderr)
             if error:
@@ -298,12 +317,13 @@ def main(argv=None) -> int:
     args = parse_args(argv)
     plan = build_plan(args)
     if args.dry_run:
+        if args.serve:
+            print("Start Streamlit progress dashboard before preparation:")
+            print(subprocess.list2cmdline(serve_command(args)))
         if args.start_minio:
             print("docker compose up -d")
         for step in plan:
             print(subprocess.list2cmdline([sys.executable, "-m", step.module, *step.arguments]))
-        if args.serve:
-            print(subprocess.list2cmdline(serve_command(args)))
         if not args.no_backup:
             print(f"Source failures may use the verified backup at {args.backup_dir}")
         print(f"Plan only: no network requests or writes. Final zone: {args.through}.")
@@ -312,6 +332,8 @@ def main(argv=None) -> int:
     if args.storage_config:
         os.environ["ADSBD_STORAGE_CONFIG"] = str(args.storage_config)
     env = dict(os.environ)
+    # A batch invocation must not inherit another run's dashboard state.
+    env.pop(STATUS_ENV, None)
     env.update(PYTHONIOENCODING="utf-8", PYTHONUNBUFFERED="1", MPLBACKEND="Agg")
     env.setdefault("OMP_NUM_THREADS", "4")
     env.setdefault("MKL_NUM_THREADS", "4")
@@ -322,41 +344,89 @@ def main(argv=None) -> int:
     records, counts, error, code = [], {}, None, 1
     from src.pipelines.backup_sources import BackupSources
     recovery = BackupSources(args)
+    dashboard, heartbeat, progress_path = None, None, None
+    interrupted = False
     try:
         if args.command == "status":
             return check_status()
+        if args.serve:
+            if importlib.util.find_spec("streamlit") is None:
+                raise ValueError("Install the app extra to start Streamlit")
+            progress_path = create_progress(args.report_dir, plan)
+            env[STATUS_ENV] = str(progress_path)
+            heartbeat = Heartbeat(progress_path)
+            heartbeat.start()
+            dashboard = start_dashboard(serve_command(args), env, args.port, args.report_dir)
+            print(f"Follow preparation at http://127.0.0.1:{args.port}", flush=True)
+        update_progress(progress_path, phase="Checking requirements")
         preflight(args, env)
+        update_progress(progress_path, phase="Preparing local storage")
         if args.start_minio and execute(["docker", "compose", "up", "-d"], env):
             raise RuntimeError("Docker Compose could not start MinIO")
         prepare_storage(wait=args.start_minio)
         code, records = run_steps(plan, env, executor=execute, recovery=recovery)
         if code == 0:
+            update_progress(progress_path, phase="Verifying the prepared data")
             counts = verify_trusted()
+            if dashboard is not None and dashboard.poll() is not None:
+                raise RuntimeError("Streamlit stopped during preparation. Restart the application after reviewing its log.")
             print(f"[OK] All three modalities reached Trusted: {counts}")
             if args.through == "exploitation":
                 print(f"[OK] All four embedding collections verified in {args.db_path}")
+    except KeyboardInterrupt:
+        error, code, interrupted = "Preparation was interrupted. No successful completion was recorded.", 130, True
+        if progress_path:
+            state = read_progress(progress_path)
+            index = state.get("current_step")
+            if index is not None and state["steps"][index]["status"] == "running":
+                step_progress(progress_path, index, "failed", error=error,
+                              seconds=round(time.time() - state["steps"][index]["started_at"], 3))
     except (OSError, ValueError, RuntimeError, BotoCoreError, ClientError) as exc:
         error, code = redact(str(exc), env), 1
         print(f"[ERROR] {error}", file=sys.stderr)
     finally:
-        recovery.cleanup()
-        if args.command == "run":
-            args.report_dir.mkdir(parents=True, exist_ok=True)
-            timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-            report = args.report_dir / f"run_{timestamp}.json"
-            report.write_text(json.dumps({"completed_at_utc": timestamp, "exit_code": code,
-                                          "error": error, "steps": records, "trusted": counts,
-                                          "total_seconds": round(time.monotonic() - started, 3),
-                                          "backup_fallbacks": recovery.events,
-                                          "through": args.through, "database": str(args.db_path)}, indent=2), encoding="utf-8")
-            print(f"Run report: {report}")
-    if code == 0 and args.serve:
-        return execute(serve_command(args), env)
+        try:
+            recovery.cleanup()
+            if args.command == "run":
+                args.report_dir.mkdir(parents=True, exist_ok=True)
+                timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+                report = args.report_dir / f"run_{timestamp}.json"
+                report.write_text(json.dumps({"completed_at_utc": timestamp, "exit_code": code,
+                                              "error": error, "steps": records, "trusted": counts,
+                                              "total_seconds": round(time.monotonic() - started, 3),
+                                              "backup_fallbacks": recovery.events,
+                                              "through": args.through, "database": str(args.db_path)}, indent=2), encoding="utf-8")
+                print(f"Run report: {report}")
+        except KeyboardInterrupt:
+            error, code, interrupted = "Preparation finalization was interrupted.", 130, True
+        except (OSError, ValueError) as exc:
+            error, code = redact(str(exc), env), 1
+            print(f"[ERROR] Could not finalize preparation: {error}", file=sys.stderr)
+        finally:
+            try:
+                if progress_path:
+                    update_progress(progress_path, status="ready" if code == 0 else "interrupted" if interrupted else "failed",
+                                    phase="Data preparation verified" if code == 0 else "Preparation stopped",
+                                    error=error or (None if code == 0 else "A pipeline stage failed. Review its status and execution details."),
+                                    trusted=counts, finished_at=time.time())
+            finally:
+                if heartbeat:
+                    heartbeat.stop()
+    if dashboard is not None:
+        if interrupted:
+            stop_dashboard(dashboard)
+            return code
+        try:
+            server_code = dashboard.wait()
+            return code if code else server_code
+        except KeyboardInterrupt:
+            stop_dashboard(dashboard)
+            return code
     return code
 
 
 def serve_command(args):
-    """Keep the interactive application in the foreground after preparation."""
+    """Use one Streamlit process for preparation and the finished application."""
     return [sys.executable, "-m", "streamlit", "run", str(PROJECT_ROOT / "streamlit_app.py"),
             "--server.address", "127.0.0.1", "--server.port", str(args.port),
             "--server.headless", "true",

@@ -1,4 +1,4 @@
-"""Converteix captures RAWG persistents a Parquet per data de recollida UTC."""
+"""Convert Persistent RAWG captures to Parquet by UTC collection date."""
 
 from __future__ import annotations
 
@@ -74,13 +74,13 @@ def json_to_table(captures: list[tuple[dict[str, Any], dict[str, str]]]) -> pa.T
                 value = json.dumps(value, ensure_ascii=False, separators=(",", ":")) if value is not None else None
             elif value is not None:
                 if field.name in INTEGER_FIELDS and (type(value) is not int):
-                    raise ValueError(f"El camp {field.name} no es un enter")
+                    raise ValueError(f"Field {field.name} is not an integer")
                 if field.name in TEXT_FIELDS and not isinstance(value, str):
-                    raise ValueError(f"El camp {field.name} no es text")
+                    raise ValueError(f"Field {field.name} is not text")
                 if field.name == "tba" and type(value) is not bool:
-                    raise ValueError("El camp tba no es boolea")
+                    raise ValueError("Field tba is not boolean")
                 if field.name == "rating" and type(value) not in (int, float):
-                    raise ValueError("El camp rating no es numeric")
+                    raise ValueError("Field rating is not numeric")
             row[field.name] = value
         rows.append(row)
     return pa.Table.from_pylist(rows, schema=schema)
@@ -115,7 +115,7 @@ def format_texts(*, dry_run: bool = False) -> int:
             seen_ids = set()
             for key, game_id, date in sorted(sources):
                 if game_id in seen_ids:
-                    raise ValueError(f"Mes d'un fitxer per joc i dia: {game_id}, {day}")
+                    raise ValueError(f"More than one file for the same game and day: {game_id}, {day}")
                 seen_ids.add(game_id)
                 raw = read_bytes(client, source_bucket, key)
                 digest = sha256(raw)
@@ -128,7 +128,7 @@ def format_texts(*, dry_run: bool = False) -> int:
                     or record["source_game_id"] != game_id or record["source"] != "rawg"
                     or record["bucket"] != source_bucket or record["persistent_object_key"] != key
                     or record["sha256"] != digest):
-                    raise ValueError(f"Procedencia inconsistent: {key}")
+                    raise ValueError(f"Inconsistent provenance: {key}")
                 inputs.append({"key": key, "sha256": digest})
                 captures.append((payload, {
                     "source": "rawg", "ingested_at_utc": record["ingested_at_utc"],
@@ -145,17 +145,17 @@ def format_texts(*, dry_run: bool = False) -> int:
                 previous = {entry["key"]: entry["sha256"] for entry in old["inputs"]}
                 current = {entry["key"]: entry["sha256"] for entry in inputs}
                 if any(current.get(key) != digest for key, digest in previous.items()):
-                    raise ValueError("Un original processat ha canviat o ha desaparegut de persistent")
+                    raise ValueError("A previously processed original changed or disappeared from Persistent")
                 if (old.get("format_version") == FORMAT_VERSION and old["inputs"] == inputs
                     and old.get("row_provenance") == row_provenance):
                     output = read_optional(client, target_bucket, destination)
                     if output is not None and sha256(output) == old["output_sha256"]:
-                        print(f"[SKIP] {destination}: {len(captures)} files ja processades")
+                        print(f"[SKIP] {destination}: {len(captures)} rows already processed")
                         skipped += 1
                         continue
             table = json_to_table(captures)
             if dry_run:
-                print(f"[DRY] {destination}: {table.num_rows} files, {table.num_columns} columnes")
+                print(f"[DRY] {destination}: {table.num_rows} rows, {table.num_columns} columns")
                 continue
             buffer = pa.BufferOutputStream()
             pq.write_table(table, buffer, compression="snappy")
@@ -163,7 +163,7 @@ def format_texts(*, dry_run: bool = False) -> int:
             client.put_object(Bucket=target_bucket, Key=destination, Body=output, ContentType="application/vnd.apache.parquet")
             stored = read_bytes(client, target_bucket, destination)
             if stored != output or not pq.ParquetFile(pa.BufferReader(stored)).read().equals(table):
-                raise ValueError("El Parquet pujat no coincideix amb la taula original")
+                raise ValueError("The uploaded Parquet does not match the original table")
             checkpoint = {
                 "format_version": FORMAT_VERSION, "source_bucket": source_bucket,
                 "output_key": destination, "output_sha256": sha256(output),
@@ -174,19 +174,19 @@ def format_texts(*, dry_run: bool = False) -> int:
             checkpoint_bytes = json.dumps(checkpoint, ensure_ascii=False, indent=2).encode("utf-8")
             client.put_object(Bucket=target_bucket, Key=checkpoint_key, Body=checkpoint_bytes, ContentType="application/json")
             if read_bytes(client, target_bucket, checkpoint_key) != checkpoint_bytes:
-                raise ValueError("No s'ha pogut verificar el registre de processament")
+                raise ValueError("Could not verify the processing checkpoint")
             written += 1
-            print(f"[OK] {destination}: {table.num_rows} files, {table.num_columns} columnes")
+            print(f"[OK] {destination}: {table.num_rows} rows, {table.num_columns} columns")
         except Exception as exc:
             errors += 1
             print(f"[ERROR] {day}: {exc}", file=sys.stderr)
-    print(f"Formatted: {written} particions escrites, {skipped} omeses, {errors} errors.")
+    print(f"Formatted: {written} partitions written, {skipped} skipped, {errors} errors.")
     return 1 if errors else 0
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dry-run", action="store_true", help="Valida les dades sense escriure a MinIO.")
+    parser.add_argument("--dry-run", action="store_true", help="Validate data without writing to MinIO.")
     args = parser.parse_args()
     raise SystemExit(format_texts(dry_run=args.dry_run))
 
