@@ -10,6 +10,11 @@ the RAWG games as their original soundtrack.
 
 ## Requirements and setup
 
+Clone the repository and check out the branch or commit being assessed. This is
+a private repository, so the assessor needs GitHub access. Commands below assume
+the repository root. See [continuous integration](.github/README.md) for the
+automatic checks and how to inspect the result for a specific commit.
+
 Use Python 3.12 (the package requires Python >=3.11), Docker with Compose, and
 FFmpeg/FFprobe. Start Docker Desktop on Windows before using `--start-minio`.
 The first embedding run needs internet access and several GB for pinned model
@@ -148,7 +153,11 @@ python -m pytest -q
 ```
 
 The default suite uses isolated fixtures and skips opt-in service/model tests.
-GitHub Actions runs it on pushes and pull requests. See [integration tests](tests/integration/README.md)
+GitHub Actions runs it on pushes and pull requests. A separate automatic
+**Backup end-to-end pipeline** job processes the real 50/50/16 backup through
+fresh storage, model indexing, retrieval verification and application checks.
+It requires no source API credentials. See [CI instructions](.github/README.md)
+and [integration tests](tests/integration/README.md)
 for live-source and full-backup runs. Their success must be checked from their
 actual reports; source failures are not evidence of a successful live API call.
 See [the quality assessment](docs/quality/README.md) for the documented sample,

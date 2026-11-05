@@ -30,7 +30,8 @@ def test_all_source_failures_use_backup_through_verified_embeddings(tmp_path, mo
     config = tmp_path / "storage.yml"
     config.write_text(yaml.safe_dump(storage), encoding="utf-8")
     monkeypatch.setenv("ADSBD_STORAGE_CONFIG", str(config))
-    monkeypatch.setenv("HF_HUB_OFFLINE", "1")
+    offline = os.getenv("ADSBD_TEST_MODEL_OFFLINE", "1")
+    monkeypatch.setenv("HF_HUB_OFFLINE", offline)
     execute = pipeline.execute
     failed = []
     def source_failure(command, env):
@@ -67,8 +68,14 @@ def test_all_source_failures_use_backup_through_verified_embeddings(tmp_path, mo
         landing = storage["buckets"]["landing"]
         assert sum(key.endswith(".json") for key in list_object_keys(client, landing, "persistent/texts/rawg/")) == 50
         assert len(list_object_keys(client, landing, "persistent/images/")) == 50
+        monkeypatch.setenv("ADSBD_CHROMA_PATH", str(tmp_path / "chroma"))
+        from streamlit.testing.v1 import AppTest
+        app = AppTest.from_file(pipeline.PROJECT_ROOT / "streamlit_app.py", default_timeout=45).run()
+        assert not app.exception
+        assert [metric.value for metric in app.metric] == ["50", "50", "16"]
         evidence = {"input_counts": {"descriptions": 50, "images": 50, "audio": 16},
-                    "source_failures": "simulated", "model_cache": "existing pinned weights; no data or vector reuse",
+                    "source_failures": "simulated", "model_downloads_allowed": offline != "1",
+                    "model_cache": "pinned weights; no data or vector reuse", "application_counts_verified": True,
                     "elapsed_seconds": round(time.monotonic() - started, 3),
                     "run": report, "verification": verification}
         output = pipeline.PROJECT_ROOT / "reports/pipeline/backup_validation_50_50_16.json"

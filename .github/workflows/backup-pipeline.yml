@@ -1,0 +1,73 @@
+name: Backup end-to-end pipeline
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backup-pipeline-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      ADSBD_RUN_BACKUP_PIPELINE: "1"
+      ADSBD_TEST_MODEL_OFFLINE: "0"
+      MINIO_ROOT_USER: pipeline-test
+      MINIO_ROOT_PASSWORD: isolated-ci-test-password
+      HF_HOME: ${{ runner.temp }}/huggingface
+      HF_MODULES_CACHE: ${{ runner.temp }}/hf-modules
+      MPLBACKEND: Agg
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install documented prerequisites and CPU dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e ".[dev,app]"
+          python -m pip check
+      - name: Start fresh CI storage
+        run: |
+          printf 'MINIO_ROOT_USER=%s\nMINIO_ROOT_PASSWORD=%s\n' "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" > .env
+          docker compose up -d minio
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://localhost:9000/minio/health/ready; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Test real backup through all zones, embeddings, retrieval and application
+        run: python -m pytest tests/integration/test_backup_pipeline.py -q -s --basetemp=reports/backup-test --junitxml=reports/backup-junit.xml
+      - name: Record storage diagnostics
+        if: always()
+        run: |
+          mkdir -p reports
+          docker compose logs --no-color > reports/storage.log
+      - name: Upload execution evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backup-pipeline-reports
+          path: |
+            reports/pipeline/backup_validation_50_50_16.json
+            reports/backup-test/**/reports/
+            reports/backup-junit.xml
+            reports/storage.log
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Stop disposable storage
+        if: always()
+        run: docker compose down -v

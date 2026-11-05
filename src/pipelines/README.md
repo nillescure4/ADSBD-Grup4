@@ -233,7 +233,12 @@ The same test module also checks real MinIO/Chroma image retirement and safe
 refresh of tracked legacy audio, including incremental no-op reruns. The quality
 assessment is separate from these operational tests; see the media review above.
 
-GitHub Actions runs the automated suite on pushes and pull requests. The manual
+GitHub Actions runs the automated suite and the **Backup end-to-end pipeline**
+on pushes and pull requests. The backup job permits pinned model downloads,
+starts fresh MinIO, exercises the real 50/50/16 snapshot through all zones and
+indexes, checks retrieval and application counts, and uploads the run evidence.
+It needs no source/provider secrets. See [CI instructions](../../.github/README.md).
+The manual
 `Live end-to-end pipeline` workflow runs the real test on an Ubuntu runner with
 Docker and FFmpeg; configure the repository secret `RAWG_API_KEY` before running
 it. It does not need Gemini or production MinIO credentials. Source/network

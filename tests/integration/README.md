@@ -36,3 +36,10 @@ retiring a newly rejected image and its Chroma vector, and upgrading clipped v1
 audio derivatives to the measured-headroom v2 policy. Both use unique disposable
 buckets and preserve the original bytes. The full backup run verifies exactly two
 recorded attenuation decisions; it does not need generative AI credentials.
+
+The automatic **Backup end-to-end pipeline** GitHub Actions workflow runs this
+module on a fresh Ubuntu runner with disposable MinIO storage. It sets
+`ADSBD_TEST_MODEL_OFFLINE=0` to allow pinned models to download on first use.
+Local runs default to `1`, requiring cached models. The full test additionally
+checks Streamlit's actual 50/50/16 catalogue counts. See the
+[CI guide](../../.github/README.md) for workflow results and downloadable reports.
