@@ -10,7 +10,10 @@ measurements, sample selection and assisted observations. It is not the separate
 submission memo or a human certification of all current/future data.
 
 `python -m src.trusted.media_sample_review` reconstructs outputs with the actual
-production converters and quality rules, without changing MinIO. Selected image
+production converters and quality rules, without changing MinIO. Its image and
+audio review stages are implemented independently in `src/trusted/images/sample_review.py`
+and `src/trusted/audio/sample_review.py`; the entrypoint only coordinates them.
+Selected image
 pairs and audio excerpts were also assessed using the configured Gemini model;
 observations were checked/reworded against measured facts. A model impression is
 not a measured retrieval score. This was not a blind review: filenames and

@@ -100,6 +100,12 @@ Reproduce the measurements from the verified offline snapshot with FFmpeg on PAT
 python -m src.trusted.media_sample_review
 ```
 
+The entrypoint only orchestrates the reviews. Image comparisons and image-assisted
+assessment live in `src/trusted/images/sample_review.py`; audio comparisons,
+excerpts and audio-assisted assessment live in `src/trusted/audio/sample_review.py`.
+Reusable array comparison, sampling and AI transport helpers live in
+`src/trusted/review_support.py`. Each format owns its quality work independently.
+
 Outputs are local reconstructions under `reports/media_quality/`, not changes to
 MinIO. `--assess-with-gemini` additionally sends selected image pairs and bounded
 audio excerpts to the configured Gemini service. It is optional, uses the server

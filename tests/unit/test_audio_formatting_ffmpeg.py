@@ -101,7 +101,8 @@ def test_real_lossy_overshoots_are_not_clipped(tmp_path, relative):
     import math
     import numpy as np
     from src.common.config import PROJECT_ROOT
-    from src.trusted.media_sample_review import pcm, difference
+    from src.trusted.audio.sample_review import pcm
+    from src.trusted.review_support import difference
     source = PROJECT_ROOT / "backup_data/audio/raw/files" / relative
     output = tmp_path / "converted.flac"
     _, info, bits, note = convert_audio(source, output)
