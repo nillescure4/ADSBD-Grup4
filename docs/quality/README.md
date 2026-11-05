@@ -1,4 +1,9 @@
-# Documented text quality assessment
+# Documented quality assessments
+
+This page documents the text assessment. See [the image/audio assessment](media_assessment.md)
+for concrete media comparisons, conversion effects, task implications and the
+machine-readable evidence. Both assessments are sample-scoped and assisted;
+neither certifies all future data or replaces the separate submission memo.
 
 This is technical review evidence for the repository, not the separate submission
 memo. Eight distinct games were selected from the current 50-game offline sample

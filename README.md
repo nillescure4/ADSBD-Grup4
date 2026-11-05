@@ -144,3 +144,9 @@ actual reports; source failures are not evidence of a successful live API call.
 See [the quality assessment](docs/quality/README.md) for the documented sample,
 its content hashes and the limits of that review. The separate submission
 memo is maintained outside this repository.
+
+The [media assessment](docs/quality/media_assessment.md) compares actual image and
+audio samples before/after production conversion and cleaning. Active Trusted
+images and retired image vectors synchronize automatically. Audio format policy
+v2 prevents decoded overshoots from clipping; measured gain changes are recorded,
+and intact tracked derivatives can be refreshed without changing originals.

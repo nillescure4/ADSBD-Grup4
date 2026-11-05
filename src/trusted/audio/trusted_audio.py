@@ -162,7 +162,21 @@ def process_one(client: Any, formatted_bucket: str, trusted_bucket: str,
                     and int(existing["ContentLength"]) > 0):
                 outcome["status"] = "skipped"
                 return outcome
-            raise RuntimeError("Different or untracked Trusted destination exists; refusing overwrite")
+            # Regenerate a tracked derivative after its verified Formatted source
+            # changes. Preserve unrelated or damaged objects for explicit review.
+            expected = metadata.get("trusted-sha256") if metadata.get("trusted-method") == "dcshift" else metadata.get("source-sha256")
+            tracked = (metadata.get("trusted-policy") == POLICY_VERSION
+                       and metadata.get("source-key-sha256") == hashlib.sha256(key.encode("utf-8")).hexdigest()
+                       and metadata.get("trusted-method") in {"copy", "dcshift"} and expected)
+            if not tracked:
+                raise RuntimeError("Different or untracked Trusted destination exists; refusing overwrite")
+            response = client.get_object(Bucket=trusted_bucket, Key=key)
+            try:
+                actual = hashlib.sha256(response["Body"].read()).hexdigest()
+            finally:
+                response["Body"].close()
+            if actual != expected:
+                raise RuntimeError("Existing Trusted derivative is damaged; refusing automatic refresh")
         if method == "copy":
             client.copy_object(
                 Bucket=trusted_bucket, Key=key,

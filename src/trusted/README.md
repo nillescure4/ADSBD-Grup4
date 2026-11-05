@@ -52,8 +52,12 @@ are rejected; other flags are advisory. Accepted bytes are copied without
 model-specific resizing. Rule thresholds are heuristics, not certified perceptual
 judgments. Analysis produces distributions, group-specific rejection rates,
 summary tables and review candidates. A checkpoint restores a missing local CSV
-on unchanged runs. `--prune` explicitly enables removal of stale Trusted objects;
-it is not automatic. Legacy/canonical filename migration needs deliberate review.
+on unchanged runs. Active Trusted images synchronize with the current accepted
+set by default (`--prune`); originals remain in Persistent and Formatted. Obsolete
+copies are removed only after accepted replacements verify successfully, and the
+final active listing must match the accepted set. `--no-prune` is a diagnostic
+opt-out that can retain rejected files and should not be used for delivery.
+The image indexer and orchestrator also prune retired image vectors.
 
 `publish_provenance` verifies the source image manifest against original Persistent
 bytes and canonical Formatted/Trusted JPEGs. It writes `provenance/images.jsonl`
@@ -77,6 +81,30 @@ support it, followed by independent output verification. Other accepted files ar
 copied. Metadata preserves source revisions, hashes and processing decisions.
 The analysis report describes quality before cleaning; the processing CSV and
 output metadata record actual corrections and verification outcomes.
+
+Tracked Trusted derivatives can be refreshed after verified Formatted content
+changes. Before replacement the old derivative's stored hash is checked; damaged
+or untracked objects still stop automatic refresh. Originals remain immutable.
+
+## Qualitative media evidence
+
+[The media assessment](../../docs/quality/media_assessment.md) records eight image
+comparisons and four audio comparisons, full-file measurements, model-assisted
+observations and their limitations. Reports attach the documented sample notes
+only when the current Formatted SHA-256 matches the reviewed content. Unknown
+content remains unreviewed; numerical thresholds do not certify semantic quality.
+
+Reproduce the measurements from the verified offline snapshot with FFmpeg on PATH:
+
+```powershell
+python -m src.trusted.media_sample_review
+```
+
+Outputs are local reconstructions under `reports/media_quality/`, not changes to
+MinIO. `--assess-with-gemini` additionally sends selected image pairs and bounded
+audio excerpts to the configured Gemini service. It is optional, uses the server
+credentials and may incur provider usage; no AI request is added to normal batch
+processing. Existing reviewed records are preserved in `docs/quality/`.
 
 No Trusted process generates embeddings. Rebuild/revalidate the corresponding
 indexes after changed Trusted bytes; see [Exploitation](../exploitation/README.md).

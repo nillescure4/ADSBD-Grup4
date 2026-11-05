@@ -78,6 +78,25 @@ def test_float32_over_full_scale_is_attenuated(monkeypatch: pytest.MonkeyPatch, 
     assert "prevent clipping" in note
 
 
+@pytest.mark.parametrize("codec", ["mp3", "vorbis", "aac", "opus"])
+def test_lossy_decoder_overshoot_gets_measured_headroom(monkeypatch, tmp_path, codec):
+    from src.formatting.audio import formatting_audio as audio
+    monkeypatch.setattr(audio, "inspect_float_peak_dbfs", lambda _: 0.7)
+    bits, filters, note = audio.flac_conversion_settings(tmp_path / "source", make_audio_info(codec, None))
+    assert bits == 16
+    assert filters == ["-af", "volume=-0.800000000dB:precision=float"]
+    assert "source peak=0.700000" in note
+    assert "prevent clipping" in note
+
+
+def test_lossy_below_full_scale_keeps_gain(monkeypatch, tmp_path):
+    from src.formatting.audio import formatting_audio as audio
+    monkeypatch.setattr(audio, "inspect_float_peak_dbfs", lambda _: -2.)
+    bits, filters, note = audio.flac_conversion_settings(tmp_path / "source", make_audio_info("mp3", None))
+    assert bits == 16 and filters == []
+    assert "no gain applied" in note
+
+
 def test_original_extension_is_kept_in_output_name() -> None:
     """Formatted keys must be unique across codecs with identical stems."""
     mp3 = destination_key_for("persistent/audio/opengameart$music$18-10-2026$123$song.mp3", "persistent")

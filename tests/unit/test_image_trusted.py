@@ -177,6 +177,20 @@ def test_sync_keeps_stale_images_unless_pruning(s3):
     assert trusted_images(s3) == ["images/a.jpg"]
 
 
+def test_failed_replacement_preserves_old_trusted_image_for_recovery(s3):
+    put_formatted(s3, a=b"new")
+    s3.put(TRUSTED, "images/old.jpg", b"old")
+    s3.corrupt_copies = True
+    assert sync(s3, ["images/a.jpg"], prune=True) == 1
+    assert s3.data(TRUSTED, "images/old.jpg") == b"old"
+
+
+def test_silent_failed_removal_is_not_reported_as_success(s3, monkeypatch):
+    s3.put(TRUSTED, "images/retired.jpg", b"old")
+    monkeypatch.setattr(s3, "delete_object", lambda **kwargs: {})
+    assert sync(s3, [], prune=True) == 1
+
+
 def test_sync_dry_run_neither_copies_nor_deletes(s3):
     put_formatted(s3, a=b"A")
     s3.put(TRUSTED, "images/stale.jpg", b"S")
@@ -352,6 +366,24 @@ def test_an_image_that_stops_being_accepted_stays_until_pruned(pipeline):
     assert trusted_images(pipeline.s3) == ["images/a.jpg", "images/b.jpg"]
     assert pipeline.run(prune=True) == 0
     assert trusted_images(pipeline.s3) == ["images/a.jpg"]
+
+
+def test_default_pipeline_removes_rejected_images_and_preserves_formatted(pipeline):
+    put_formatted(pipeline.s3, b=b"same")
+    assert build.build_trusted_images(dry_run=False, csv_output=pipeline.csv) == 0
+    put_formatted(pipeline.s3, a=b"same")
+    assert build.build_trusted_images(dry_run=False, csv_output=pipeline.csv) == 0
+    assert trusted_images(pipeline.s3) == ["images/a.jpg"]
+    assert pipeline.s3.data(FORMATTED, "images/b.jpg") == b"same"
+    pipeline.s3.put(TRUSTED, "images/untracked.jpg", b"old")
+    assert build.build_trusted_images(dry_run=False, csv_output=pipeline.csv) == 0
+    assert trusted_images(pipeline.s3) == ["images/a.jpg"]
+
+
+def test_empty_formatted_removes_stale_active_images(pipeline):
+    pipeline.s3.put(TRUSTED, "images/stale.jpg", b"old")
+    assert build.build_trusted_images(dry_run=False, csv_output=pipeline.csv) == 0
+    assert trusted_images(pipeline.s3) == []
 
 
 def test_empty_formatted_zone_is_not_an_error(pipeline):

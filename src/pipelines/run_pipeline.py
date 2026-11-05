@@ -108,7 +108,7 @@ def build_plan(args) -> list[Step]:
         Step("Format images", "src.formatting.images.persistent_to_formatted"),
         Step("Format text", "src.formatting.text_to_formatted_zone"),
         Step("Format audio", "src.formatting.audio.formatting_audio", ("--report", str(reports / "audio/formatting.csv"))),
-        Step("Build Trusted images", "src.trusted.images.build_trusted_images", ("--csv_output", str(image_csv))),
+        Step("Build Trusted images", "src.trusted.images.build_trusted_images", ("--csv_output", str(image_csv), "--prune")),
         Step("Build Trusted text", "src.trusted.text_to_trusted_zone"),
         Step("Profile audio quality", "src.trusted.audio.analyze_audio_quality", ("--report", str(audio_csv))),
         Step("Build Trusted audio", "src.trusted.audio.trusted_audio", ("--quality-report", str(audio_csv), "--report", str(reports / "audio/processing.csv"))),
@@ -123,7 +123,7 @@ def build_plan(args) -> list[Step]:
         database = ("--db-path", str(args.db_path))
         plan.extend([
             Step("Index Jina descriptions", "src.exploitation.text.build_embeddings", database),
-            Step("Index Jina images", "src.exploitation.images.build_embeddings", database),
+            Step("Index Jina images", "src.exploitation.images.build_embeddings", (*database, "--prune")),
             Step("Index CLAP audio", "src.exploitation.audio.embedding_audio",
                  ("--all", "--chroma-path", str(args.db_path), "--report", str(reports / "audio/embeddings.csv"))),
             Step("Index CLAP descriptions", "src.exploitation.text.build_clap_embeddings", database),

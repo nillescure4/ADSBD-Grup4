@@ -51,6 +51,9 @@ Images use RGB JPEG with EXIF orientation applied and transparent pixels on whit
 multi-frame sources use the first frame. Audio uses FLAC, preserving source sample
 rate and channel count, with 16- or 24-bit precision selected from the source.
 See [Formatting](../src/formatting/README.md) for accepted inputs and conversion limits.
+Decoded floating-point peaks from lossy codecs or float PCM above full scale are
+attenuated with measured 0.1 dB headroom before integer FLAC conversion. Other
+files retain their gain. The conversion note records the measured peak and gain.
 
 Image hard-rejection reasons include corrupt, too-small, blank and duplicate
 content; blur/darkness/brightness/letterbox flags are advisory. Text flags cover
@@ -58,6 +61,9 @@ identity, provenance, missing/short descriptions, date/JSON validity and nonfini
 numbers. Audio flags cover technical amplitude/silence/DC indicators; duplicate
 and invalid files are excluded, and DC correction requires verified headroom.
 Thresholds are heuristics; metric values alone do not certify semantic quality.
+Active Trusted images and their image embeddings retire obsolete quality decisions
+by default. Full originals remain available in Landing and Formatted. Sample-scoped
+[qualitative evidence](quality/media_assessment.md) accompanies the numerical reports.
 
 ## Embedding collections
 

@@ -146,6 +146,21 @@ def test_existing_untracked_output_is_not_overwritten(monkeypatch: pytest.Monkey
     assert client.uploads == 0
 
 
+def test_tracked_version_one_derivative_is_upgraded_then_reused(monkeypatch, tmp_path):
+    client = FakeMinioClient()
+    monkeypatch.setattr(audio, "list_object_keys", lambda *_: [SOURCE_KEY])
+    monkeypatch.setattr(audio, "require_tools", lambda: None)
+    def convert(source, destination):
+        destination.write_bytes(b"verified-flac")
+        return "converted", audio.AudioInfo("mp3", 44100, 2, None, "fltp", 90.), 16, ""
+    monkeypatch.setattr(audio, "convert_audio", convert)
+    assert audio.run_formatting(client, STORAGE, "persistent/audio/")["converted"] == 1
+    client.objects["2.formatted-zone", DEST_KEY]["metadata"]["format_version"] = "audio-flac-v1"
+    assert audio.run_formatting(client, STORAGE, "persistent/audio/")["converted"] == 1
+    assert client.objects["2.formatted-zone", DEST_KEY]["metadata"]["format_version"] == audio.FORMAT_VERSION
+    assert audio.run_formatting(client, STORAGE, "persistent/audio/")["skipped"] == 1
+
+
 def test_cli_defaults_to_configured_persistent_audio_prefix(monkeypatch: pytest.MonkeyPatch) -> None:
     """Use the configured persistent area and avoid requiring outdated source paths."""
     import sys

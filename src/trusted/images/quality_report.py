@@ -9,6 +9,7 @@ import matplotlib
 matplotlib.use("Agg")  # headless (HPC / no display)
 import matplotlib.pyplot as plt
 import pandas as pd
+from src.trusted.media_review_registry import review_markdown
 
 METRICS = ["width", "height", "aspect_ratio", "sharpness", "brightness",
            "contrast", "entropy", "letterbox_ratio", "file_size"]
@@ -58,6 +59,7 @@ def write_summary(q: pd.DataFrame, out: Path) -> None:
         "- Thresholds are heuristics, not validated limits. Check `review_samples.csv` before trusting any of them.",
         "- The tables by group show whether rejection affects some kinds of images more; they do not explain why.", "",
     ]
+    lines += review_markdown("image", q["sha256"].dropna())
     (out / "summary.md").write_text("\n".join(lines), encoding="utf-8")
 
 

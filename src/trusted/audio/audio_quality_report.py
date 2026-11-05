@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+from src.trusted.media_review_registry import review_markdown
 import math
 import statistics
 from collections import Counter
@@ -178,6 +179,7 @@ def make_quality_report(source: Path, output_dir: Path) -> dict:
         "- duration_histogram.png", "- rms_histogram.png", "- peak_histogram.png",
         "- dc_offset_histogram.png", "- quality_flags.png", "",
     ]
+    lines += review_markdown("audio", [row["sha256"] for row in rows])
     (output_dir / "quality_overview.md").write_text("\n".join(lines), encoding="utf-8")
     return summary
 

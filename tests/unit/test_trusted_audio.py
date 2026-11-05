@@ -76,6 +76,35 @@ def test_duplicates_are_not_copied():
     assert result["status"] == "duplicate_excluded"
 
 
+@pytest.mark.parametrize("damaged", [False, True])
+def test_refreshes_only_intact_tracked_derivatives(damaged):
+    import hashlib
+    from io import BytesIO
+    old, new = b"old-flac", b"new-flac-content"
+    row = make_row()
+    row.update(sha256=hashlib.sha256(new).hexdigest(), size_bytes=str(len(new)))
+    old_row = {**row, "sha256": hashlib.sha256(old).hexdigest()}
+    class Client:
+        body = b"damaged" if damaged else old
+        metadata = metadata_for(old_row, "copy")
+        copies = 0
+        def head_object(self, Bucket, Key):
+            return {"ETag": '"etag123"', "ContentLength": len(new) if Bucket == "formatted" else len(self.body),
+                    "Metadata": {} if Bucket == "formatted" else self.metadata}
+        def get_object(self, **kwargs):
+            return {"Body": BytesIO(self.body)}
+        def copy_object(self, **kwargs):
+            self.copies += 1
+            self.body, self.metadata = new, kwargs["Metadata"]
+    client = Client()
+    result = process_one(client, "formatted", "trusted", row)
+    assert result["status"] == ("failed" if damaged else "copied")
+    assert client.copies == (0 if damaged else 1)
+    if not damaged:
+        assert client.body == new
+        assert process_one(client, "formatted", "trusted", row)["status"] == "skipped"
+
+
 def test_runs_dryrun_without_writing(tmp_path: Path):
     rows = [make_row(), make_row("audio/b.flac", flags="identical_file", duplicate="audio/a.flac")]
     file = tmp_path / "quality.csv"

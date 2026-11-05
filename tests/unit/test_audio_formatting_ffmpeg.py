@@ -92,3 +92,21 @@ def test_float32_over_range_is_attenuated_before_quantization(tmp_path: Path) ->
     assert "applied gain" in note
     assert probe_audio(destination).bit_depth == 24
     assert measure_output_peak_dbfs(destination) == pytest.approx(-0.1, abs=0.01)
+
+
+@pytest.mark.parametrize("relative", [
+    "3922/cave%20themeb4.ogg", "49460/enchanted%20tiki%2086_0.mp3",
+])
+def test_real_lossy_overshoots_are_not_clipped(tmp_path, relative):
+    import math
+    import numpy as np
+    from src.common.config import PROJECT_ROOT
+    from src.trusted.media_sample_review import pcm, difference
+    source = PROJECT_ROOT / "backup_data/audio/raw/files" / relative
+    output = tmp_path / "converted.flac"
+    _, info, bits, note = convert_audio(source, output)
+    gain = float(re.search(r"applied gain=([-0-9.]+) dB", note)[1])
+    assert gain < 0 and bits == 16
+    residual = difference(pcm(source) * math.pow(10, gain / 20), pcm(output))
+    assert residual["max_absolute_error"] < 2 / 65536
+    assert measure_output_peak_dbfs(output) == pytest.approx(-0.1, abs=0.01)

@@ -93,10 +93,17 @@ guessed from filenames. Existing valid associations are retained across runs.
 
 Formatted image keys retain the complete source filename before `.jpg`, avoiding
 collisions between different input extensions. Existing legacy derived images are
-not automatically deleted; see [the migration notes](../formatting/README.md).
+not automatically deleted from Formatted; see [the migration notes](../formatting/README.md).
+Active Trusted images and their Jina vectors are synchronized with current
+acceptance decisions using `--prune`. Originals remain in Landing/Formatted;
+failed accepted replacements defer retirement and stop downstream stages.
 Text quality version 5 produces English reports and attaches exact-hash sample
 assessments from [the review registry](../../docs/quality/README.md). Changing the
 registry invalidates Trusted report checkpoints without changing source data.
+Image/audio reports also attach exact-hash sample assessments from
+[the media review](../../docs/quality/media_assessment.md). Audio format policy v2
+prevents decoded lossy overshoots from clipping and upgrades tracked v1 outputs;
+verified Trusted derivatives and affected embeddings refresh incrementally.
 
 The shared Chroma directory is `data/exploitation/chroma`. Collections are
 `texts_jina_clip_v2`, `images_jina_clip_v2` (1024 dimensions) and `texts_clap`,
@@ -202,6 +209,9 @@ It simulates both source collectors failing, then processes the real 50/50/16
 backup through fresh isolated buckets and a new vector database. Its report is
 `reports/pipeline/backup_validation_50_50_16.json`. Model weights may already be
 cached; no data objects or existing embeddings are reused. Test buckets are deleted.
+The same test module also checks real MinIO/Chroma image retirement and safe
+refresh of tracked legacy audio, including incremental no-op reruns. The quality
+assessment is separate from these operational tests; see the media review above.
 
 GitHub Actions runs the automated suite on pushes and pull requests. The manual
 `Live end-to-end pipeline` workflow runs the real test on an Ubuntu runner with

@@ -69,3 +69,18 @@ def test_changed_game_provenance_is_refreshed_even_for_unchanged_pixels(monkeypa
     monkeypatch.setattr(pipeline, "sync_batch", sync)
     assert pipeline.run(None, [asset], Encoder(), Collection(), "config", batch_size=1, prune=False) == 0
     assert refreshed == [asset]
+
+
+@pytest.mark.parametrize("failed", [False, True])
+def test_pruning_removes_retired_vectors_only_after_success(tmp_path, monkeypatch, failed):
+    import chromadb
+    db = chromadb.PersistentClient(path=str(tmp_path / "chroma"))
+    collection = db.create_collection("images_prune_test", embedding_function=None)
+    collection.upsert(ids=["retired"], embeddings=[[1., 0.]],
+                      metadatas=[{"asset_id": "old.jpg", "config_sha256": "config"}])
+    class Encoder:
+        dimension = 2
+    monkeypatch.setattr(pipeline, "sync_batch", lambda *args: (0, 1))
+    assets = [pipeline.Asset("trusted", "new.jpg", "etag", {})] if failed else []
+    assert pipeline.run(None, assets, Encoder(), collection, "config", batch_size=1, prune=True) == int(failed)
+    assert db.get_collection("images_prune_test").get()["ids"] == (["retired"] if failed else [])

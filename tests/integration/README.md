@@ -30,3 +30,9 @@ verify that corpus; consult their source before running against a production
 index. Reports are under ignored `reports/` or `data/exploitation/` paths. Local
 success does not demonstrate that GitHub-hosted jobs ran. API/model failures must
 remain visible and must not be confused with successful offline source recovery.
+
+The backup test module also includes small real-service regression cases for
+retiring a newly rejected image and its Chroma vector, and upgrading clipped v1
+audio derivatives to the measured-headroom v2 policy. Both use unique disposable
+buckets and preserve the original bytes. The full backup run verifies exactly two
+recorded attenuation decisions; it does not need generative AI credentials.

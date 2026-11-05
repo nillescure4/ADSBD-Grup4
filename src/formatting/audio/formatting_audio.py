@@ -182,20 +182,20 @@ def flac_conversion_settings(source: Path, info: AudioInfo) -> tuple[int, list[s
     codec = info.codec.lower()
     if codec.startswith("pcm_s32"):
         return bits, [], "PCM32 integer reduced to 24-bit FLAC; precision loss is expected"
-    if codec.startswith("pcm_f32"):
+    if codec.startswith("pcm_f32") or codec in LOSSY_CODECS:
         peak = inspect_float_peak_dbfs(source)
         if peak > 0.0:
             # Keep 0.1 dB of headroom for safe floating-to-integer rounding.
             gain = -peak - 0.1
             filter_arg = f"volume={gain:.9f}dB:precision=float"
             note = (
-                f"Float32 converted to 24-bit FLAC; source peak={peak:.6f} dBFS; "
+                f"{codec} decoded to {bits}-bit FLAC; source peak={peak:.6f} dBFS; "
                 f"applied gain={gain:.6f} dB to prevent clipping"
             )
             return bits, ["-af", filter_arg], note
         peak_text = "silence" if peak == -math.inf else f"{peak:.6f} dBFS"
         return bits, [], (
-            f"Float32 converted to 24-bit FLAC; source peak={peak_text}; "
+            f"{codec} decoded to {bits}-bit FLAC; source peak={peak_text}; "
             "no gain applied; precision loss is expected"
         )
     return bits, [], ""
@@ -252,7 +252,7 @@ MINIO_REPORT_COLUMNS = [
     "channels", "source_bit_depth", "formatted_bit_depth", "duration_seconds",
     "formatted_bytes", "message",
 ]
-FORMAT_VERSION = "audio-flac-v1"
+FORMAT_VERSION = "audio-flac-v2"
 
 
 def normalize_source_prefix(prefix: str, persistent_prefix: str) -> str:
@@ -355,7 +355,12 @@ def process_one(
                 row["status"] = "skipped"
                 row["message"] = "Current formatted version already exists"
                 return row
-            if not overwrite:
+            tracked_upgrade = (
+                previous_sig == signature and previous_version == "audio-flac-v1"
+                and previous.get("Metadata", {}).get("source_key_sha256") == hashlib.sha256(source_key.encode("utf-8")).hexdigest()
+                and bool(previous.get("Metadata", {}).get("source_sha256"))
+            )
+            if not overwrite and not tracked_upgrade:
                 raise RuntimeError(
                     "Different or untracked destination exists; use --overwrite only after review"
                 )
@@ -370,6 +375,8 @@ def process_one(
                 raise RuntimeError("Downloaded size differs from MinIO source size")
             downloaded_sha = hash_file(source_file)
             row["source_sha256"] = downloaded_sha
+            if previous is not None and tracked_upgrade and downloaded_sha != previous["Metadata"]["source_sha256"]:
+                raise RuntimeError("Tracked legacy output refers to different original bytes")
             known_sha = original.get("Metadata", {}).get("sha256")
             if known_sha and downloaded_sha.lower() != known_sha.lower():
                 raise RuntimeError("Downloaded audio differs from source SHA256 metadata")

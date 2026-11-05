@@ -45,7 +45,8 @@ are copied to `quarantine/images/`. Infrastructure errors fail the stage.
 Old stem-only outputs are not silently removed or renamed. When upgrading an
 existing store, new canonical keys may coexist with legacy derived objects.
 Rebuild/validate an isolated store before switching an existing deployment;
-review any Trusted pruning explicitly. Persistent originals are always retained.
+Trusted now removes derived images that no longer pass its active quality rules,
+after verifying accepted replacements. Persistent originals are always retained.
 
 ## Audio: playable formats to FLAC
 
@@ -58,12 +59,19 @@ Supported sources include AAC, AIFF, AU, FLAC, M4A, MP3, OGA/OGG, Opus, WAV and 
 FFmpeg converts them to FLAC, preserving sample rate and channel count. Output
 precision is 16 or 24 bits according to the source; integer PCM32 and float32
 conversion to 24 bits can lose precision and is documented in the report. Float32
-peaks above 0 dBFS receive measured attenuation to avoid clipping.
+and lossy-codec decoded peaks above 0 dBFS receive measured attenuation with 0.1 dB
+headroom to avoid clipping. This is not loudness normalization: no gain is applied
+to in-range inputs. The measured peak and applied gain are recorded.
 Output retains the complete
 original filename before `.flac`, avoiding extension collisions. Source hashes,
 converter settings and verified output metadata support incremental reuse.
 The report records successful, skipped and failed inputs. Tracker/MIDI source
 files and archives are outside this playable-audio formatting contract.
+
+Policy `audio-flac-v2` replaces `audio-flac-v1` for tracked derivatives with the
+same verified original hash and source identity. Other existing destinations
+still require explicit review. Trusted can refresh an intact tracked derivative
+after its Formatted source changes; rerunning the indexers updates affected vectors.
 
 See [the data dictionary](../../docs/data_dictionary.md) and [Trusted](../trusted/README.md)
 for the next stage. Run one writer per bucket set.
