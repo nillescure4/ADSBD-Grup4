@@ -10,29 +10,85 @@ the RAWG games as their original soundtrack.
 
 ## Requirements and setup
 
-Clone the repository and check out the branch or commit being assessed. This is
-a private repository, so the assessor needs GitHub access. Commands below assume
-the repository root. See [continuous integration](.github/README.md) for the
-automatic checks and how to inspect the result for a specific commit.
+The project is available at
+[nillescure4/ADSBD-Grup4](https://github.com/nillescure4/ADSBD-Grup4).
+The commands below clone `main`; check out a different branch or commit if it is
+the version being assessed. A public repository can be cloned without an
+invitation; if access is restricted, the owner must grant the assessor access
+through GitHub. See [continuous integration](.github/README.md) for the automatic
+checks and how to inspect the result for a specific commit.
 
-Use Python 3.12 (the package requires Python >=3.11), Docker with Compose, and
-FFmpeg/FFprobe. Start Docker Desktop on Windows before using `--start-minio`.
-The first embedding run needs internet access and several GB for pinned model
-weights; subsequent runs can reuse them.
+Install Git, Python 3.12, Docker Desktop with Compose (or Docker Engine with
+Compose on Linux), and FFmpeg/FFprobe. Start Docker Desktop before running the
+pipeline on Windows or macOS. The first embedding run requires internet access
+and several GB of free disk space for pinned model weights; later runs can reuse
+the downloaded files. A GPU is not required.
 
-Windows PowerShell:
+### Install FFmpeg and FFprobe
+
+On Windows:
+
+1. Open the [official FFmpeg download page](https://ffmpeg.org/download.html),
+   choose Windows and follow the **Windows builds from gyan.dev** link.
+2. On the [Windows builds page](https://www.gyan.dev/ffmpeg/builds/), download
+   **ffmpeg-release-essentials.zip** under **release builds** and extract it to a
+   permanent folder. The package contains both `ffmpeg.exe` and `ffprobe.exe`;
+   no separate FFprobe download is required.
+3. Open Windows **Environment Variables**, edit your user **Path**, and add the
+   extracted `bin` directory containing both executables. Reopen PowerShell and
+   check that both commands work:
+
+   ```powershell
+   ffmpeg -version
+   ffprobe -version
+   ```
+
+Alternatively, supply `--ffmpeg-dir "C:\path\to\ffmpeg\bin"` when running the
+orchestrator. An existing installation under `data/tools/ffmpeg/bin` is also
+discovered automatically. The project does not bundle or download these tools.
+
+On Ubuntu/Debian:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y ffmpeg
+ffmpeg -version
+ffprobe -version
+```
+
+On macOS, with Homebrew installed:
+
+```bash
+brew install ffmpeg
+ffmpeg -version
+ffprobe -version
+```
+
+### Clone and install — Windows PowerShell
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -e ".[dev,app]"
+git clone --branch main https://github.com/nillescure4/ADSBD-Grup4.git
+cd ADSBD-Grup4
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -e ".[dev,app]"
 Copy-Item .env.example .env
 ```
 
-Linux/macOS:
+Use the virtual environment's Python directly; activating it is not required.
+Enable UTF-8 in the same PowerShell session before running the pipeline so model
+output and subprocess logs can include Unicode characters:
+
+```powershell
+$env:PYTHONUTF8 = "1"
+$env:PYTHONIOENCODING = "utf-8"
+```
+
+### Clone and install — Linux/macOS
 
 ```bash
+git clone --branch main https://github.com/nillescure4/ADSBD-Grup4.git
+cd ADSBD-Grup4
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
@@ -40,20 +96,53 @@ python -m pip install -e ".[dev,app]"
 cp .env.example .env
 ```
 
-Set `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` in `.env`. `MINIO_ENDPOINT`
-defaults to `http://localhost:9000`. Set `RAWG_API_KEY` for live RAWG collection;
-source collection can fall back to the versioned backup if the key or service
-is unavailable. For TASK 3, configure the provider/model/key described in
-[the application guide](src/app/README.md). Keep credentials out of Git.
+### Configure local storage and API keys
 
-FFmpeg and FFprobe must be on PATH, supplied with `--ffmpeg-dir`, or already
-installed under `data/tools/ffmpeg/bin`. They are not bundled or auto-downloaded.
+Edit `.env` locally: set `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` and retain
+`MINIO_ENDPOINT=http://localhost:9000` for local storage. Keep credentials in this
+untracked file; do not include real keys in documentation or commit them to Git.
+Copy `.env.example` only for a new installation; do not overwrite an existing
+`.env` containing your configuration.
+
+**RAWG — descriptions and screenshots.** Open the
+[RAWG API page](https://rawg.io/apidocs), create an account or sign in, then follow
+**Get API Key** to the API-key page associated with your profile. Complete the
+requested application details and copy the issued key into `RAWG_API_KEY` in
+`.env`. This enables live collection for the selected games.
+
+**RAWG availability note — validation on 5 November 2026.** Checks of both the
+documentation website and the API ended in read timeouts from our validation
+environment. Registration, key retrieval and live collection may fail while the
+service is unavailable; the cause and recovery time were not established. This
+is a dated observation, not a guarantee of the service's current status. A failed
+source collection can select the verified backup of 50 descriptions, 50 associated
+screenshots and 16 audio files. Recovery reprocesses that snapshot; it does not
+provide newly fetched RAWG data or the larger development corpus.
+
+**Gemini — TASK 3 generation.** Open
+[Google AI Studio's API Keys page](https://aistudio.google.com/apikey) and sign in
+with a Google account. Accept the terms if prompted and create an API key in an
+available project; create or import a Google Cloud project if needed. Copy the
+key into `GEMINI_API_KEY` in `.env`, set `LLM_PROVIDER=gemini` and retain the supplied
+`LLM_MODEL` value or choose a compatible vision model available to your account.
+Model access, quotas and billing requirements depend on the project and model;
+a key does not guarantee unlimited or free requests. See the
+[official API-key guidance](https://ai.google.dev/gemini-api/docs/api-key) and
+[application guide](src/app/README.md) for provider configuration. The batch
+pipeline does not make generative requests; interactive TASK 3 needs the key.
 
 ## Run the complete project
 
-Run commands from the repository root:
+Run commands from the repository root. On Windows, use the PowerShell session
+where you enabled UTF-8:
 
 ```powershell
+.\.venv\Scripts\python.exe -m src.pipelines.run_pipeline --start-minio --serve
+```
+
+On Linux/macOS, with the virtual environment activated:
+
+```bash
 python -m src.pipelines.run_pipeline --start-minio --serve
 ```
 
@@ -61,7 +150,9 @@ Streamlit starts immediately at http://127.0.0.1:8501 and displays live zones,
 elapsed time and backup use while Landing, Formatted, Trusted
 and Exploitation are prepared. After the four embedding collections and retrieval
 are verified, the same page automatically opens the application. A failed run
-keeps the progress page visible with the error. Use `--port` if 8501 is occupied.
+keeps the progress page visible with the error. Add `--port 8502` if 8501 is
+occupied. Ctrl+C stops the foreground application; persisted data remains
+available for the next run.
 MinIO's optional visual console is at http://localhost:9001; scripts perform all
 storage operations programmatically.
 
@@ -72,19 +163,22 @@ collector's accumulated game manifest. Music collection uses a robots-aware
 OpenGameArt HTML crawler, not a public audio API.
 
 ```powershell
-python -m src.pipelines.run_pipeline --dry-run
-python -m src.pipelines.run_pipeline --through trusted
-python -m src.pipelines.run_pipeline --skip-collection
-python -m src.pipelines.run_pipeline --embeddings-only
-python -m src.pipelines.run_pipeline status
+.\.venv\Scripts\python.exe -m src.pipelines.run_pipeline --dry-run
+.\.venv\Scripts\python.exe -m src.pipelines.run_pipeline --through trusted
+.\.venv\Scripts\python.exe -m src.pipelines.run_pipeline --skip-collection
+.\.venv\Scripts\python.exe -m src.pipelines.run_pipeline --embeddings-only
+.\.venv\Scripts\python.exe -m src.pipelines.run_pipeline status
 ```
+
+On Linux/macOS, use `python` in place of `.\.venv\Scripts\python.exe` after
+activating the virtual environment.
 
 Omit `--serve` for batch preparation. `--skip-collection` requires existing local
 image/audio collections and text already in Landing. `--embeddings-only` starts
 from existing Trusted data. To open an already prepared application separately:
 
 ```powershell
-python -m streamlit run streamlit_app.py
+.\.venv\Scripts\python.exe -m streamlit run streamlit_app.py
 ```
 
 **Data reports**, alongside Home, presents the current description, image and audio
@@ -149,7 +243,7 @@ at 512 tokens and audio vectors represent a centered excerpt of up to ten second
 ## Tests and delivery
 
 ```powershell
-python -m pytest -q
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
 The default suite uses isolated fixtures and skips opt-in service/model tests.
