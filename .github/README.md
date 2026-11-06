@@ -1,10 +1,13 @@
 # Continuous integration and third-person execution
 
-The repository must be accessible to the assessor. Private repository access must
-be granted through GitHub; no production credentials are committed. Clone the
-repository, check out the branch or commit being assessed, and follow the root
-[installation instructions](../README.md). Python 3.12, Docker with Compose and
-FFmpeg/FFprobe are the documented host prerequisites.
+The repository must be accessible to the assessor. A public repository can be
+cloned without an invitation; for restricted repositories, grant access through
+GitHub. Sign in to GitHub to inspect workflow runs and download their available
+artifacts. No production credentials are committed. Clone the repository, check
+out the branch or commit being assessed, and follow the root
+[installation instructions](../README.md), including Windows UTF-8 configuration.
+Python 3.12, Docker with Compose and FFmpeg/FFprobe are the documented host
+prerequisites.
 
 ## Automatic checks
 
